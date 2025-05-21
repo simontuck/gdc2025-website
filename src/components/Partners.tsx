@@ -163,8 +163,8 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
         </div>
 
         <div className="bg-primary-50 rounded-xl p-8 md:p-12">
-          <div className="md:flex items-center justify-between">
-            <div className="mb-6 md:mb-0 md:mr-8">
+          <div className="flex flex-col">
+            <div className="mb-6">
               <h3 className="text-2xl font-bold text-primary-600 mb-3">Become a Co-organizer</h3>
               <p className="text-gray-700">
                 Help shape the future of digital credentials, wallets, and infrastructure. Join our growing community of co-organizers and contribute to this groundbreaking event.
@@ -172,7 +172,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
             </div>
             <a 
               href="mailto:info@globaldigitalcollaboration.org?subject=GDC25%20Co-organizer%20Application"
-              className="btn btn-primary whitespace-nowrap flex items-center"
+              className="btn btn-primary w-fit flex items-center"
             >
               Apply as a Co-organizer
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -184,5 +184,4 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   );
 };
 
-
-export default CoOrganizers
+export default CoOrganizers;
