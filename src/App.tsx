@@ -1,0 +1,73 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useHashScroll } from './hooks/useHashScroll';
+import Header from './components/Header';
+import Home from './pages/Home';
+import AgendaPage from './pages/AgendaPage';
+import FAQPage from './pages/FAQPage';
+import NotFound from './pages/NotFound';
+import HotelsPage from './pages/HotelsPage';
+import Footer from './components/Footer';
+import { CookieConsent } from './components/CookieConsent';
+import RegistrationModal from './components/RegistrationModal';
+import AgendaIdeaModal from './components/AgendaIdeaModal';
+
+const AppContent = () => {
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+  const [isAgendaIdeaModalOpen, setIsAgendaIdeaModalOpen] = useState(false);
+  const location = useLocation();
+  useHashScroll();
+
+  // Reset scroll position when navigating to a new route without hash
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header onRegisterClick={() => setIsRegistrationModalOpen(true)} />
+      
+      <Routes>
+        <Route path="/" element={
+          <Home 
+            onRegisterClick={() => setIsRegistrationModalOpen(true)}
+            onCoOrganizerClick={() => setIsRegistrationModalOpen(true)}
+            onIdeaClick={() => setIsAgendaIdeaModalOpen(true)}
+          />
+        } />
+        <Route path="/agenda" element={
+          <AgendaPage onIdeaClick={() => setIsAgendaIdeaModalOpen(true)} />
+        } />
+        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/hotels" element={<HotelsPage />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
+      </Routes>
+
+      <Footer />
+      
+      <RegistrationModal 
+        isOpen={isRegistrationModalOpen} 
+        onClose={() => setIsRegistrationModalOpen(false)} 
+      />
+      
+      <AgendaIdeaModal 
+        isOpen={isAgendaIdeaModalOpen} 
+        onClose={() => setIsAgendaIdeaModalOpen(false)} 
+      />
+      <CookieConsent />
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
+
+export default App;

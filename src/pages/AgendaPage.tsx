@@ -1,0 +1,206 @@
+import React, { useState, useMemo } from 'react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin } from 'lucide-react';
+import { useAgenda } from '../hooks/useAgenda';
+
+interface AgendaPageProps {
+  onIdeaClick: () => void;
+}
+
+const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
+  const { data: agendaItems, isLoading, error } = useAgenda();
+  const [selectedDay, setSelectedDay] = useState<string>('2025-07-01');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+
+  const days = [
+    { id: '2025-07-01', label: 'Tuesday, July 1' },
+    { id: '2025-07-02', label: 'Wednesday, July 2' }
+  ];
+
+  // Get unique categories from agenda items
+  const categories = useMemo(() => {
+    if (!agendaItems) return [];
+    const uniqueCategories = Array.from(new Set(agendaItems.map(item => item.category).filter(Boolean)));
+    return uniqueCategories.sort();
+  }, [agendaItems]);
+
+  // Filter agenda items by selected day and category
+  const filteredAgendaItems = useMemo(() => {
+    if (!agendaItems) return [];
+    return agendaItems.filter(item => {
+      const dayMatch = item.day === selectedDay;
+      const categoryMatch = !selectedCategory || item.category === selectedCategory;
+      return dayMatch && categoryMatch;
+    });
+  }, [agendaItems, selectedDay, selectedCategory]);
+
+  return (
+    <div className="pt-20">
+      <section className="bg-primary-700 text-white py-16">
+        <div className="container">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Conference Agenda</h1>
+          <p className="text-xl text-white/90 max-w-3xl">
+            Two days of intensive collaboration, knowledge sharing, and strategic planning for the future of digital public infrastructure.
+          </p>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className="container">
+          {/* Filters */}
+          <div className="mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:gap-6">
+            {/* Day Filter */}
+            <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+              {days.map((day) => (
+                <button
+                  key={day.id}
+                  onClick={() => setSelectedDay(day.id)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    selectedDay === day.id
+                      ? 'bg-primary-500 text-white'
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  {day.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Category Filter */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category === selectedCategory ? '' : category)}
+                  className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                    category === selectedCategory
+                      ? 'bg-primary-500 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {category}
+                  {category === selectedCategory && (
+                    <X className="h-4 w-4 ml-1.5" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+            </div>
+          ) : error ? (
+            <div className="bg-red-50 border-l-4 border-red-400 p-4">
+              <div className="flex">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">Error loading agenda</h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    <p>There was an error loading the agenda. Please try again later.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : filteredAgendaItems.length === 0 ? (
+            <div className="bg-gray-50 rounded-lg p-8 text-center">
+              <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No Events Found</h3>
+              <p className="text-gray-600">
+                {selectedCategory 
+                  ? `No ${selectedCategory} events scheduled for this day.`
+                  : 'There are no events scheduled for this day yet. Check back later for updates.'}
+              </p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              {filteredAgendaItems.map((item, index) => (
+                <div key={index} className="border-b border-gray-200 last:border-0">
+                  <div className="p-6 hover:bg-gray-50">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 mt-1">
+                        <Clock className="h-5 w-5 text-primary-400" />
+                      </div>
+                      <div className="ml-4 flex-grow">
+                        <p className="text-sm font-medium text-primary-600">
+                          {item.time}
+                        </p>
+                        <h3 className="text-xl font-semibold text-gray-900 mt-1">
+                          {item.title}
+                        </h3>
+                        
+                        {/* Room information */}
+                        {item.room && (
+                          <div className="flex items-center mt-2 text-gray-600">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            <span className="text-sm">{item.room}</span>
+                          </div>
+                        )}
+                        
+                        {item.category && (
+                          <span className="inline-block mt-2 px-3 py-1 text-sm font-medium bg-primary-100 text-primary-800 rounded-full">
+                            {item.category}
+                          </span>
+                        )}
+                        
+                        {item.description && (
+                          <div className="mt-4">
+                            <p className="text-gray-600 whitespace-pre-line">{item.description}</p>
+                          </div>
+                        )}
+
+                        {item.organizers && (
+                          <div className="mt-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Building2 className="h-4 w-4 text-gray-500" />
+                              <h4 className="text-sm font-medium text-gray-700">Organizers</h4>
+                            </div>
+                            <p className="text-sm text-gray-600">{item.organizers}</p>
+                          </div>
+                        )}
+
+                        {item.speakers && (
+                          <div className="mt-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Users className="h-4 w-4 text-gray-500" />
+                              <h4 className="text-sm font-medium text-gray-700">Speakers</h4>
+                            </div>
+                            <p className="text-sm text-gray-600">{item.speakers}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="bg-gray-50 rounded-xl p-8 md:p-12 mt-8">
+            <div className="md:flex items-center justify-between">
+              <div className="mb-6 md:mb-0 md:mr-8">
+                <div className="flex items-center mb-3">
+                  <MessageSquare className="h-6 w-6 text-gray-500 mr-3" />
+                  <h3 className="text-2xl font-bold text-gray-700">
+                    Have an idea for the agenda?
+                  </h3>
+                </div>
+                <p className="text-gray-600">
+                  The agenda is shaped collaboratively – we welcome your ideas for deep dives, panels, and demos. Share your groundbreaking use case, framework, or perspective.
+                </p>
+              </div>
+              <button 
+                onClick={onIdeaClick}
+                className="btn bg-gray-600 text-white hover:bg-gray-700 whitespace-nowrap flex items-center"
+              >
+                Submit Your Idea
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default AgendaPage;
