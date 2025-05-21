@@ -23,7 +23,7 @@
   }
 
   .btn-secondary {
-    @apply bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300;
+    @apply bg-white text-primary-500 border-2 border-primary-500 hover:bg-primary-50 focus:ring-4 focus:ring-primary-300;
   }
 
   .btn-outline {

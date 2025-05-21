@@ -172,7 +172,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
             </div>
             <a 
               href="mailto:info@globaldigitalcollaboration.org?subject=GDC25%20Co-organizer%20Application"
-              className="btn btn-primary w-fit flex items-center"
+              className="btn btn-secondary w-fit flex items-center"
             >
               Apply as a Co-organizer
               <ArrowRight className="ml-2 h-5 w-5" />
