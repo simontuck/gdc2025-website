@@ -7,7 +7,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
   return (
-    <section className="relative pt-20 pb-32 md:pt-32 md:pb-48 bg-primary-700">
+    <section className="relative pt-32 md:pt-44 pb-32 md:pb-48 bg-primary-700">
       <div className="container relative z-10 mx-auto px-4 text-white">
         <div className="max-w-3xl">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm mb-6">
