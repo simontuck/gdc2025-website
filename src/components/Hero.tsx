@@ -47,7 +47,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>up to 2,000 representatives from the public and private sector</span>
+              <span>Up to 2,000 representatives from the public and private sector</span>
             </div>
             <div className="flex items-center">
               <Building2 className="h-5 w-5 mr-2 flex-shrink-0" />
