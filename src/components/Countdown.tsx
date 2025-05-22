@@ -11,7 +11,7 @@ const Countdown: React.FC = () => {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const eventDate = new Date('2025-07-01T09:00:00+02:00'); // Geneva time (CEST)
+      const eventDate = new Date('2025-07-01T08:30:00+02:00'); // Geneva time (CEST)
       const now = new Date();
       const difference = eventDate.getTime() - now.getTime();
 
@@ -63,7 +63,7 @@ const Countdown: React.FC = () => {
           </div>
 
           <p className="text-center text-gray-600 mt-6">
-            Join us on July 1, 2025 at 09:00 CEST in Geneva, Switzerland
+            Join us on July 1, 2025 at 08:30 CEST in Geneva, Switzerland
           </p>
         </div>
       </div>
