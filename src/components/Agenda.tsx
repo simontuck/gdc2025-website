@@ -32,7 +32,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
               to="/agenda" 
               className="btn btn-primary inline-flex items-center justify-center w-full md:w-auto md:min-w-[300px]"
             >
-              View Draft Conference Schedule
+              View Draft Conference Agenda
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>
