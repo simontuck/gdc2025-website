@@ -51,10 +51,6 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
-  const academicLogos = [
-    '/GC25_logos/05_Academic/C4DT.png',
-  ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
   const coOrganizerCategories = [
     {
       title: "Intergovernmental Organizations",
@@ -71,10 +67,6 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     {
       title: "Other Organizations",
       logos: otherLogos
-    },
-    {
-      title: "Academic Organizations",
-      logos: academicLogos
     }
   ];
 
