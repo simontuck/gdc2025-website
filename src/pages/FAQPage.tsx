@@ -33,7 +33,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "What does the barcode image in the hero section represent?",
-      answer: "The distinctive barcode pattern visualizes the top 20 countries leading the global open source movement, arranged from west to east. Each bar represents a country's contribution to open source development, with its width corresponding to the relative impact. This unique visualization demonstrates how digital collaboration transcends geographical boundaries and highlights the truly global nature of open source innovation.\n\nIf you'd like to create your own barcode visualization, you can use this tool: "
+      answer: "The distinctive barcode pattern visualizes the top 40 countries leading the global open source movement, arranged from west to east. Each bar represents a country's contribution to open source development, with its width corresponding to the relative impact. This unique visualization demonstrates how digital collaboration transcends geographical boundaries and highlights the truly global nature of open source innovation.\n\nIf you'd like to create your own barcode visualization, you can use this tool: "
     }
   ];
 
@@ -62,7 +62,7 @@ const FAQPage: React.FC = () => {
                 </summary>
                 <div className="px-6 pb-6 text-gray-600">
                   <p className="whitespace-pre-line">
-                    {faq.question === "What does the barcode image represent?" ? (
+                    {faq.question === "What does the barcode image in the hero section represent?" ? (
                       <>
                         {faq.answer}
                         <a 
@@ -71,7 +71,7 @@ const FAQPage: React.FC = () => {
                           rel="noopener noreferrer"
                           className="text-primary-600 hover:text-primary-700"
                         >
-                          https://shaheeilyas.com/ow-barcode/
+                          shaheeilyas.com/ow-barcode/
                         </a>
                       </>
                     ) : (
