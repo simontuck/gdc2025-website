@@ -95,7 +95,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
                     <img
                       src={logo}
                       alt={`Logo ${logoIndex + 1}`}
-                      className="max-h-full w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                      className="max-h-full w-auto object-contain filter grayscale"
                     />
                   </div>
                 ))}
