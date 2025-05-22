@@ -6,22 +6,71 @@ interface CoOrganizersProps {
 }
 
 const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
+  const intergovernmentalLogos = [
+    '/GC25_logos/01_Intergovernmental_Organisation/ITU.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/OECD.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/UNICC.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/unece.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/who.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/world_bank.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/european_commission.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/aamva.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/austroads.png',
+  ];
+
+  const standardsLogos = [
+    '/GC25_logos/02_Standard_development_Organisations/iso.png',
+    '/GC25_logos/02_Standard_development_Organisations/iec.png',
+    '/GC25_logos/02_Standard_development_Organisations/etsi.png',
+    '/GC25_logos/02_Standard_development_Organisations/CCC-logo-grayscale.png',
+    '/GC25_logos/02_Standard_development_Organisations/csc.png',
+    '/GC25_logos/02_Standard_development_Organisations/dif.png',
+    '/GC25_logos/02_Standard_development_Organisations/w3c.png',
+    '/GC25_logos/02_Standard_development_Organisations/fido.png',
+    '/GC25_logos/02_Standard_development_Organisations/global_platform.png',
+  ];
+
+  const openSourceLogos = [
+    '/GC25_logos/03_Open_Source_Organisations/OpenWallet_Logo_Color-with-descriptor (1).webp',
+    '/GC25_logos/03_Open_Source_Organisations/eclipse_foundation.png',
+  ];
+
+  const otherLogos = [
+    '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/dcpi.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/dcc.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/didas.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/fides.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/gleif.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/ifrc.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/ispirt.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/ayra.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/bgin_logomark_black.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/DIAL LOGO.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/DigitalSociety_black_rgb.jpg',
+  ];
+
   const coOrganizerCategories = [
     {
       title: "Intergovernmental Organizations",
-      organizations: ["European Commission", "International Telecommunication Union", "United Nations Economic Commission for Europe", "UNICC", "The World Bank Group", "World Health Organization"]
+      icon: <Globe className="h-6 w-6 text-primary-500 mr-3" />,
+      logos: intergovernmentalLogos
     },
     {
       title: "Standardization Development Organizations",
-      organizations: ["AAMVA", "Austroads", "eReg", "CCC", "CSC", "DIF", "ETSI", "FIDO Alliance", "ISO", "IEC", "W3C"]
+      icon: <Building className="h-6 w-6 text-primary-500 mr-3" />,
+      logos: standardsLogos
     },
     {
       title: "Open Source Organizations",
-      organizations: ["OWF", "Eclipse Foundation"]
+      icon: <Users className="h-6 w-6 text-primary-500 mr-3" />,
+      logos: openSourceLogos
     },
     {
       title: "Other Organizations",
-      organizations: ["LF / FINOS", "CDPI", "DCC", "EPFL", "Fides", "MOSIP", "DIDAS"]
+      icon: <Users className="h-6 w-6 text-primary-500 mr-3" />,
+      logos: otherLogos
     }
   ];
 
@@ -33,131 +82,26 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Leading organizations from across the globe working together to shape the future of digital public infrastructure.
           </p>
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 gap-y-10 items-center">
-            {/* Intergovernmental Organizations */}
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/OECD.png" alt="OECD" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/ITU.png" alt="ITU" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/EC LOGO.png" alt="European Commission" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/UNECE.png" alt="UNECE" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/UNICC.png" alt="UNICC" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/World Bank.png" alt="World Bank Group" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/WHO.png" alt="WHO" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            
-            {/* Standards Organizations */}
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/ISO.png" alt="ISO" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/IEC.png" alt="IEC" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/ETSI Logo No Tagline BLACK.png" alt="ETSI" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/CCC-logo-grayscale.png" alt="CCC" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/CSC.png" alt="CSC" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/DIF.png" alt="DIF" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/W3C.png" alt="W3C" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Fido.png" alt="FIDO Alliance" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/IETF.png" alt="IETF" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Austroads.png" alt="Austroads" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            
-            {/* Open Source & Industry */}
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/OpenWallet_Logo_Color-with-descriptor (1).webp" alt="Open Wallet Foundation" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Eclipse Foundation.png" alt="Eclipse Foundation" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/LFDT.png" alt="Linux Foundation Digital Trust" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/FINOS.png" alt="FINOS" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/GLEIF.png" alt="GLEIF" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Global platform.png" alt="Global Platform" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/EWC.png" alt="EWC" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Ispirt.png" alt="iSPIRT" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            
-            {/* Other Organizations */}
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Mosip.png" alt="MOSIP" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/DCPI.png" alt="DCPI" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/DCC.png" alt="DCC" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/C4DT.png" alt="C4DT" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/FIDES.png" alt="FIDES" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/Didas.png" alt="DIDAS" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/ayra.png" alt="AYRA" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-            <div className="flex items-center justify-center h-16 px-4">
-              <img src="/logos/PLI_logo_outline_black.png" alt="PLI" className="max-h-full w-auto object-contain filter grayscale" />
-            </div>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {coOrganizerCategories.map((category, index) => (
             <div key={index} className="card p-6">
               <div className="flex items-center mb-4">
-                {index === 0 && <Globe className="h-6 w-6 text-primary-500 mr-3" />}
-                {index === 1 && <Building className="h-6 w-6 text-primary-500 mr-3" />}
-                {(index === 2 || index === 3) && <Users className="h-6 w-6 text-primary-500 mr-3" />}
+                {category.icon}
                 <h3 className="text-xl font-semibold text-gray-900">{category.title}</h3>
               </div>
-              <ul className="space-y-2 mb-6">
-                {category.organizations.map((org, idx) => (
-                  <li key={idx} className="text-gray-700">{org}</li>
+              <div className="grid grid-cols-2 gap-4">
+                {category.logos.map((logo, logoIndex) => (
+                  <div key={logoIndex} className="flex items-center justify-center h-16 p-2 bg-white rounded-lg">
+                    <img
+                      src={logo}
+                      alt={`Logo ${logoIndex + 1}`}
+                      className="max-h-full w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                    />
+                  </div>
                 ))}
-                <li className="text-gray-500 italic">and many more...</li>
-              </ul>
+              </div>
             </div>
           ))}
         </div>
