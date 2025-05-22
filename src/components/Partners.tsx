@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Building, Globe, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface CoOrganizersProps {
   onCoOrganizerClick: () => void;
@@ -54,22 +54,18 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   const coOrganizerCategories = [
     {
       title: "Intergovernmental Organizations",
-      icon: <Globe className="h-6 w-6 text-primary-500 mr-3" />,
       logos: intergovernmentalLogos
     },
     {
       title: "Standardization Development Organizations",
-      icon: <Building className="h-6 w-6 text-primary-500 mr-3" />,
       logos: standardsLogos
     },
     {
       title: "Open Source Organizations",
-      icon: <Users className="h-6 w-6 text-primary-500 mr-3" />,
       logos: openSourceLogos
     },
     {
       title: "Other Organizations",
-      icon: <Users className="h-6 w-6 text-primary-500 mr-3" />,
       logos: otherLogos
     }
   ];
@@ -87,10 +83,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {coOrganizerCategories.map((category, index) => (
             <div key={index} className="card p-6">
-              <div className="flex items-center mb-4">
-                {category.icon}
-                <h3 className="text-xl font-semibold text-gray-900">{category.title}</h3>
-              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">{category.title}</h3>
               <div className="grid grid-cols-2 gap-4">
                 {category.logos.map((logo, logoIndex) => (
                   <div key={logoIndex} className="flex items-center justify-center h-16 p-2 bg-white rounded-lg">
