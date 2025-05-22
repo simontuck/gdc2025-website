@@ -16,20 +16,28 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     { id: '2025-07-02', label: 'Wednesday, July 2' }
   ];
 
-  // Get unique categories from agenda items
+  // Get unique categories from published agenda items
   const categories = useMemo(() => {
     if (!agendaItems) return [];
-    const uniqueCategories = Array.from(new Set(agendaItems.map(item => item.category).filter(Boolean)));
+    const uniqueCategories = Array.from(
+      new Set(
+        agendaItems
+          .filter(item => item.ready_to_publish)
+          .map(item => item.category)
+          .filter(Boolean)
+      )
+    );
     return uniqueCategories.sort();
   }, [agendaItems]);
 
-  // Filter agenda items by selected day and category
+  // Filter agenda items by selected day, category, and published status
   const filteredAgendaItems = useMemo(() => {
     if (!agendaItems) return [];
     return agendaItems.filter(item => {
       const dayMatch = item.day === selectedDay;
       const categoryMatch = !selectedCategory || item.category === selectedCategory;
-      return dayMatch && categoryMatch;
+      const isPublished = item.ready_to_publish === true;
+      return dayMatch && categoryMatch && isPublished;
     });
   }, [agendaItems, selectedDay, selectedCategory]);
 
