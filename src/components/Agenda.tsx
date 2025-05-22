@@ -10,9 +10,13 @@ interface AgendaProps {
 const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
   const { data: agendaItems, isLoading, error } = useAgenda();
 
-  // Filter and sort day 1 items
-  const dayOneItems = agendaItems
-    ?.filter(item => item.day === '2025-07-01')
+  // Filter and sort day 1 items that are highlighted and ready to publish
+  const dayOneHighlights = agendaItems
+    ?.filter(item => 
+      item.day === '2025-07-01' && 
+      item.highlight === true && 
+      item.ready_to_publish === true
+    )
     .slice(0, 5);
 
   return (
@@ -74,7 +78,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
                   </div>
                 ) : error ? (
                   <div className="p-4 text-red-600">Failed to load agenda items</div>
-                ) : dayOneItems?.map((item, index) => (
+                ) : dayOneHighlights?.map((item, index) => (
                   <div key={index} className="p-4 hover:bg-gray-50">
                     <div className="flex items-start">
                       <div className="flex-shrink-0 mt-1">
