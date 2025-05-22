@@ -102,22 +102,17 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-8 md:p-12">
-          <div className="md:flex items-center justify-between">
-            <div className="mb-6 md:mb-0 md:mr-8">
-              <div className="flex items-center mb-3">
-                <MessageSquare className="h-6 w-6 text-gray-500 mr-3" />
-                <h3 className="text-2xl font-bold text-gray-700">
-                  Have an idea for the agenda?
-                </h3>
-              </div>
-              <p className="text-gray-600">
+        <div className="bg-primary-50 rounded-xl p-8 md:p-12">
+          <div className="flex flex-col">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-primary-600 mb-3">Have an idea for the agenda?</h3>
+              <p className="text-gray-700">
                 The agenda is shaped collaboratively – we welcome your ideas for deep dives, panels, and demos. Share your groundbreaking use case, framework, or perspective.
               </p>
             </div>
             <button 
               onClick={onIdeaClick}
-              className="btn bg-gray-600 text-white hover:bg-gray-700 whitespace-nowrap flex items-center"
+              className="btn btn-secondary w-fit flex items-center"
             >
               Submit Your Idea
               <ArrowRight className="ml-2 h-5 w-5" />
