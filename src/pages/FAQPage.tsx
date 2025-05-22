@@ -17,7 +17,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "How can I become a co-organizer?",
-      answer: "Organizations interested in becoming co-organizers can apply by sending an email to info@globaldigitalcollaboration.org with the subject 'GDC25 Co-organizer Application'. We welcome organizations from intergovernmental, standardization, open source, and other relevant sectors."
+      answer: "Organizations interested in becoming co-organizers can apply by sending an email to info@globaldigitalcollaboration.org with the subject 'GDC25 Co-organizer Application'. We welcome organizations from intergovernmental, standardization, open source, and other relevant sectors. Ideally, your proposal would involve other co-organizers, since the aim is to initiate concrete collaboration."
     },
     {
       question: "Can I submit an idea for the agenda?",
