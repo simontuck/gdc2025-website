@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, ExternalLink, ArrowRight, Linkedin } from 'lucide-react';
+import { ExternalLink, ArrowRight, Linkedin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -9,8 +9,13 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div className="flex flex-col">
             <div className="mb-4">
-              <h3 className="text-xl font-bold">GDC25</h3>
-              <p className="text-sm text-gray-300">Global Digital Collaboration</p>
+              <Link to="/">
+                <img 
+                  src="/GC25_logo_white.svg" 
+                  alt="GDC25 Logo" 
+                  className="h-12 w-auto mb-2"
+                />
+              </Link>
             </div>
             <div className="mt-auto">
               <p className="text-sm text-gray-300">
