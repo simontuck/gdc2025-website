@@ -9,7 +9,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "How can I register for the conference?",
-      answer: "You can register for the conference through our official registration platform at lu.ma/gc25. Register with the co-organizer of your choice which will approve your entry. Early registration is recommended as space is limited."
+      answer: "You can register for the conference through our official registration platform at "
     },
     {
       question: "What hotels are recommended for conference attendees?",
@@ -62,7 +62,20 @@ const FAQPage: React.FC = () => {
                 </summary>
                 <div className="px-6 pb-6 text-gray-600">
                   <p className="whitespace-pre-line">
-                    {faq.question === "What does the barcode image in the hero section represent?" ? (
+                    {faq.question === "How can I register for the conference?" ? (
+                      <>
+                        {faq.answer}
+                        <a 
+                          href="https://lu.ma/gc25" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary-600 hover:text-primary-700"
+                        >
+                          lu.ma/gc25
+                        </a>
+                        . Register with the co-organizer of your choice which will approve your entry. Early registration is recommended as space is limited.
+                      </>
+                    ) : faq.question === "What does the barcode image in the hero section represent?" ? (
                       <>
                         {faq.answer}
                         <a 
