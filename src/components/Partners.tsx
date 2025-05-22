@@ -38,7 +38,6 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   const otherLogos = [
     '/GC25_logos/04_Non-Governmental_Organisations/ayra.png',
     '/GC25_logos/04_Non-Governmental_Organisations/bgin_logomark_black.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/C4DT.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dcc.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dcpi.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dial_logo.png',
@@ -50,6 +49,10 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/04_Non-Governmental_Organisations/ispirt.png',
     '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
     '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
+  ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+  const academicLogos = [
+    '/GC25_logos/05_Academic/C4DT.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   const coOrganizerCategories = [
@@ -68,6 +71,10 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     {
       title: "Other Organizations",
       logos: otherLogos
+    },
+    {
+      title: "Academic Organizations",
+      logos: academicLogos
     }
   ];
 
