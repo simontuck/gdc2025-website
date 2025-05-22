@@ -7,49 +7,49 @@ interface CoOrganizersProps {
 
 const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   const intergovernmentalLogos = [
-    '/GC25_logos/01_Intergovernmental_Organisation/ITU.png',
-    '/GC25_logos/01_Intergovernmental_Organisation/OECD.png',
-    '/GC25_logos/01_Intergovernmental_Organisation/UNICC.png',
-    '/GC25_logos/01_Intergovernmental_Organisation/unece.png',
-    '/GC25_logos/01_Intergovernmental_Organisation/who.png',
-    '/GC25_logos/01_Intergovernmental_Organisation/world_bank.png',
-    '/GC25_logos/01_Intergovernmental_Organisation/european_commission.png',
     '/GC25_logos/01_Intergovernmental_Organisation/aamva.png',
     '/GC25_logos/01_Intergovernmental_Organisation/austroads.png',
-  ];
+    '/GC25_logos/01_Intergovernmental_Organisation/european_commission.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/ITU.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/OECD.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/unece.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/UNICC.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/who.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/world_bank.png',
+  ].sort();
 
   const standardsLogos = [
-    '/GC25_logos/02_Standard_development_Organisations/iso.png',
-    '/GC25_logos/02_Standard_development_Organisations/iec.png',
-    '/GC25_logos/02_Standard_development_Organisations/etsi.png',
     '/GC25_logos/02_Standard_development_Organisations/CCC-logo-grayscale.png',
     '/GC25_logos/02_Standard_development_Organisations/csc.png',
     '/GC25_logos/02_Standard_development_Organisations/dif.png',
-    '/GC25_logos/02_Standard_development_Organisations/w3c.png',
+    '/GC25_logos/02_Standard_development_Organisations/etsi.png',
     '/GC25_logos/02_Standard_development_Organisations/fido.png',
     '/GC25_logos/02_Standard_development_Organisations/global_platform.png',
-  ];
+    '/GC25_logos/02_Standard_development_Organisations/iec.png',
+    '/GC25_logos/02_Standard_development_Organisations/iso.png',
+    '/GC25_logos/02_Standard_development_Organisations/w3c.png',
+  ].sort();
 
   const openSourceLogos = [
-    '/GC25_logos/03_Open_Source_Organisations/OpenWallet_Logo_Color-with-descriptor (1).webp',
     '/GC25_logos/03_Open_Source_Organisations/eclipse_foundation.png',
-  ];
+    '/GC25_logos/03_Open_Source_Organisations/OpenWallet_Logo_Color-with-descriptor (1).webp',
+  ].sort();
 
   const otherLogos = [
-    '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/dcpi.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/ayra.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/bgin_logomark_black.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dcc.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/dcpi.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/DIAL LOGO.png',
     '/GC25_logos/04_Non-Governmental_Organisations/didas.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/DigitalSociety_black_rgb.jpg',
     '/GC25_logos/04_Non-Governmental_Organisations/fides.png',
     '/GC25_logos/04_Non-Governmental_Organisations/gleif.png',
     '/GC25_logos/04_Non-Governmental_Organisations/ifrc.png',
     '/GC25_logos/04_Non-Governmental_Organisations/ispirt.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
     '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/ayra.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/bgin_logomark_black.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/DIAL LOGO.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/DigitalSociety_black_rgb.jpg',
-  ];
+  ].sort();
 
   const coOrganizerCategories = [
     {
