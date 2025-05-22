@@ -2,7 +2,6 @@ import React from 'react';
 
 const Sponsors: React.FC = () => {
   const sponsorLogos = [
-    { src: '/Sponsors/futurewei_logo.webp', alt: 'Futurewei' },
     { src: '/Sponsors/google_logo.png', alt: 'Google' },
     { src: '/Sponsors/huawei_logo.png', alt: 'Huawei' },
     { src: '/Sponsors/mastercard_logo..png', alt: 'Mastercard' },
@@ -19,7 +18,7 @@ const Sponsors: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center max-w-4xl mx-auto">
           {sponsorLogos.map((logo, index) => (
             <div 
               key={index}
