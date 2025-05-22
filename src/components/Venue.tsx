@@ -100,7 +100,7 @@ const Venue: React.FC = () => {
               />
               <Marker position={position}>
                 <Popup>
-                  <b>CICG Geneva</b><br />
+                  <b>CICG Geneva</b>
                   Centre International de Conférences Genève<br />
                   17 Rue de Varembé, 1211 Genève
                 </Popup>
