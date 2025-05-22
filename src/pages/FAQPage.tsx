@@ -9,7 +9,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "How can I register for the conference?",
-      answer: "You can register for the conference through our official registration platform at lu.ma/gc25. Early registration is recommended as space is limited."
+      answer: "You can register for the conference through our official registration platform at lu.ma/gc25. Register with the co-organizer of your choice which will approve your entry. Early registration is recommended as space is limited."
     },
     {
       question: "What hotels are recommended for conference attendees?",
