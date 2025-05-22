@@ -34,6 +34,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/03_Open_Source_Organisations/FINOS.png',
     '/GC25_logos/03_Open_Source_Organisations/LFDT.png',
     '/GC25_logos/03_Open_Source_Organisations/openwallet_logo_color_with_descriptor.webp',
+    '/GC25_logos/03_Open_Source_Organisations/tanzania_logo.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   const otherLogos = [
