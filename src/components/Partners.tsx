@@ -22,9 +22,10 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/02_Standard_development_Organisations/dif.png',
     '/GC25_logos/02_Standard_development_Organisations/etsi.png',
     '/GC25_logos/02_Standard_development_Organisations/fido.png',
-    '/GC25_logos/02_Standard_development_Organisations/global_platform.png',
+    '/GC25_logos/02_Standard_development_Organisations/gp-logo-.jpg',
     '/GC25_logos/02_Standard_development_Organisations/iec.png',
     '/GC25_logos/02_Standard_development_Organisations/iso.png',
+    '/GC25_logos/02_Standard_development_Organisations/openid_logo.jpg',
     '/GC25_logos/02_Standard_development_Organisations/w3c.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
@@ -36,13 +37,17 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   const otherLogos = [
+    '/GC25_logos/04_Non-Governmental_Organisations/Aamva.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/Austroads.png',
     '/GC25_logos/04_Non-Governmental_Organisations/ayra.png',
     '/GC25_logos/04_Non-Governmental_Organisations/bgin_logomark_black.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/c4dt.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dcc.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dcpi.png',
     '/GC25_logos/04_Non-Governmental_Organisations/dial_logo.png',
     '/GC25_logos/04_Non-Governmental_Organisations/didas.png',
     '/GC25_logos/04_Non-Governmental_Organisations/DigitalSociety_black_rgb.jpg',
+    '/GC25_logos/04_Non-Governmental_Organisations/EReg.png',
     '/GC25_logos/04_Non-Governmental_Organisations/fides.png',
     '/GC25_logos/04_Non-Governmental_Organisations/gleif.png',
     '/GC25_logos/04_Non-Governmental_Organisations/ifrc.png',
