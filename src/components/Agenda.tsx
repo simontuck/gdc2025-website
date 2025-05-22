@@ -110,13 +110,13 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
                 The agenda is shaped collaboratively – we welcome your ideas for deep dives, panels, and demos. Share your groundbreaking use case, framework, or perspective.
               </p>
             </div>
-            <button 
-              onClick={onIdeaClick}
+            <a 
+              href="mailto:info@globaldigitalcollaboration.org?subject=Agenda%20idea%20for%20GDC2025"
               className="btn btn-secondary w-fit flex items-center"
             >
               Submit Your Idea
               <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
+            </a>
           </div>
         </div>
       </div>
