@@ -69,7 +69,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
           <div className="md:w-1/2">
             <div className="border border-gray-200 rounded-lg overflow-hidden">
               <div className="bg-primary-500 text-white py-4 px-6">
-                <h3 className="text-xl font-semibold">Day 1 Highlights</h3>
+                <h3 className="text-xl font-semibold">Day 1 Start</h3>
               </div>
               <div className="divide-y divide-gray-200">
                 {isLoading ? (
