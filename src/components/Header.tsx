@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
     if (location.pathname === '/') {
       const element = document.getElementById(hash);
       if (element) {
-        const headerOffset = 100; // Increased to account for taller header
+        const headerOffset = 100;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
         window.scrollTo({
@@ -52,12 +52,13 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
       {/* Header content */}
       <div className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-          <div>
-            <Link to="/" className="ml-2">
-              <h1 className="text-lg md:text-xl font-bold text-primary-500">GDC25</h1>
-              <p className="text-xs text-gray-600 hidden md:block">Global Digital Collaboration</p>
-            </Link>
-          </div>
+          <Link to="/" className="block">
+            <img 
+              src="/GC25_logo.svg" 
+              alt="GDC25 Logo" 
+              className="h-12 w-auto"
+            />
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
