@@ -4,7 +4,7 @@ import { MapPin, Navigation, ExternalLink } from 'lucide-react';
 
 const Venue: React.FC = () => {
   // CICG Geneva coordinates
-  const position: [number, number] = [46.2228, 6.1382];
+  const position: [number, number] = [46.219756, 6.137516];
 
   return (
     <section id="venue" className="section bg-gray-50">
@@ -100,7 +100,7 @@ const Venue: React.FC = () => {
               />
               <Marker position={position}>
                 <Popup>
-                  <b>CICG Geneva</b>
+                  <b>CICG Geneva</b><br />
                   Centre International de Conférences Genève<br />
                   17 Rue de Varembé, 1211 Genève
                 </Popup>
