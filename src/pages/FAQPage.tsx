@@ -25,7 +25,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "Can I submit an idea for the agenda?",
-      answer: "Yes! We welcome ideas for deep dives, panels, and demos. You can submit your proposal through the 'Submit Your Idea' button on the Agenda page. We're particularly interested in groundbreaking use cases, frameworks, and perspectives in digital public infrastructure."
+      answer: "Yes! We welcome ideas for collaborative sessions. You can submit your proposal through the 'Submit Your Idea' button on the Agenda page. Ideally, your proposal would involve other co-organizers, since the aim is to initiate concrete collaboration."
     },
     {
       question: "What topics will be covered at the conference?",
