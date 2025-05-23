@@ -73,6 +73,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
             )}
             <Link to="/agenda" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
+            <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
             {location.pathname === '/' ? (
               <button
                 onClick={() => handleHashClick('venue')}
@@ -130,6 +131,13 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               >
                 Agenda
               </Link>
+              <Link 
+                to="/speakers" 
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Speakers
+              </Link>
               {location.pathname === '/' ? (
                 <button
                   onClick={() => handleHashClick('venue')}
@@ -171,4 +179,4 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
   );
 };
 
-export default Header
+export default Header;
