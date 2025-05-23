@@ -4,6 +4,10 @@ import { ChevronDown } from 'lucide-react';
 const FAQPage: React.FC = () => {
   const faqs = [
     {
+      question: "What is the goal of the conference?",
+      answer: "The goal of the conference is to initiate collaboration on specific topics that require the involvement of more than one co-organizer to achieve interoperability. Ideally, sessions will lead to the formation of working groups who continue their collaboration beyond the conference."
+    },
+    {
       question: "When and where is the conference?",
       answer: "The Global Digital Collaboration Conference (GDC25) takes place on July 1-2, 2025, in Geneva, Switzerland. The venue is the Centre International de Conférences Genève (CICG)."
     },
