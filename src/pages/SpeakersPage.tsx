@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Linkedin } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
 
 interface Speaker {
   id: string;
   fullname: string;
   title: string;
+  headline: string;
   organisation: string;
   bio: string;
   profile_picture_link: string;
+  linkedin: string;
   ready_to_publish: boolean;
 }
 
@@ -57,9 +59,25 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                 </h3>
                 <p className="text-lg text-primary-600 mb-1">{speaker.title}</p>
                 <p className="text-md text-gray-600 mb-4">{speaker.organisation}</p>
+                {speaker.headline && (
+                  <p className="text-md text-gray-700 mb-4 italic">{speaker.headline}</p>
+                )}
                 <div className="mt-4 prose max-w-none">
                   <p className="text-gray-700 whitespace-pre-line">{speaker.bio}</p>
                 </div>
+                {speaker.linkedin && (
+                  <div className="mt-6">
+                    <a
+                      href={speaker.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-primary-600 hover:text-primary-700"
+                    >
+                      <Linkedin className="h-5 w-5 mr-2" />
+                      View LinkedIn Profile
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -119,7 +137,22 @@ const SpeakersPage: React.FC = () => {
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{speaker.fullname}</h3>
                     <p className="text-sm text-primary-600 mb-1">{speaker.title}</p>
-                    <p className="text-sm text-gray-600">{speaker.organisation}</p>
+                    <p className="text-sm text-gray-600 mb-2">{speaker.organisation}</p>
+                    {speaker.headline && (
+                      <p className="text-sm text-gray-700 italic line-clamp-2">{speaker.headline}</p>
+                    )}
+                    {speaker.linkedin && (
+                      <a
+                        href={speaker.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center mt-2 text-sm text-primary-600 hover:text-primary-700"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Linkedin className="h-4 w-4 mr-1" />
+                        LinkedIn Profile
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}

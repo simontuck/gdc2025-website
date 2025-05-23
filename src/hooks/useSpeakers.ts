@@ -9,7 +9,7 @@ export function useSpeakers() {
         .from('speakers')
         .select('*')
         .eq('ready_to_publish', true)
-        .order('lastname', { ascending: true });
+        .order('fullname', { ascending: true });
 
       if (error) throw error;
       return data;
