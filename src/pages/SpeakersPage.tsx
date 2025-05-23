@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Linkedin } from 'lucide-react';
+import { X, Linkedin, Building2 } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
 
 interface Speaker {
@@ -58,7 +58,10 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                   {speaker.fullname}
                 </h3>
                 <p className="text-lg text-primary-600 mb-1">{speaker.title}</p>
-                <p className="text-md text-gray-600 mb-4">{speaker.organisation}</p>
+                <div className="flex items-center text-md text-gray-600 mb-4">
+                  <Building2 className="h-4 w-4 mr-2" />
+                  <span>{speaker.organisation}</span>
+                </div>
                 {speaker.headline && (
                   <p className="text-md text-gray-700 mb-4 italic">{speaker.headline}</p>
                 )}
@@ -137,9 +140,12 @@ const SpeakersPage: React.FC = () => {
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{speaker.fullname}</h3>
                     <p className="text-sm text-primary-600 mb-1">{speaker.title}</p>
-                    <p className="text-sm text-gray-600 mb-2">{speaker.organisation}</p>
+                    <div className="flex items-center text-sm text-gray-600 mb-2">
+                      <Building2 className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                      <span>{speaker.organisation}</span>
+                    </div>
                     {speaker.headline && (
-                      <p className="text-sm text-gray-700 italic line-clamp-2">{speaker.headline}</p>
+                      <p className="text-sm text-gray-700 italic line-clamp-2 mb-2">{speaker.headline}</p>
                     )}
                     {speaker.linkedin && (
                       <a
