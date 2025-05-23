@@ -7,6 +7,7 @@ import AgendaPage from './pages/AgendaPage';
 import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
 import HotelsPage from './pages/HotelsPage';
+import ImprintPage from './pages/ImprintPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -17,7 +18,6 @@ const AppContent = () => {
   const location = useLocation();
   useHashScroll();
 
-  // Reset scroll position when navigating to a new route without hash
   useEffect(() => {
     if (!location.hash) {
       window.scrollTo(0, 0);
@@ -41,6 +41,7 @@ const AppContent = () => {
         } />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
+        <Route path="/imprint" element={<ImprintPage />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>

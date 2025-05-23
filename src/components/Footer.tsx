@@ -91,7 +91,12 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="border-t border-primary-400 pt-8 mt-8 text-center">
-          <p className="text-gray-400 text-sm">© Global Digital Collaboration Conference. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">
+            © Global Digital Collaboration Conference. All rights reserved. 
+            <Link to="/imprint" className="text-gray-400 hover:text-white ml-2 transition-colors">
+              Imprint
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
