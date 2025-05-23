@@ -8,7 +8,6 @@ import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
 import HotelsPage from './pages/HotelsPage';
 import Footer from './components/Footer';
-import { CookieConsent } from './components/CookieConsent';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
 
@@ -57,7 +56,6 @@ const AppContent = () => {
         isOpen={isAgendaIdeaModalOpen} 
         onClose={() => setIsAgendaIdeaModalOpen(false)} 
       />
-      <CookieConsent />
     </div>
   );
 };
