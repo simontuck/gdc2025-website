@@ -14,7 +14,7 @@ const Sponsors: React.FC = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Sponsors</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Leading organizations supporting the advancement of digital public infrastructure and global collaboration.
+            Leading organizations supporting the advancement of wallets, credentials and trusted of digital public infrastructure in a manner and global collaboration.
           </p>
         </div>
 
