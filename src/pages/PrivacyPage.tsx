@@ -8,7 +8,7 @@ const PrivacyPage: React.FC = () => {
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Privacy Statement</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            How we handle and protect your data at GDC25
+            How we handle and protect your data at Global Digital Collaboration
           </p>
         </div>
       </section>
