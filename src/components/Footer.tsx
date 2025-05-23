@@ -95,6 +95,9 @@ const Footer: React.FC = () => {
             © Global Digital Collaboration Conference. All rights reserved. | 
             <Link to="/imprint" className="text-gray-400 hover:text-white ml-2 transition-colors">
               Imprint
+            </Link> |
+            <Link to="/privacy" className="text-gray-400 hover:text-white ml-2 transition-colors">
+              Privacy
             </Link>
           </p>
         </div>

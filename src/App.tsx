@@ -8,6 +8,7 @@ import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
 import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
+import PrivacyPage from './pages/PrivacyPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -42,6 +43,7 @@ const AppContent = () => {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/imprint" element={<ImprintPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
@@ -60,13 +62,3 @@ const AppContent = () => {
     </div>
   );
 };
-
-function App() {
-  return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
-  );
-}
-
-export default App;
