@@ -60,18 +60,22 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   const coOrganizerCategories = [
     {
       title: "Intergovernmental Organizations",
+      description: "Leading international bodies shaping global digital policy and infrastructure",
       logos: intergovernmentalLogos
     },
     {
       title: "Standards Development Organizations",
+      description: "Organizations developing technical standards for digital infrastructure",
       logos: standardsLogos
     },
     {
       title: "Open Source Organizations",
+      description: "Communities building open source solutions for digital public infrastructure",
       logos: openSourceLogos
     },
     {
       title: "Other Organizations",
+      description: "Additional partners contributing to digital collaboration",
       logos: otherLogos
     }
   ];
@@ -86,17 +90,23 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="space-y-16">
           {coOrganizerCategories.map((category, index) => (
-            <div key={index} className="card p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">{category.title}</h3>
-              <div className="grid grid-cols-2 gap-4">
+            <div key={index} className="bg-white rounded-lg shadow-lg p-8">
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{category.title}</h3>
+                <p className="text-gray-600">{category.description}</p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 {category.logos.map((logo, logoIndex) => (
-                  <div key={logoIndex} className="flex items-center justify-center h-16 p-2 bg-white rounded-lg">
+                  <div 
+                    key={logoIndex} 
+                    className="flex items-center justify-center h-20 p-4 bg-white rounded-lg border border-gray-100 hover:border-primary-200 transition-colors"
+                  >
                     <img
                       src={logo}
                       alt={`Logo ${logoIndex + 1}`}
-                      className="max-h-full w-auto object-contain filter grayscale"
+                      className="max-h-full w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
                     />
                   </div>
                 ))}
@@ -105,7 +115,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
           ))}
         </div>
 
-        <div className="bg-primary-50 rounded-xl p-8 md:p-12">
+        <div className="bg-primary-50 rounded-xl p-8 md:p-12 mt-16">
           <div className="flex flex-col">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-primary-600 mb-3">Become a Co-Organizer</h3>
