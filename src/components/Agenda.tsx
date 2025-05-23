@@ -56,11 +56,10 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
             <div className="bg-primary-50 rounded-lg p-6">
               <div className="flex items-center mb-4">
                 <Calendar className="h-6 w-6 text-primary-500 mr-3" />
-                <h3 className="text-xl font-semibold text-gray-900">Day 2: Deep Dives</h3>
+                <h3 className="text-xl font-semibold text-gray-900">Day 2: Collaborative Sessions</h3>
               </div>
               <p className="text-gray-700 mb-4 italic">
-                The second day features technical deep dives on credential formats, authentication, standards, platform requirements, and interoperability challenges across various domains.
-                Additional deep-dive sessions will be announced.
+                The second day features collaborative sessions on wallets, credential formats, authentication, standards, platform requirements, and interoperability challenges across various domains. Additional collaborative sessions will be announced.
               </p>
             </div>
           </div>
