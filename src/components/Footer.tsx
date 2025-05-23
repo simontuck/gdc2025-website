@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Register Now</h3>
             <p className="text-gray-300 mb-4">
-              Secure your place at the most inclusive, multistakeholder event shaping the future of secure digital credentials and infrastructure.
+              Secure your seat at the most inclusive, multi stakeholder event shaping the future of wallets, credentials and trusted infrastructure.
             </p>
             <a 
               href="https://lu.ma/gc25?utm_source=gdc-website"
