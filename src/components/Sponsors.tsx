@@ -5,6 +5,7 @@ const Sponsors: React.FC = () => {
     { src: '/Sponsors/google_logo.png', alt: 'Google' },
     { src: '/Sponsors/huawei_logo.png', alt: 'Huawei' },
     { src: '/Sponsors/mastercard_logo..png', alt: 'Mastercard' },
+    { src: '/Sponsors/suisse_farbig_positiv.png', alt: 'Swiss Confederation' },
     { src: '/Sponsors/visa_logo.png', alt: 'Visa' },
   ].sort((a, b) => a.alt.toLowerCase().localeCompare(b.alt.toLowerCase()));
 
