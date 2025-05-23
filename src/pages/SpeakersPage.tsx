@@ -57,7 +57,6 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                 <h3 className="text-2xl leading-6 font-bold text-gray-900 mb-2">
                   {speaker.fullname}
                 </h3>
-                <p className="text-lg text-primary-600 mb-1">{speaker.title}</p>
                 <div className="flex items-center text-md text-gray-600 mb-4">
                   <Building2 className="h-4 w-4 mr-2" />
                   <span>{speaker.organisation}</span>
@@ -138,8 +137,7 @@ const SpeakersPage: React.FC = () => {
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">{speaker.fullname}</h3>
-                    <p className="text-sm text-primary-600 mb-1">{speaker.title}</p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{speaker.fullname}</h3>
                     <div className="flex items-center text-sm text-gray-600 mb-2">
                       <Building2 className="h-4 w-4 mr-1.5 flex-shrink-0" />
                       <span>{speaker.organisation}</span>
