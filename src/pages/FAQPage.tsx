@@ -32,8 +32,8 @@ const FAQPage: React.FC = () => {
       answer: "Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, World Bank Group, European Commission, and many other prominent organizations. Check our Agenda page for the latest speaker lineup."
     },
     {
-      question: "What is the conference code of conduct?",
-      answer: "The sessions of Day 1 are public. On Day 2, Chatham House rules apply unless otherwise announced. Media are welcome but must register in advance by contacting info@globaldigitalcollaboration.org."
+      question: "What does the barcode image in the hero section represent?",
+      answer: "The distinctive barcode pattern visualizes the top 40 countries leading the global open source movement, arranged from west to east. Each bar represents a country's contribution to open source development, with its width corresponding to the relative impact. This unique visualization demonstrates how digital collaboration transcends geographical boundaries and highlights the truly global nature of open source innovation.\n\nIf you'd like to create your own barcode visualization, you can use this tool: "
     }
   ];
 
@@ -74,6 +74,18 @@ const FAQPage: React.FC = () => {
                           lu.ma/gc25
                         </a>
                         . Register with the co-organizer of your choice which will approve your entry. Early registration is recommended as space is limited.
+                      </>
+                    ) : faq.question === "What does the barcode image in the hero section represent?" ? (
+                      <>
+                        {faq.answer}
+                        <a 
+                          href="https://shaheeilyas.com/ow-barcode/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary-600 hover:text-primary-700"
+                        >
+                          shaheeilyas.com/ow-barcode/
+                        </a>
                       </>
                     ) : (
                       faq.answer
