@@ -62,3 +62,5 @@ const AppContent = () => {
     </div>
   );
 };
+
+export default AppContent
