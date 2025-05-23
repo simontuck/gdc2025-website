@@ -23,8 +23,6 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/02_Standard_development_Organisations/etsi.png',
     '/GC25_logos/02_Standard_development_Organisations/fido.png',
     '/GC25_logos/02_Standard_development_Organisations/gp-logo-.jpg',
-    '/GC25_logos/02_Standard_development_Organisations/iec.png',
-    '/GC25_logos/02_Standard_development_Organisations/iso.png',
     '/GC25_logos/02_Standard_development_Organisations/openid_logo.jpg',
     '/GC25_logos/02_Standard_development_Organisations/w3c.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
@@ -35,6 +33,12 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/03_Open_Source_Organisations/LFDT.png',
     '/GC25_logos/03_Open_Source_Organisations/openwallet_logo_color_with_descriptor.webp',
     '/GC25_logos/03_Open_Source_Organisations/tanzania_logo.png',
+  ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+  const internationalLogos = [
+    '/GC25_logos/05_International_Organizations/iec.png',
+    '/GC25_logos/05_International_Organizations/ifrc.png',
+    '/GC25_logos/05_International_Organizations/iso.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   const otherLogos = [
@@ -51,7 +55,6 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/04_Non-Governmental_Organisations/EReg.png',
     '/GC25_logos/04_Non-Governmental_Organisations/fides.png',
     '/GC25_logos/04_Non-Governmental_Organisations/gleif.png',
-    '/GC25_logos/04_Non-Governmental_Organisations/ifrc.png',
     '/GC25_logos/04_Non-Governmental_Organisations/ispirt.png',
     '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
     '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
@@ -72,6 +75,11 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
       title: "Open Source Organizations",
       description: "Communities building open source solutions for digital public infrastructure",
       logos: openSourceLogos
+    },
+    {
+      title: "International Organizations",
+      description: "Global organizations contributing to international collaboration and standardization",
+      logos: internationalLogos
     },
     {
       title: "Other Organizations",
