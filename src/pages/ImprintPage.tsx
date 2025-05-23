@@ -18,8 +18,16 @@ const ImprintPage: React.FC = () => {
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Legal Information</h2>
             <p className="text-gray-700 mb-8">
-              The Swiss Confederation as host is represented by the Federal Office of Justice FOJ. 
-              Trust Square Ecosystems AG acts as a service provider on behalf of the Swiss Confederation.
+              The Swiss Confederation as host is represented by the Federal Office of Justice FOJ.{' '}
+              <a 
+                href="https://www.trustsquare.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-600 hover:text-primary-700"
+              >
+                Trust Square Ecosystem AG
+              </a>{' '}
+              acts as a service provider on behalf of the Swiss Confederation.
             </p>
 
             <div className="border-t border-gray-200 pt-8 mt-8">
