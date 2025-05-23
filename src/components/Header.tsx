@@ -170,5 +170,3 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
     </header>
   );
 };
-
-export default Header;

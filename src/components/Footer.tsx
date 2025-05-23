@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center text-white bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-md transition-colors"
             >
-              Register
+              Register Now
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
@@ -105,5 +105,3 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;
