@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, MessageSquare, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
 
@@ -102,7 +102,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
           </div>
         </div>
 
-        <div className="bg-primary-50 rounded-xl p-8 md:p-12">
+        <div className="bg-primary-50 rounded-xl p-8 md:p-12 mb-8">
           <div className="flex flex-col">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-primary-600 mb-3">Have an idea for the agenda?</h3>
@@ -117,6 +117,28 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
               Submit Your Idea
               <ArrowRight className="ml-2 h-5 w-5" />
             </a>
+          </div>
+        </div>
+
+        <div className="bg-gray-50 rounded-xl p-8 md:p-12">
+          <div className="flex items-start gap-4">
+            <Info className="h-6 w-6 text-primary-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Code of Conduct and Media</h3>
+              <p className="text-gray-700 mb-4">
+                The sessions of Day 1 are public. On Day 2, Chatham House rules apply unless otherwise announced.
+              </p>
+              <p className="text-gray-700">
+                Media are welcome. Please contact{' '}
+                <a 
+                  href="mailto:info@globaldigitalcollaboration.org" 
+                  className="text-primary-600 hover:text-primary-700"
+                >
+                  info@globaldigitalcollaboration.org
+                </a>
+                {' '}for assistance.
+              </p>
+            </div>
           </div>
         </div>
       </div>
