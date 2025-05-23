@@ -19,16 +19,16 @@ const Sponsors: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center max-w-4xl mx-auto">
+        <div className="flex flex-wrap justify-center items-center gap-12 max-w-5xl mx-auto">
           {sponsorLogos.map((logo, index) => (
             <div 
               key={index}
-              className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
+              className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
             >
               <img
                 src={logo.src}
                 alt={logo.alt}
-                className="max-h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                className="h-12 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
               />
             </div>
           ))}
