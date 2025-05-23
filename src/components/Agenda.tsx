@@ -103,9 +103,9 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
         <div className="bg-primary-50 rounded-xl p-8 md:p-12 mb-8">
           <div className="flex flex-col">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-primary-600 mb-3">Shape the Future of Digital Trust</h3>
+              <h3 className="text-2xl font-bold text-primary-600 mb-3">Contribute to the agenda</h3>
               <p className="text-gray-700">
-                The agenda is shaped collaboratively – we welcome your ideas for collaborative sessions, panels, and demos. Share your groundbreaking use case, framework, or perspective on wallets, credentials, and trusted infrastructure.
+                The agenda is shaped collaboratively – we welcome your ideas for collaborative sessions. Ideally, in your session you address with other co-organizers an issue that needs collaboration across regulators, standards developers and coders.
               </p>
             </div>
             <a 
