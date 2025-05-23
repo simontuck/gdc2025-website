@@ -80,7 +80,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     <section id="co-organizers" className="section bg-gray-50">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Co-organizers</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Co-Organizers</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Leading organizations from across the globe working together to shape the future of digital public infrastructure.
           </p>
@@ -108,7 +108,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
         <div className="bg-primary-50 rounded-xl p-8 md:p-12">
           <div className="flex flex-col">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-primary-600 mb-3">Become a Co-organizer</h3>
+              <h3 className="text-2xl font-bold text-primary-600 mb-3">Become a Co-Organizer</h3>
               <p className="text-gray-700">
                 Help shape the future of digital credentials, wallets, and infrastructure. Join our growing community of co-organizers and contribute to this groundbreaking event.
               </p>
@@ -117,7 +117,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
               href="mailto:info@globaldigitalcollaboration.org?subject=GDC25%20Co-organizer%20Application"
               className="btn btn-secondary w-fit flex items-center"
             >
-              Apply as a Co-organizer
+              Apply as a Co-Organizer
               <ArrowRight className="ml-2 h-5 w-5" />
             </a>
           </div>

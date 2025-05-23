@@ -67,10 +67,10 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 onClick={() => handleHashClick('co-organizers')}
                 className="text-gray-700 hover:text-primary-500 transition-colors"
               >
-                Co-organizers
+                Co-Organizers
               </button>
             ) : (
-              <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-organizers</Link>
+              <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
             )}
             <Link to="/agenda" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
             {location.pathname === '/' ? (
@@ -118,10 +118,10 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                   onClick={() => handleHashClick('co-organizers')}
                   className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
                 >
-                  Co-organizers
+                  Co-Organizers
                 </button>
               ) : (
-                <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">Co-organizers</Link>
+                <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">Co-Organizers</Link>
               )}
               <Link 
                 to="/agenda" 
