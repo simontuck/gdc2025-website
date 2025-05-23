@@ -51,7 +51,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Building2 className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Organized by leading Intergovernmental, Standards and Open Source Organizations</span>
+              <span>Organized by leading Intergovernmental, Standards Development and Open Source Organizations</span>
             </div>
           </div>
         </div>
