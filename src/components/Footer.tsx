@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
               <img 
                 src="/logos/Logo_der_Schweizerischen_Eidgenossenschaft.png" 
                 alt="Swiss Confederation" 
-                className="h-16 mt-2 bg-white p-2 rounded"
+                className="h-16 mt-2 bg-black p-2 rounded"
               />
             </div>
           </div>
