@@ -38,6 +38,10 @@ const FAQPage: React.FC = () => {
     {
       question: "What does the barcode image in the hero section represent?",
       answer: "The distinctive barcode pattern visualizes the top 40 countries leading the global open source movement, arranged from west to east. Each bar represents a country's contribution to open source development, with its width corresponding to the relative impact. This unique visualization demonstrates how digital collaboration transcends geographical boundaries and highlights the truly global nature of open source innovation.\n\nIf you'd like to create your own barcode visualization, you can use this tool: "
+    },
+    {
+      question: "Will there be a second conference?",
+      answer: "Yes, the conference shall be held annually."
     }
   ];
 
