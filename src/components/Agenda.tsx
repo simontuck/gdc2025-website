@@ -49,8 +49,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
                 <h3 className="text-xl font-semibold text-gray-900">Day 1: Global Updates</h3>
               </div>
               <p className="text-gray-700 mb-4 italic">
-                The first day focuses on global updates and real-world use cases from around the world, providing a comprehensive overview of the current state of digital public infrastructure.
-                More sessions to be announced.
+                The first day focuses on global updates and real-world use cases from around the world, providing a comprehensive overview of the current state of wallets, credentials and trusted infrastructure. More sessions to be announced.
               </p>
             </div>
 
