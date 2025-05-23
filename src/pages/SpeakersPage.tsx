@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Linkedin, Building2, Link as LinkIcon } from 'lucide-react';
+import { X, Linkedin, Building2 } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
 
 interface Speaker {
@@ -60,7 +60,19 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                 </h3>
                 <div className="flex items-center text-md text-gray-600 mb-4">
                   <Building2 className="h-4 w-4 mr-2" />
-                  <span>{speaker.organisation}</span>
+                  {speaker.organisation_link ? (
+                    <a
+                      href={speaker.organisation_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-primary-600"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {speaker.organisation}
+                    </a>
+                  ) : (
+                    <span>{speaker.organisation}</span>
+                  )}
                 </div>
                 {speaker.headline && (
                   <p className="text-md text-gray-700 mb-4 italic">{speaker.headline}</p>
@@ -68,8 +80,8 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                 <div className="mt-4 prose max-w-none">
                   <p className="text-gray-700 whitespace-pre-line">{speaker.bio}</p>
                 </div>
-                <div className="mt-6 flex gap-4">
-                  {speaker.linkedin && (
+                {speaker.linkedin && (
+                  <div className="mt-6">
                     <a
                       href={speaker.linkedin}
                       target="_blank"
@@ -79,19 +91,8 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                       <Linkedin className="h-5 w-5 mr-2" />
                       View LinkedIn Profile
                     </a>
-                  )}
-                  {speaker.organisation_link && (
-                    <a
-                      href={speaker.organisation_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-primary-600 hover:text-primary-700"
-                    >
-                      <LinkIcon className="h-5 w-5 mr-2" />
-                      Visit Organization Website
-                    </a>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -152,13 +153,25 @@ const SpeakersPage: React.FC = () => {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{speaker.fullname}</h3>
                     <div className="flex items-center text-sm text-gray-600 mb-2">
                       <Building2 className="h-4 w-4 mr-1.5 flex-shrink-0" />
-                      <span>{speaker.organisation}</span>
+                      {speaker.organisation_link ? (
+                        <a
+                          href={speaker.organisation_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-primary-600"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {speaker.organisation}
+                        </a>
+                      ) : (
+                        <span>{speaker.organisation}</span>
+                      )}
                     </div>
                     {speaker.headline && (
                       <p className="text-sm text-gray-700 italic line-clamp-2 mb-2">{speaker.headline}</p>
                     )}
-                    <div className="flex gap-3 mt-2">
-                      {speaker.linkedin && (
+                    {speaker.linkedin && (
+                      <div className="mt-2">
                         <a
                           href={speaker.linkedin}
                           target="_blank"
@@ -168,19 +181,8 @@ const SpeakersPage: React.FC = () => {
                         >
                           <Linkedin className="h-4 w-4" />
                         </a>
-                      )}
-                      {speaker.organisation_link && (
-                        <a
-                          href={speaker.organisation_link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary-600 hover:text-primary-700"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <LinkIcon className="h-4 w-4" />
-                        </a>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
