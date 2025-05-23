@@ -49,7 +49,7 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
               <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                 <div className="mb-6">
                   <img
-                    src={speaker.profile_picture_link || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg'}
+                    src={speaker.profile_picture_link || 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800'}
                     alt={speaker.fullname}
                     className="w-32 h-32 rounded-full mx-auto object-cover"
                   />
@@ -127,11 +127,11 @@ const SpeakersPage: React.FC = () => {
                   className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   onClick={() => setSelectedSpeaker(speaker)}
                 >
-                  <div className="aspect-w-1 aspect-h-1">
+                  <div className="relative pb-[100%]">
                     <img
-                      src={speaker.profile_picture_link || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg'}
+                      src={speaker.profile_picture_link || 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800'}
                       alt={speaker.fullname}
-                      className="w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   </div>
                   <div className="p-4">
