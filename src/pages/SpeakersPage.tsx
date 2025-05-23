@@ -49,7 +49,7 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
               <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                 <div className="mb-6">
                   <img
-                    src={speaker.profile_picture_link || 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800'}
+                    src={speaker.profile_picture_link || '/images/profile-placeholder.svg'}
                     alt={speaker.fullname}
                     className="w-32 h-32 rounded-full mx-auto object-cover"
                   />
@@ -129,7 +129,7 @@ const SpeakersPage: React.FC = () => {
                 >
                   <div className="relative pb-[100%]">
                     <img
-                      src={speaker.profile_picture_link || 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800'}
+                      src={speaker.profile_picture_link || '/images/profile-placeholder.svg'}
                       alt={speaker.fullname}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
