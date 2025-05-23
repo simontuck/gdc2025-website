@@ -110,7 +110,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-primary-600 mb-3">Become a Co-Organizer</h3>
               <p className="text-gray-700">
-                Help shape the future of digital credentials, wallets, and infrastructure. Join our growing community of co-organizers and contribute to this groundbreaking event.
+                Help shape the future of wallets, credentials, wallets, and trusted infrastructure. Join our growing community of co-organizers and contribute to this groundbreaking event.
               </p>
             </div>
             <a 
