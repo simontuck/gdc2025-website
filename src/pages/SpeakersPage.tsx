@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Linkedin, Building2 } from 'lucide-react';
+import { X, Linkedin, Building2, Link as LinkIcon } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
 
 interface Speaker {
@@ -8,6 +8,7 @@ interface Speaker {
   title: string;
   headline: string;
   organisation: string;
+  organisation_link: string;
   bio: string;
   profile_picture_link: string;
   linkedin: string;
@@ -67,8 +68,8 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                 <div className="mt-4 prose max-w-none">
                   <p className="text-gray-700 whitespace-pre-line">{speaker.bio}</p>
                 </div>
-                {speaker.linkedin && (
-                  <div className="mt-6">
+                <div className="mt-6 flex gap-4">
+                  {speaker.linkedin && (
                     <a
                       href={speaker.linkedin}
                       target="_blank"
@@ -78,8 +79,19 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                       <Linkedin className="h-5 w-5 mr-2" />
                       View LinkedIn Profile
                     </a>
-                  </div>
-                )}
+                  )}
+                  {speaker.organisation_link && (
+                    <a
+                      href={speaker.organisation_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-primary-600 hover:text-primary-700"
+                    >
+                      <LinkIcon className="h-5 w-5 mr-2" />
+                      Visit Organization Website
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -145,18 +157,30 @@ const SpeakersPage: React.FC = () => {
                     {speaker.headline && (
                       <p className="text-sm text-gray-700 italic line-clamp-2 mb-2">{speaker.headline}</p>
                     )}
-                    {speaker.linkedin && (
-                      <a
-                        href={speaker.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center mt-2 text-sm text-primary-600 hover:text-primary-700"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Linkedin className="h-4 w-4 mr-1" />
-                        LinkedIn Profile
-                      </a>
-                    )}
+                    <div className="flex gap-3 mt-2">
+                      {speaker.linkedin && (
+                        <a
+                          href={speaker.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary-600 hover:text-primary-700"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Linkedin className="h-4 w-4" />
+                        </a>
+                      )}
+                      {speaker.organisation_link && (
+                        <a
+                          href={speaker.organisation_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary-600 hover:text-primary-700"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <LinkIcon className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
