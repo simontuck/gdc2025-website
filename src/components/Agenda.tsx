@@ -25,7 +25,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Conference Agenda</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            From digital driving licenses to health and education credentials, cross-border trade to organizational trust frameworks, GDC25 tackles the most pressing digital trust challenges. A detailed agenda with additional sessions, speakers, and networking opportunities will be announced soon.
+            From digital driving licenses to health and education credentials, cross-border trade to organizational trust frameworks, GDC25 tackles the most pressing digital trust challenges.
           </p>
           <div className="mt-8">
             <Link 
@@ -37,7 +37,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
             </Link>
           </div>
           <p className="mt-4 text-sm text-gray-500 italic">
-            Note: This is a preliminary agenda and subject to change. Additional sessions, speakers, and detailed timings will be announced as they are confirmed.
+            Note: This is a preliminary agenda and subject to change.
           </p>
         </div>
 
