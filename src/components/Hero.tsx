@@ -20,7 +20,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 text-white/90 drop-shadow">
-            To foster wallets, credentials and trusted infrastructure for the benefit of all humans
+            Uniting the world to shape the future of digital public infrastructure
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -43,7 +43,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
             <div className="flex items-center">
               <MapPin className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Hosted by the Swiss Confederation</span>
+              <span>Hosted by the Swiss Federal Office of Justice</span>
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
@@ -51,7 +51,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Building2 className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Organized by leading Intergovernmental, Standards and Open Source Organizations</span>
+              <span>Co-organized by leading intergovernmental, standards and open source organizations</span>
             </div>
           </div>
         </div>
