@@ -30,7 +30,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               rel="noopener noreferrer"
               className="btn bg-white text-primary-600 hover:bg-gray-100"
             >
-              Register Now
+              Register
             </a>
             <a 
               href="#agenda" 
