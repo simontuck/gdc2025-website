@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
                 Hosted by the Swiss Confederation
               </p>
               <img 
-                src="/logos/Logo_RGB_farbig_EN_negativ.svg" 
+                src="/logos/Wappen_SVG_farbig.svg" 
                 alt="Swiss Confederation" 
                 className="h-16 mt-2 p-2 rounded"
               />
