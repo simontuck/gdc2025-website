@@ -73,7 +73,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
       logos: internationalLogos
     },
     {
-      title: "Standards Development Organizations",
+      title: "Standard Development Organizations",
       description: "Organizations developing technical standards for digital infrastructure",
       logos: standardsLogos
     },
