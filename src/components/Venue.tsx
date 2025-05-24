@@ -87,7 +87,7 @@ const Venue: React.FC = () => {
             </div>
           </div>
 
-          <div className="h-[500px] rounded-lg overflow-hidden shadow-lg">
+          <div className="h-[500px] rounded-lg overflow-hidden shadow-lg relative z-0">
             <MapContainer 
               center={position} 
               zoom={15} 
