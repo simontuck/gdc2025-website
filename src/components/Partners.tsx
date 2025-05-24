@@ -67,6 +67,11 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
       logos: intergovernmentalLogos
     },
     {
+      title: "International Organizations",
+      description: "Global organizations contributing to international collaboration and standardization",
+      logos: internationalLogos
+    },
+    {
       title: "Standards Development Organizations",
       description: "Organizations developing technical standards for digital infrastructure",
       logos: standardsLogos
@@ -75,11 +80,6 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
       title: "Open Source Organizations",
       description: "Communities building open source solutions for digital public infrastructure",
       logos: openSourceLogos
-    },
-    {
-      title: "International Organizations",
-      description: "Global organizations contributing to international collaboration and standardization",
-      logos: internationalLogos
     },
     {
       title: "Other Organizations",
