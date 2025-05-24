@@ -58,6 +58,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/04_Non-Governmental_Organisations/ispirt.png',
     '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
     '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/verifiable.trade.svg',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   const coOrganizerCategories = [
