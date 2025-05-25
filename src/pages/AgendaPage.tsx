@@ -16,30 +16,34 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     { id: '2025-07-02', label: 'Wednesday, July 2' }
   ];
 
-  // Get unique categories from published agenda items
-  const categories = useMemo(() => {
+  // Filter agenda items by day and published status first
+  const dayFilteredItems = useMemo(() => {
     if (!agendaItems) return [];
+    return agendaItems.filter(item => 
+      item.day === selectedDay && 
+      item.ready_to_publish === true
+    );
+  }, [agendaItems, selectedDay]);
+
+  // Get unique categories from the day-filtered items
+  const categories = useMemo(() => {
     const uniqueCategories = Array.from(
       new Set(
-        agendaItems
-          .filter(item => item.ready_to_publish)
+        dayFilteredItems
           .map(item => item.category)
           .filter(Boolean)
       )
     );
     return uniqueCategories.sort();
-  }, [agendaItems]);
+  }, [dayFilteredItems]);
 
-  // Filter agenda items by selected day, category, and published status
+  // Filter items by selected category
   const filteredAgendaItems = useMemo(() => {
-    if (!agendaItems) return [];
-    return agendaItems.filter(item => {
-      const dayMatch = item.day === selectedDay;
-      const categoryMatch = !selectedCategory || item.category === selectedCategory;
-      const isPublished = item.ready_to_publish === true;
-      return dayMatch && categoryMatch && isPublished;
-    });
-  }, [agendaItems, selectedDay, selectedCategory]);
+    if (!dayFilteredItems) return [];
+    return dayFilteredItems.filter(item => 
+      !selectedCategory || item.category === selectedCategory
+    );
+  }, [dayFilteredItems, selectedCategory]);
 
   return (
     <div className="pt-20">
@@ -61,7 +65,10 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
               {days.map((day) => (
                 <button
                   key={day.id}
-                  onClick={() => setSelectedDay(day.id)}
+                  onClick={() => {
+                    setSelectedDay(day.id);
+                    setSelectedCategory(''); // Reset category when changing day
+                  }}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                     selectedDay === day.id
                       ? 'bg-primary-500 text-white'
@@ -74,24 +81,26 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
             </div>
 
             {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category === selectedCategory ? '' : category)}
-                  className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                    category === selectedCategory
-                      ? 'bg-primary-500 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {category}
-                  {category === selectedCategory && (
-                    <X className="h-4 w-4 ml-1.5" />
-                  )}
-                </button>
-              ))}
-            </div>
+            {categories.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category === selectedCategory ? '' : category)}
+                    className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                      category === selectedCategory
+                        ? 'bg-primary-500 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {category}
+                    {category === selectedCategory && (
+                      <X className="h-4 w-4 ml-1.5" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {isLoading ? (
