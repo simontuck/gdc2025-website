@@ -95,7 +95,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Co-Organizers</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Leading organizations from across the globe working together to shape the future of digital public infrastructure, in particular in the realm of secure, interoperable wallets, credentials and trusted infrastructure.
+            Leading organizations from across the globe coming together to shape the future of digital identity, in particular in the realm of secure, interoperable wallets, credentials and trusted infrastructure.
           </p>
         </div>
 
