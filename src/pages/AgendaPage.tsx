@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 interface AgendaPageProps {
   onIdeaClick: () => void;
@@ -8,13 +9,25 @@ interface AgendaPageProps {
 
 const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   const { data: agendaItems, isLoading, error } = useAgenda();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  
   const [selectedDay, setSelectedDay] = useState<string>('2025-07-01');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>(searchParams.get('category') || '');
 
   const days = [
     { id: '2025-07-01', label: 'Tuesday, July 1' },
     { id: '2025-07-02', label: 'Wednesday, July 2' }
   ];
+
+  // Update URL when category changes
+  useEffect(() => {
+    if (selectedCategory) {
+      setSearchParams({ category: selectedCategory });
+    } else {
+      setSearchParams({});
+    }
+  }, [selectedCategory, setSearchParams]);
 
   // Filter agenda items by day and published status first
   const dayFilteredItems = useMemo(() => {
