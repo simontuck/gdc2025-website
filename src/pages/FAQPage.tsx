@@ -41,7 +41,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "Will there be a second conference?",
-      answer: "Yes, the conference shall be held annually."
+      answer: "Yes, the conference will be held annually. Conference co-organizers may change from year to year."
     }
   ];
 
