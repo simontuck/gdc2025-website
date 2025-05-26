@@ -9,7 +9,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "What is the goal of the conference?",
-      answer: "The goal of the conference is to initiate collaboration on specific topics that require the involvement of more than one co-organizer to achieve interoperability. Ideally, sessions will lead to the formation of working groups who continue their collaboration beyond the conference."
+      answer: "The goal of the conference is to initiate collaboration on specific topics that require the involvement of more than one actor or organistion to be succesful. Sessions may inspire continued collaboration beyond the conference."
     },
     {
       question: "How can I register for the conference?",
