@@ -69,7 +69,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-8 md:p-12">
+        <div id="code-of-conduct" className="bg-gray-50 rounded-xl p-8 md:p-12">
           <div className="flex items-start gap-4">
             <Info className="h-6 w-6 text-primary-500 flex-shrink-0 mt-1" />
             <div>

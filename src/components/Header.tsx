@@ -82,15 +82,20 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             ) : (
               <Link to="/#venue" className="text-gray-700 hover:text-primary-500 transition-colors">Venue</Link>
             )}
+            <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
+            <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             {location.pathname === '/' ? (
               <button
-                onClick={() => navigate('/hotels')}
+                onClick={() => handleHashClick('code-of-conduct')}
                 className="text-gray-700 hover:text-primary-500 transition-colors"
-              >Hotels</button>
+              >
+                Code of conduct
+              </button>
             ) : (
-              <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
+              <Link to="/#code-of-conduct" className="text-gray-700 hover:text-primary-500 transition-colors">
+                Code of conduct
+              </Link>
             )}
-            <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <a
               href="https://lu.ma/gc25?utm_source=gdc-website"
               target="_blank"
@@ -163,6 +168,22 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               </Link>
               )}
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
+              {location.pathname === '/' ? (
+                <button
+                  onClick={() => handleHashClick('code-of-conduct')}
+                  className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                >
+                  Code of conduct
+                </button>
+              ) : (
+                <Link 
+                  to="/#code-of-conduct" 
+                  className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Code of conduct
+                </Link>
+              )}
               <a
                 href="https://lu.ma/gc25?utm_source=gdc-website"
                 target="_blank"
