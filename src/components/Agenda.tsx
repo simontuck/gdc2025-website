@@ -75,7 +75,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Code of Conduct and Media</h3>
               <p className="text-gray-700 mb-4">
-                The sessions of Day 1 are public. On Day 2, Chatham House rules apply unless otherwise announced.
+                The sessions of Day 1 are public. On Day 2, <a href="https://www.chathamhouse.org/about-us/chatham-house-rule" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-700">Chatham House rules</a> apply unless otherwise announced.
               </p>
               <p className="text-gray-700">
                 Media are welcome. Please contact{' '}
