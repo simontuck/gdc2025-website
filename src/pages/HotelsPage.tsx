@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building, Star, ExternalLink, Mail, Clock, Car, Train, Wallet as Walk } from 'lucide-react';
+import { Building, Star, ExternalLink, Mail, Clock, Car, Train, Footprints } from 'lucide-react';
 import { useHotels } from '../hooks/useHotels';
 
 const HotelsPage: React.FC = () => {
@@ -72,7 +72,7 @@ const HotelsPage: React.FC = () => {
                         <span>By tram: {hotel.tram_min} minutes</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Walk className="h-4 w-4 text-gray-400" />
+                        <Footprints className="h-4 w-4 text-gray-400" />
                         <span>Walking: {hotel.walk_min} minutes</span>
                       </div>
                     </div>
