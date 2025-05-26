@@ -1,71 +1,9 @@
 import React from 'react';
 import { Building, Star, ExternalLink, Mail } from 'lucide-react';
+import { useHotels } from '../hooks/useHotels';
 
 const HotelsPage: React.FC = () => {
-  const hotels = [
-    {
-      name: "Hotel Intercontinental Geneva",
-      stars: 5,
-      description: "Closest to venue (5 min walk)",
-      price: "From CHF 305",
-      bookUrl: "https://www.ihg.com",
-      emailContact: "Yann.PUNSOLA@ihg.com",
-    },
-    {
-      name: "Hotel President Wilson",
-      stars: 5,
-      description: "Luxury lakeside hotel",
-      price: "From CHF 350",
-      bookUrl: "https://www.hotelpwilson.com",
-      emailContact: "reservation.geneva@hotelpwilson.com",
-    },
-    {
-      name: "Four Seasons Hotel des Bergues",
-      stars: 5,
-      description: "Historic luxury hotel with lake views",
-      price: "From CHF 750",
-      emailContact: "res.geneva@fourseasons.com",
-    },
-    {
-      name: "Hotel d'Angleterre",
-      stars: 5,
-      description: "Boutique luxury hotel on the lake",
-      price: "From CHF 690",
-      emailContact: "reservations@dangleterrehotel.com",
-    },
-    {
-      name: "Hotel N'vY",
-      stars: 4,
-      description: "Modern design hotel",
-      price: "From CHF 280",
-      bookUrl: "https://www.hotelnvygeneva.com",
-      emailContact: "nvy@manotel.com",
-    },
-    {
-      name: "Hotel Royal",
-      stars: 4,
-      description: "Central location near the lake",
-      price: "From CHF 290",
-      bookUrl: "https://www.hotelroyalgeneva.com",
-      emailContact: "royal@manotel.com",
-    },
-    {
-      name: "Hotel Jade",
-      stars: 4,
-      description: "Boutique hotel with zen atmosphere",
-      price: "From CHF 260",
-      bookUrl: "https://www.hoteljade.com",
-      emailContact: "jade@manotel.com",
-    },
-    {
-      name: "Hotel Auteuil",
-      stars: 4,
-      description: "Contemporary business hotel",
-      price: "From CHF 270",
-      bookUrl: "https://www.hotelauteuil.com",
-      emailContact: "auteuil@manotel.com",
-    }
-  ];
+  const { data: hotels, isLoading, error } = useHotels();
 
   return (
     <div className="pt-20">
@@ -87,54 +25,71 @@ const HotelsPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {hotels.map((hotel, index) => (
-              <div key={index} className="bg-white rounded-lg border border-gray-200 p-6 hover:border-primary-300 transition-colors">
-                <div className="p-6">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-lg font-semibold text-gray-900">{hotel.name}</h3>
-                        <div className="flex">
-                          {Array.from({ length: hotel.stars }).map((_, i) => (
-                            <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                          ))}
-                        </div>
-                      </div>
-                      <p className="text-sm text-gray-500 mb-3">{hotel.description}</p>
-                    </div>
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-1 rounded">
-                      {hotel.price}
-                    </span>
-                  </div>
-                  
-                  <div className="mt-4 space-y-2">
-                    {hotel.bookUrl && (
-                      <a 
-                        href={hotel.bookUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center text-primary-600 hover:text-primary-700 text-sm"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Book Online
-                      </a>
-                    )}
-                    
-                    {hotel.emailContact && (
-                      <a 
-                        href={`mailto:${hotel.emailContact}?subject=GDC25%20Hotel%20Booking`} 
-                        className="flex items-center text-primary-600 hover:text-primary-700 text-sm"
-                      >
-                        <Mail className="h-4 w-4 mr-2" />
-                        {hotel.emailContact}
-                      </a>
-                    )}
+          {isLoading ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+            </div>
+          ) : error ? (
+            <div className="bg-red-50 border-l-4 border-red-400 p-4">
+              <div className="flex">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">Error loading hotels</h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    <p>There was an error loading the hotel information. Please try again later.</p>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {hotels?.map((hotel) => (
+                <div key={hotel.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:border-primary-300 transition-colors">
+                  <div className="p-6">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="text-lg font-semibold text-gray-900">{hotel.hotel}</h3>
+                          <div className="flex">
+                            {Array.from({ length: parseInt(hotel.stars) }).map((_, i) => (
+                              <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-500 mb-3">{hotel.notes}</p>
+                      </div>
+                      <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-1 rounded">
+                        {hotel.rate_offer}
+                      </span>
+                    </div>
+                    
+                    <div className="mt-4 space-y-2">
+                      {hotel.url && (
+                        <a 
+                          href={hotel.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center text-primary-600 hover:text-primary-700 text-sm"
+                        >
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Book Online
+                        </a>
+                      )}
+                      
+                      {hotel.contact && (
+                        <a 
+                          href={`mailto:${hotel.contact}?subject=GDC25%20Hotel%20Booking`} 
+                          className="flex items-center text-primary-600 hover:text-primary-700 text-sm"
+                        >
+                          <Mail className="h-4 w-4 mr-2" />
+                          {hotel.contact}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="mt-12 bg-gray-100 rounded-lg p-6 text-center">
             <div className="flex items-center justify-center mb-4">
@@ -144,6 +99,15 @@ const HotelsPage: React.FC = () => {
             <p className="text-gray-700 mb-4">
               Geneva offers a wide range of accommodation options to suit all preferences and budgets. The city's excellent public transport system makes it easy to reach the venue from any location.
             </p>
+            <a 
+              href="https://www.geneve.ch/en/accommodations" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-primary-600 hover:text-primary-700"
+            >
+              <ExternalLink className="h-4 w-4 mr-1" />
+              View more hotels in Geneva
+            </a>
           </div>
         </div>
       </section>
