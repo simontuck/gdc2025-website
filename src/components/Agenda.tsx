@@ -8,7 +8,7 @@ interface AgendaProps {
 
 const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
   return (
-    <section id="agenda" className="section bg-white">
+    <section id="agenda\" className="section bg-white">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Conference Agenda</h2>
