@@ -29,7 +29,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "What topics will be covered at the conference?",
-      answer: "The conference covers a wide range of topics related to digital public infrastructure, including digital wallets, verifiable credentials, trust frameworks, technical standards, and regulatory issues. Key areas include government initiatives, digital identity, health credentials, educational credentials, and cross-border interoperability."
+      answer: "The conference covers a wide range of topics related to digital identity, including wallets, verifiable credentials, trust frameworks, technical standards, and regulatory issues. Key areas include health credentials, educational credentials, and cross-border interoperability."
     },
     {
       question: "Who are the speakers?",
