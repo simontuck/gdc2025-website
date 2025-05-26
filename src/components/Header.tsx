@@ -76,16 +76,6 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
             {location.pathname === '/' ? (
               <button
-                onClick={() => handleHashClick('venue')}
-                className="text-gray-700 hover:text-primary-500 transition-colors"
-              >Venue</button>
-            ) : (
-              <Link to="/#venue" className="text-gray-700 hover:text-primary-500 transition-colors">Venue</Link>
-            )}
-            <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
-            <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
-            {location.pathname === '/' ? (
-              <button
                 onClick={() => handleHashClick('code-of-conduct')}
                 className="text-gray-700 hover:text-primary-500 transition-colors"
               >
@@ -96,6 +86,16 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 Code of conduct
               </Link>
             )}
+            {location.pathname === '/' ? (
+              <button
+                onClick={() => handleHashClick('venue')}
+                className="text-gray-700 hover:text-primary-500 transition-colors"
+              >Venue</button>
+            ) : (
+              <Link to="/#venue" className="text-gray-700 hover:text-primary-500 transition-colors">Venue</Link>
+            )}
+            <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
+            <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <a
               href="https://lu.ma/gc25?utm_source=gdc-website"
               target="_blank"
@@ -145,31 +145,6 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               </Link>
               {location.pathname === '/' ? (
                 <button
-                  onClick={() => handleHashClick('venue')}
-                  className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                >
-                  Venue
-                </button>
-              ) : (
-                <Link to="/#venue" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">Venue</Link>
-              )}
-              {location.pathname === '/' ? (
-                <button
-                  onClick={() => navigate('/hotels')}
-                  className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                >Hotels</button>
-              ) : (
-                <Link 
-                to="/hotels"
-                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Hotels
-              </Link>
-              )}
-              <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
-              {location.pathname === '/' ? (
-                <button
                   onClick={() => handleHashClick('code-of-conduct')}
                   className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
                 >
@@ -184,6 +159,24 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                   Code of conduct
                 </Link>
               )}
+              {location.pathname === '/' ? (
+                <button
+                  onClick={() => handleHashClick('venue')}
+                  className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                >
+                  Venue
+                </button>
+              ) : (
+                <Link to="/#venue" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">Venue</Link>
+              )}
+              <Link 
+                to="/hotels"
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Hotels
+              </Link>
+              <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
               <a
                 href="https://lu.ma/gc25?utm_source=gdc-website"
                 target="_blank"
