@@ -21,7 +21,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "How can I become a co-organizer?",
-      answer: "Organizations interested in becoming co-organizers can apply by sending an email to info@globaldigitalcollaboration.org with the subject 'GDC25 Co-organizer Application'. We welcome organizations from intergovernmental, standards development, open source, and other relevant sectors who want to engage in collaboration with other co-organizer."
+      answer: "Organizations interested in becoming co-organizers can apply by sending an email to "
     },
     {
       question: "Can I submit an idea for the agenda?",
@@ -82,6 +82,17 @@ const FAQPage: React.FC = () => {
                           lu.ma/gc25
                         </a>
                         . Register with the co-organizer of your choice which will approve your entry. Early registration is recommended as space is limited.
+                      </>
+                    ) : faq.question === "How can I become a co-organizer?" ? (
+                      <>
+                        Organizations interested in becoming co-organizers can apply by sending an email to{' '}
+                        <a 
+                          href="mailto:info@globaldigitalcollaboration.org"
+                          className="text-primary-600 hover:text-primary-700"
+                        >
+                          info@globaldigitalcollaboration.org
+                        </a>
+                        {' '}with the subject 'GDC25 Co-organizer Application'. We welcome organizations from intergovernmental, standards development, open source, and other relevant sectors who want to engage in collaboration with other co-organizers.
                       </>
                     ) : faq.question === "What does the barcode image in the hero section represent?" ? (
                       <>
