@@ -12,7 +12,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   
-  const [selectedDay, setSelectedDay] = useState<string>('2025-07-01');
+  const [selectedDay, setSelectedDay] = useState<string>(searchParams.get('day') || '2025-07-01');
   const [selectedCategory, setSelectedCategory] = useState<string>(searchParams.get('category') || '');
 
   const days = [
@@ -20,14 +20,17 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     { id: '2025-07-02', label: 'Wednesday, July 2' }
   ];
 
-  // Update URL when category changes
+  // Update URL when filters change
   useEffect(() => {
+    const params = new URLSearchParams();
     if (selectedCategory) {
-      setSearchParams({ category: selectedCategory });
-    } else {
-      setSearchParams({});
+      params.set('category', selectedCategory);
     }
-  }, [selectedCategory, setSearchParams]);
+    if (selectedDay) {
+      params.set('day', selectedDay);
+    }
+    setSearchParams(params);
+  }, [selectedCategory, selectedDay, setSearchParams]);
 
   // Filter agenda items by day and published status first
   const dayFilteredItems = useMemo(() => {
