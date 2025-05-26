@@ -9,7 +9,8 @@ export function useHotels() {
         .from('hotels')
         .select('*')
         .eq('ready_to_publish', true)
-        .order('sort_order', { ascending: true });
+        .order('sort_order', { ascending: true })
+        .order('hotel', { ascending: true });
 
       if (error) throw error;
       return data;
