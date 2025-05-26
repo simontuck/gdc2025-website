@@ -44,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
             <div className="flex items-center">
               <Building2 className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Organized by leading Intergovernmental, Standards Development and Open Source Organizations</span>
+              <span>Organized by 40 leading Intergovernmental, Standard Development, and Open Source Organizations</span>
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
