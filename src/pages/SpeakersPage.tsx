@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Linkedin, Building2, ExternalLink } from 'lucide-react';
+import { X, Linkedin, Building2 } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
 import { useSearchParams } from 'react-router-dom';
 
@@ -187,7 +187,7 @@ const SpeakersPage: React.FC = () => {
                           className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <ExternalLink className="h-4 w-4 mr-1.5" />
+                          <Building2 className="h-4 w-4 mr-1.5" />
                           www
                         </a>
                       )}
