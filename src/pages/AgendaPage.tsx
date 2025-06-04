@@ -67,7 +67,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Conference Agenda</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            Two days of intensive collaboration, knowledge sharing, and strategic planning for the future of digital public infrastructure.
+            Two days of intensive collaboration, knowledge sharing, and strategic planning for the future of digital public infrastructure. All sessions are conducted in English, with no simultaneous translation provided.
           </p>
         </div>
       </section>
