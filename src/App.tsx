@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
 import PrivacyPage from './pages/PrivacyPage';
+import EventRegistrationTermsPage from './pages/EventRegistrationTermsPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -46,6 +47,7 @@ const AppContent = () => {
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/imprint" element={<ImprintPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/event-registration-terms" element={<EventRegistrationTermsPage />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
