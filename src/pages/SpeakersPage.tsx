@@ -59,41 +59,41 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
                 <h3 className="text-2xl leading-6 font-bold text-gray-900 mb-2">
                   {speaker.fullname}
                 </h3>
-                <div className="flex items-center text-md text-gray-600 mb-4">
-                  <Building2 className="h-4 w-4 mr-2" />
-                  {speaker.organisation_link ? (
+                
+                <div className="flex gap-2 mb-3">
+                  {speaker.organisation_link && (
                     <a
                       href={speaker.organisation_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-primary-600"
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      {speaker.organisation}
+                      <Building2 className="h-4 w-4 mr-1.5" />
+                      www
                     </a>
-                  ) : (
-                    <span>{speaker.organisation}</span>
+                  )}
+                  {speaker.linkedin && (
+                    <a
+                      href={speaker.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Linkedin className="h-4 w-4 mr-1.5" />
+                      LinkedIn
+                    </a>
                   )}
                 </div>
+
+                <p className="text-md text-gray-600 mb-4">{speaker.organisation}</p>
                 {speaker.headline && (
                   <p className="text-md text-gray-700 mb-4 italic">{speaker.headline}</p>
                 )}
                 <div className="mt-4 prose max-w-none">
                   <p className="text-gray-700 whitespace-pre-line">{speaker.bio}</p>
                 </div>
-                {speaker.linkedin && (
-                  <div className="mt-6">
-                    <a
-                      href={speaker.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-primary-600 hover:text-primary-700"
-                    >
-                      <Linkedin className="h-5 w-5 mr-2" />
-                      View LinkedIn Profile
-                    </a>
-                  </div>
-                )}
               </div>
             </div>
           </div>
