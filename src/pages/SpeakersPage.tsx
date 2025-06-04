@@ -187,8 +187,8 @@ const SpeakersPage: React.FC = () => {
                           className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Building2 className="h-4 w-4 mr-1.5" />
-                          Company
+                          <ExternalLink className="h-4 w-4 mr-1.5" />
+                          www
                         </a>
                       )}
                       {speaker.linkedin && (
@@ -196,7 +196,7 @@ const SpeakersPage: React.FC = () => {
                           href={speaker.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Linkedin className="h-4 w-4 mr-1.5" />
