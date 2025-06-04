@@ -29,11 +29,11 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "What topics will be covered at the conference?",
-      answer: "The conference covers a wide range of topics related to public infrastructure, including wallets, verifiable credentials, trust frameworks, technical standards, and regulatory issues. Key areas include wallets, health credentials, educational credentials, and cross-border interoperability."
+      answer: "The conference covers a wide range of topics related to digital identity, including wallets, verifiable credentials, trust frameworks, technical standards, and regulatory issues. Key areas include health credentials, educational credentials, and cross-border interoperability."
     },
     {
       question: "Who are the speakers?",
-      answer: "Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, World Bank Group, European Commission, and many other prominent organizations. Check our Agenda page for the latest speaker lineup."
+      answer: "Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, OECD, World Bank Group, European Commission, and many other prominent organizations. Check our Agenda page for the latest speaker lineup."
     },
     {
       question: "What does the barcode image in the hero section represent?",
@@ -41,7 +41,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "Will there be a second conference?",
-      answer: "Yes, we are planning to make this an annual event, building on the success and learnings from GDC25 to create an ongoing platform for global digital collaboration."
+      answer: "Yes, the conference will be held annually. Conference co-organizers may change from year to year."
     }
   ];
 
