@@ -16,6 +16,10 @@ const FAQPage: React.FC = () => {
       answer: "You can register for the conference through our official registration platform at "
     },
     {
+      question: "Why is it necessary to register through co-organizers?",
+      answer: "There are two reasons. Firstly, we wanted co-organizers to be the door for people to attend; the conference is free but you should be part of a community. And the second reason is privacy. We don't want every organizer to be forced to share their data with all the other co-organizers."
+    },
+    {
       question: "What hotels are recommended for conference attendees?",
       answer: "We've partnered with several hotels in Geneva, including the Hotel Intercontinental Geneva (closest to venue), Hotel President Wilson, and others. Special conference rates are available when mentioning 'GDC25' during booking. Visit our Hotels page for the complete list and booking information."
     },
