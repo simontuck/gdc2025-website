@@ -28,7 +28,7 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity\" onClick={onClose}>
+        <div className="fixed inset-0 transition-opacity" onClick={onClose}>
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
@@ -108,7 +108,6 @@ const SpeakersPage: React.FC = () => {
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Handle deep linking on component mount and when speakers data is loaded
   useEffect(() => {
     if (speakers && speakers.length > 0) {
       const speakerParam = searchParams.get('speaker');
@@ -170,6 +169,19 @@ const SpeakersPage: React.FC = () => {
                   className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   onClick={() => handleSpeakerClick(speaker)}
                 >
+                  {speaker.linkedin && (
+                    <div className="absolute top-2 right-2 z-10">
+                      <a
+                        href={speaker.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Linkedin className="h-5 w-5 text-[#0A66C2]" />
+                      </a>
+                    </div>
+                  )}
                   <div className="relative pb-[100%]">
                     <img
                       src={speaker.profile_picture_link || '/images/profile-placeholder.svg'}
@@ -196,20 +208,7 @@ const SpeakersPage: React.FC = () => {
                       )}
                     </div>
                     {speaker.headline && (
-                      <p className="text-sm text-gray-700 italic line-clamp-2 mb-2">{speaker.headline}</p>
-                    )}
-                    {speaker.linkedin && (
-                      <div className="mt-2">
-                        <a
-                          href={speaker.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary-600 hover:text-primary-700"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Linkedin className="h-4 w-4" />
-                        </a>
-                      </div>
+                      <p className="text-sm text-gray-700 italic line-clamp-2">{speaker.headline}</p>
                     )}
                   </div>
                 </div>
