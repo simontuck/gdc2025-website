@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Linkedin, Building2 } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
+import { useSearchParams } from 'react-router-dom';
 
 interface Speaker {
   id: string;
@@ -105,6 +106,33 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
 const SpeakersPage: React.FC = () => {
   const { data: speakers, isLoading, error } = useSpeakers();
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Handle deep linking on component mount and when speakers data is loaded
+  useEffect(() => {
+    if (speakers && speakers.length > 0) {
+      const speakerParam = searchParams.get('speaker');
+      if (speakerParam) {
+        const decodedSpeakerName = decodeURIComponent(speakerParam).toLowerCase();
+        const matchingSpeaker = speakers.find(
+          speaker => speaker.fullname.toLowerCase() === decodedSpeakerName
+        );
+        if (matchingSpeaker) {
+          setSelectedSpeaker(matchingSpeaker);
+        }
+      }
+    }
+  }, [speakers, searchParams]);
+
+  const handleSpeakerClick = (speaker: Speaker) => {
+    setSelectedSpeaker(speaker);
+    setSearchParams({ speaker: encodeURIComponent(speaker.fullname.toLowerCase()) });
+  };
+
+  const handleCloseModal = () => {
+    setSelectedSpeaker(null);
+    setSearchParams({});
+  };
 
   return (
     <div className="pt-20">
@@ -140,7 +168,7 @@ const SpeakersPage: React.FC = () => {
                 <div
                   key={speaker.id}
                   className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                  onClick={() => setSelectedSpeaker(speaker)}
+                  onClick={() => handleSpeakerClick(speaker)}
                 >
                   <div className="relative pb-[100%]">
                     <img
@@ -195,7 +223,7 @@ const SpeakersPage: React.FC = () => {
         <SpeakerModal
           speaker={selectedSpeaker}
           isOpen={!!selectedSpeaker}
-          onClose={() => setSelectedSpeaker(null)}
+          onClose={handleCloseModal}
         />
       )}
     </div>
