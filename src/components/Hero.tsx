@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, MapPin, Users, Building2 } from 'lucide-react';
+import { Calendar, MapPin, Users, Building2, Cross } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface HeroProps {
@@ -51,7 +51,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               <span>Up to 2,000 representatives from the public and private sector</span>
             </div>
             <div className="flex items-center">
-              <MapPin className="h-5 w-5 mr-2 flex-shrink-0" />
+              <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
               <span>Hosted by the Swiss Confederation</span>
             </div>
           </div>
