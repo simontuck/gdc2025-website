@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Linkedin, Building2 } from 'lucide-react';
+import { X, Linkedin, Building2, ExternalLink } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
 import { useSearchParams } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ const SpeakerModal: React.FC<SpeakerModalProps> = ({ speaker, isOpen, onClose })
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity\" onClick={onClose}>
+        <div className="fixed inset-0 transition-opacity" onClick={onClose}>
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
@@ -108,7 +108,6 @@ const SpeakersPage: React.FC = () => {
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Handle deep linking on component mount and when speakers data is loaded
   useEffect(() => {
     if (speakers && speakers.length > 0) {
       const speakerParam = searchParams.get('speaker');
@@ -179,37 +178,35 @@ const SpeakersPage: React.FC = () => {
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{speaker.fullname}</h3>
-                    <div className="flex items-center text-sm text-gray-600 mb-2">
-                      <Building2 className="h-4 w-4 mr-1.5 flex-shrink-0" />
-                      {speaker.organisation_link ? (
+                    <div className="flex gap-2 mb-3">
+                      {speaker.organisation_link && (
                         <a
                           href={speaker.organisation_link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:text-primary-600"
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          {speaker.organisation}
+                          <Building2 className="h-4 w-4 mr-1.5" />
+                          Company
                         </a>
-                      ) : (
-                        <span>{speaker.organisation}</span>
                       )}
-                    </div>
-                    {speaker.headline && (
-                      <p className="text-sm text-gray-700 italic line-clamp-2 mb-2">{speaker.headline}</p>
-                    )}
-                    {speaker.linkedin && (
-                      <div className="mt-2">
+                      {speaker.linkedin && (
                         <a
                           href={speaker.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary-600 hover:text-primary-700"
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Linkedin className="h-4 w-4" />
+                          <Linkedin className="h-4 w-4 mr-1.5" />
+                          LinkedIn
                         </a>
-                      </div>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600">{speaker.organisation}</p>
+                    {speaker.headline && (
+                      <p className="text-sm text-gray-700 italic line-clamp-2 mt-2">{speaker.headline}</p>
                     )}
                   </div>
                 </div>
