@@ -49,7 +49,7 @@ const AppContent = () => {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/event-registration-terms" element={<EventRegistrationTermsPage />} />
         <Route path="/404" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="/404" replace />} />
+        <Route path="*" element={<Navigate to="/404\" replace />} />
       </Routes>
 
       <Footer />
