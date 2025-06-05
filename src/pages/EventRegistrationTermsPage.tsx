@@ -36,8 +36,8 @@ const EventRegistrationTermsPage: React.FC = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Data Controller</h2>
               <p className="text-gray-700 mb-8">
                 The data controller responsible for the processing of your personal data is the Federal Data Protection and Information Commissioner (FDPIC). For any inquiries, please use the contact form at:{' '}
-                <a href="https://www.edoeb.admin.ch/de/kontakt" className="text-primary-600 hover:text-primary-700">
-                  https://www.edoeb.admin.ch/de/kontakt
+                <a href="https://www.edoeb.admin.ch/en/privacy-policy-terms-and-conditions" className="text-primary-600 hover:text-primary-700">
+                  https://www.edoeb.admin.ch/en/privacy-policy-terms-and-conditions
                 </a>
               </p>
 
