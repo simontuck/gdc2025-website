@@ -8,7 +8,7 @@ interface AgendaProps {
 
 const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
   return (
-    <section id="agenda\" className="section bg-white">
+    <section id="agenda" className="section bg-white">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Conference Agenda</h2>
@@ -45,8 +45,11 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
               <Calendar className="h-6 w-6 text-primary-500 mr-3" />
               <h3 className="text-xl font-semibold text-gray-900">Day 2: Collaborative Sessions</h3>
             </div>
-            <p className="text-gray-700 italic">
+            <p className="text-gray-700 italic mb-4">
               The second day features collaborative sessions on wallets, credential formats, authentication, standards, platform requirements, and interoperability challenges across various domains. Additional collaborative sessions will be announced.
+            </p>
+            <p className="text-gray-700 font-medium">
+              The Federal Councillor Beat Jans will close the conference.
             </p>
           </div>
         </div>
