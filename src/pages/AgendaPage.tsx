@@ -193,9 +193,9 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                               {item.category}
                             </span>
                           )}
-                          {item.format && (
+                          {item.format_new && (
                             <span className="inline-block px-3 py-1 text-sm font-medium bg-secondary-100 text-secondary-800 rounded-full">
-                              {item.format}
+                              {item.format_new}
                             </span>
                           )}
                         </div>
