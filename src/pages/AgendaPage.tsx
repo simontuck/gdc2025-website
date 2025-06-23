@@ -61,10 +61,21 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     );
   }, [dayFilteredItems, selectedCategory]);
 
-  // Helper function to parse comma-separated values
-  const parseCommaSeparated = (value: string | null): string[] => {
+  // Helper function to parse comma-separated values or arrays
+  const parseCommaSeparated = (value: string | string[] | null | undefined): string[] => {
     if (!value) return [];
-    return value.split(',').map(item => item.trim()).filter(Boolean);
+    
+    // If it's already an array, process it directly
+    if (Array.isArray(value)) {
+      return value.map(item => String(item).trim()).filter(Boolean);
+    }
+    
+    // If it's a string, split by comma
+    if (typeof value === 'string') {
+      return value.split(',').map(item => item.trim()).filter(Boolean);
+    }
+    
+    return [];
   };
 
   return (
