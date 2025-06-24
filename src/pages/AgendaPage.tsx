@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
@@ -249,6 +249,23 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                           )}
 
+                          {/* Format - formatted as labels with icon */}
+                          {item.format && parseCommaSeparated(item.format).length > 0 && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Presentation className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Format</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {parseCommaSeparated(item.format).map((format, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {format}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
                           {/* Focus Areas */}
                           {item.focus && parseCommaSeparated(item.focus).length > 0 && (
                             <div className="mt-4">
@@ -318,24 +335,19 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                           )}
 
                           {/* Level */}
-                          {item.level && (
+                          {item.level && parseCommaSeparated(item.level).length > 0 && (
                             <div className="mt-4">
                               <div className="flex items-center gap-2 mb-2">
                                 <BarChart3 className="h-4 w-4 text-gray-500" />
                                 <h4 className="text-sm font-medium text-gray-700">Level</h4>
                               </div>
-                              <span className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                {Array.isArray(item.level) ? item.level.join(', ') : item.level}
-                              </span>
-                            </div>
-                          )}
-
-                          {/* Format */}
-                          {item.format && (
-                            <div className="mt-4">
-                              <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
-                                {Array.isArray(item.format) ? item.format.join(', ') : item.format}
-                              </span>
+                              <div className="flex flex-wrap gap-1">
+                                {parseCommaSeparated(item.level).map((level, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {level}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           )}
 
