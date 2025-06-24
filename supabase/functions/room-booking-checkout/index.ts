@@ -158,13 +158,10 @@ Deno.serve(async (req) => {
       priceId = price.id;
     }
 
-    // Determine the email for receipt
-    const receiptEmail = customerEmail || booking.customer_email;
-
     // Create checkout session
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       customer: customer?.id,
-      customer_email: !customer ? receiptEmail : undefined,
+      customer_email: !customer ? (customerEmail || booking.customer_email) : undefined,
       line_items: [
         {
           price: priceId,
@@ -187,7 +184,11 @@ Deno.serve(async (req) => {
     };
 
     // Stripe automatically sends receipts when customer email is available
-    // No need to add receipt_email parameter - it's handled automatically
+    // This happens when either customer or customer_email is provided
+    console.log('Creating checkout session with receipt email capability:', {
+      hasCustomer: !!customer,
+      hasCustomerEmail: !!sessionParams.customer_email
+    });
 
     const session = await stripe.checkout.sessions.create(sessionParams);
 

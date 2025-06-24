@@ -162,24 +162,12 @@ Deno.serve(async (req) => {
       },
     };
 
-    // Add customer information
+    // Add customer information - Stripe automatically sends receipts when customer email is available
     if (customer) {
       sessionParams.customer = customer.id;
     } else if (customerEmail) {
       sessionParams.customer_email = customerEmail;
     }
-
-    // Enable automatic receipt emails by ensuring we have customer email
-    // Stripe automatically sends receipts when a customer email is available
-    if (!customer && customerEmail) {
-      // When customer_email is set, Stripe will automatically send receipts
-      sessionParams.customer_email = customerEmail;
-    }
-
-    // Only add shipping for physical products (skip for digital services)
-    // sessionParams.shipping_address_collection = {
-    //   allowed_countries: ['CH', 'DE', 'FR', 'IT', 'AT', 'US', 'GB', 'CA'],
-    // };
 
     console.log('Creating Stripe checkout session with params:', {
       ...sessionParams,
