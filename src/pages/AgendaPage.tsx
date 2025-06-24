@@ -81,6 +81,14 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     });
   };
 
+  // Handle clicking on a metadata value to add it to filters
+  const handleMetadataClick = (category: keyof ActiveFilters, value: string) => {
+    const currentValues = activeFilters[category];
+    if (!currentValues.includes(value)) {
+      handleFilterChange(category, [...currentValues, value]);
+    }
+  };
+
   // Helper function to parse comma-separated values or arrays
   const parseCommaSeparated = (value: string | string[] | null | undefined): string[] => {
     if (!value) return [];
@@ -130,43 +138,68 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     return null;
   };
 
+  // Helper function to render clickable metadata badges
+  const renderClickableBadge = (value: string, category: keyof ActiveFilters, isActive: boolean = false) => {
+    return (
+      <button
+        key={value}
+        onClick={() => handleMetadataClick(category, value)}
+        className={`inline-block px-2 py-0.5 text-xs rounded border transition-colors cursor-pointer hover:shadow-sm ${
+          isActive 
+            ? 'bg-primary-100 text-primary-800 border-primary-300 hover:bg-primary-200' 
+            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+        }`}
+        title={`Click to filter by ${value}`}
+      >
+        {value}
+      </button>
+    );
+  };
+
   // Helper function to render metadata table
   const renderMetadataTable = (item: any) => {
     const metadata = [
       {
         label: 'Format',
         icon: <Presentation className="h-4 w-4" />,
-        values: parseCommaSeparated(item.format)
+        values: parseCommaSeparated(item.format),
+        category: 'format' as keyof ActiveFilters
       },
       {
         label: 'Goals',
         icon: <Goal className="h-4 w-4" />,
-        values: parseGoals(item.goals)
+        values: parseGoals(item.goals),
+        category: 'goals' as keyof ActiveFilters
       },
       {
         label: 'Focus Areas',
         icon: <Target className="h-4 w-4" />,
-        values: parseCommaSeparated(item.focus)
+        values: parseCommaSeparated(item.focus),
+        category: 'focus' as keyof ActiveFilters
       },
       {
         label: 'Building Blocks',
         icon: <Layers className="h-4 w-4" />,
-        values: parseCommaSeparated(item['building blocks'])
+        values: parseCommaSeparated(item['building blocks']),
+        category: 'building blocks' as keyof ActiveFilters
       },
       {
         label: 'Use Cases',
         icon: <Briefcase className="h-4 w-4" />,
-        values: parseCommaSeparated(item['use-cases'])
+        values: parseCommaSeparated(item['use-cases']),
+        category: 'use-cases' as keyof ActiveFilters
       },
       {
         label: 'Regions',
         icon: <Globe className="h-4 w-4" />,
-        values: parseCommaSeparated(item.regions)
+        values: parseCommaSeparated(item.regions),
+        category: 'regions' as keyof ActiveFilters
       },
       {
         label: 'Level',
         icon: <BarChart3 className="h-4 w-4" />,
-        values: parseCommaSeparated(item.level)
+        values: parseCommaSeparated(item.level),
+        category: 'level' as keyof ActiveFilters
       }
     ].filter(meta => meta.values.length > 0);
 
@@ -182,14 +215,10 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                 <span className="text-sm font-medium">{meta.label}:</span>
               </div>
               <div className="flex flex-wrap gap-1 min-w-0">
-                {meta.values.map((value, valueIdx) => (
-                  <span 
-                    key={valueIdx} 
-                    className="inline-block px-2 py-0.5 text-xs bg-white text-gray-700 rounded border"
-                  >
-                    {value}
-                  </span>
-                ))}
+                {meta.values.map((value, valueIdx) => {
+                  const isActive = activeFilters[meta.category].includes(value);
+                  return renderClickableBadge(value, meta.category, isActive);
+                })}
               </div>
             </div>
           ))}
@@ -240,6 +269,15 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
             onFilterChange={handleFilterChange}
             onClearFilters={handleClearFilters}
           />
+
+          {/* Tip for clickable metadata */}
+          {Object.values(activeFilters).some(v => v.length > 0) === false && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-sm text-blue-800">
+                💡 <strong>Tip:</strong> Click on any metadata badge (like format, focus areas, etc.) in the agenda items below to quickly filter by that value.
+              </p>
+            </div>
+          )}
 
           {isLoading ? (
             <div className="flex justify-center items-center min-h-[200px]">
@@ -300,7 +338,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                           )}
 
-                          {/* Compact metadata table */}
+                          {/* Compact metadata table with clickable badges */}
                           {renderMetadataTable(item)}
 
                           {/* Organizers - using the new logic */}
