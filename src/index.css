@@ -57,6 +57,15 @@
     background: white !important;
   }
 
+  /* Hide header and footer */
+  header {
+    display: none !important;
+  }
+
+  footer {
+    display: none !important;
+  }
+
   /* Hide elements that shouldn't be printed */
   .print\:hidden {
     display: none !important;
@@ -186,5 +195,10 @@
     break-inside: avoid;
     page-break-inside: avoid;
     margin-bottom: 1.5rem;
+  }
+
+  /* Remove top padding from main content when header is hidden */
+  .pt-20 {
+    padding-top: 0 !important;
   }
 }
