@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
+import AgendaFilters from '../components/AgendaFilters';
 
 interface AgendaPageProps {
   onIdeaClick: () => void;
@@ -14,6 +16,18 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   
   const [selectedDay, setSelectedDay] = useState<string>(searchParams.get('day') || '2025-07-01');
   const [selectedCategory, setSelectedCategory] = useState<string>(searchParams.get('category') || '');
+  
+  // Initialize active filters
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
+    'use-cases': '',
+    focus: '',
+    level: '',
+    goals: '',
+    regions: '',
+    'co-organizer': '',
+    'building blocks': '',
+    format: ''
+  });
 
   const days = [
     { id: '2025-07-01', label: 'Tuesday, July 1' },
@@ -53,13 +67,42 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     return uniqueCategories.sort();
   }, [dayFilteredItems]);
 
-  // Filter items by selected category
-  const filteredAgendaItems = useMemo(() => {
-    if (!dayFilteredItems) return [];
+  // Use the filtering hook
+  const { filterOptions, filterAgendaItems } = useAgendaFilters(dayFilteredItems);
+
+  // Apply category filter first, then custom filters
+  const categoryFilteredItems = useMemo(() => {
     return dayFilteredItems.filter(item => 
       !selectedCategory || item.category === selectedCategory
     );
   }, [dayFilteredItems, selectedCategory]);
+
+  // Apply custom filters
+  const filteredAgendaItems = useMemo(() => {
+    return filterAgendaItems(categoryFilteredItems, activeFilters);
+  }, [categoryFilteredItems, activeFilters, filterAgendaItems]);
+
+  // Handle filter changes
+  const handleFilterChange = (category: keyof ActiveFilters, value: string) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [category]: value
+    }));
+  };
+
+  // Clear all filters
+  const handleClearFilters = () => {
+    setActiveFilters({
+      'use-cases': '',
+      focus: '',
+      level: '',
+      goals: '',
+      regions: '',
+      'co-organizer': '',
+      'building blocks': '',
+      format: ''
+    });
+  };
 
   // Helper function to parse comma-separated values or arrays
   const parseCommaSeparated = (value: string | string[] | null | undefined): string[] => {
@@ -91,9 +134,8 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
 
       <section className="py-16">
         <div className="container">
-          {/* Filters */}
+          {/* Day Filter */}
           <div className="mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:gap-6">
-            {/* Day Filter */}
             <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
               {days.map((day) => (
                 <button
@@ -101,6 +143,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                   onClick={() => {
                     setSelectedDay(day.id);
                     setSelectedCategory(''); // Reset category when changing day
+                    handleClearFilters(); // Clear custom filters when changing day
                   }}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                     selectedDay === day.id
@@ -136,6 +179,14 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
             )}
           </div>
 
+          {/* Advanced Filters */}
+          <AgendaFilters
+            filterOptions={filterOptions}
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+          />
+
           {isLoading ? (
             <div className="flex justify-center items-center min-h-[200px]">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
@@ -156,8 +207,8 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
               <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">No Events Found</h3>
               <p className="text-gray-600">
-                {selectedCategory 
-                  ? `No ${selectedCategory} events scheduled for this day.`
+                {selectedCategory || Object.values(activeFilters).some(v => v)
+                  ? 'No events match the selected filters. Try adjusting your filter criteria.'
                   : 'There are no events scheduled for this day yet. Check back later for updates.'}
               </p>
             </div>
@@ -193,9 +244,9 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                               {item.category}
                             </span>
                           )}
-                          {item.format_new && (
+                          {item.format && (
                             <span className="inline-block px-3 py-1 text-sm font-medium bg-secondary-100 text-secondary-800 rounded-full">
-                              {item.format_new}
+                              {Array.isArray(item.format) ? item.format.join(', ') : item.format}
                             </span>
                           )}
                         </div>
@@ -232,14 +283,14 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                         )}
 
                         {/* Building Blocks */}
-                        {item.building_blocks && parseCommaSeparated(item.building_blocks).length > 0 && (
+                        {item['building blocks'] && parseCommaSeparated(item['building blocks']).length > 0 && (
                           <div className="mt-4">
                             <div className="flex items-center gap-2 mb-2">
                               <Layers className="h-4 w-4 text-gray-500" />
                               <h4 className="text-sm font-medium text-gray-700">Building Blocks</h4>
                             </div>
                             <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item.building_blocks).map((block, idx) => (
+                              {parseCommaSeparated(item['building blocks']).map((block, idx) => (
                                 <span key={idx} className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
                                   {block}
                                 </span>
@@ -266,14 +317,14 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                         )}
 
                         {/* Use Cases */}
-                        {item.use_cases && parseCommaSeparated(item.use_cases).length > 0 && (
+                        {item['use-cases'] && parseCommaSeparated(item['use-cases']).length > 0 && (
                           <div className="mt-4">
                             <div className="flex items-center gap-2 mb-2">
                               <Briefcase className="h-4 w-4 text-gray-500" />
                               <h4 className="text-sm font-medium text-gray-700">Use Cases</h4>
                             </div>
                             <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item.use_cases).map((useCase, idx) => (
+                              {parseCommaSeparated(item['use-cases']).map((useCase, idx) => (
                                 <span key={idx} className="px-2 py-1 text-xs bg-orange-100 text-orange-800 rounded">
                                   {useCase}
                                 </span>
@@ -290,19 +341,21 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                               <h4 className="text-sm font-medium text-gray-700">Level</h4>
                             </div>
                             <span className="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded">
-                              {item.level}
+                              {Array.isArray(item.level) ? item.level.join(', ') : item.level}
                             </span>
                           </div>
                         )}
 
                         {/* Co-organizer */}
-                        {item.co_organizer && (
+                        {item['co-organizer'] && (
                           <div className="mt-4">
                             <div className="flex items-center gap-2 mb-2">
                               <UserCheck className="h-4 w-4 text-gray-500" />
                               <h4 className="text-sm font-medium text-gray-700">Co-organizer</h4>
                             </div>
-                            <p className="text-sm text-gray-600">{item.co_organizer}</p>
+                            <p className="text-sm text-gray-600">
+                              {Array.isArray(item['co-organizer']) ? item['co-organizer'].join(', ') : item['co-organizer']}
+                            </p>
                           </div>
                         )}
 
