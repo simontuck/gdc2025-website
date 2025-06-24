@@ -160,6 +160,7 @@ Deno.serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       customer: customer?.id,
       customer_email: !customer ? (customerEmail || booking.customer_email) : undefined,
+      receipt_email: customerEmail || booking.customer_email, // Add receipt email
       line_items: [
         {
           price: priceId,

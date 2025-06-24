@@ -157,6 +157,7 @@ Deno.serve(async (req) => {
       cancel_url: cancelUrl || `${origin}/payment-cancelled`,
       automatic_tax: { enabled: false },
       billing_address_collection: 'required',
+      receipt_email: customerEmail, // Add receipt email
       metadata: {
         priceId: priceId,
       },
