@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
@@ -16,16 +16,16 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   
   const [selectedDay, setSelectedDay] = useState<string>(searchParams.get('day') || '2025-07-01');
   
-  // Initialize active filters
+  // Initialize active filters with arrays
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
-    'use-cases': '',
-    focus: '',
-    level: '',
-    goals: '',
-    regions: '',
-    'co-organizer': '',
-    'building blocks': '',
-    format: ''
+    'use-cases': [],
+    focus: [],
+    level: [],
+    goals: [],
+    regions: [],
+    'co-organizer': [],
+    'building blocks': [],
+    format: []
   });
 
   const days = [
@@ -60,24 +60,24 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   }, [dayFilteredItems, activeFilters, filterAgendaItems]);
 
   // Handle filter changes
-  const handleFilterChange = (category: keyof ActiveFilters, value: string) => {
+  const handleFilterChange = (category: keyof ActiveFilters, values: string[]) => {
     setActiveFilters(prev => ({
       ...prev,
-      [category]: value
+      [category]: values
     }));
   };
 
   // Clear all filters
   const handleClearFilters = () => {
     setActiveFilters({
-      'use-cases': '',
-      focus: '',
-      level: '',
-      goals: '',
-      regions: '',
-      'co-organizer': '',
-      'building blocks': '',
-      format: ''
+      'use-cases': [],
+      focus: [],
+      level: [],
+      goals: [],
+      regions: [],
+      'co-organizer': [],
+      'building blocks': [],
+      format: []
     });
   };
 
@@ -96,6 +96,14 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     }
     
     return [];
+  };
+
+  // Helper function to parse goals into individual items
+  const parseGoals = (goals: string | null | undefined): string[] => {
+    if (!goals) return [];
+    
+    const goalsString = typeof goals === 'string' ? goals : String(goals);
+    return goalsString.split(/[,\n]/).map(g => g.trim()).filter(Boolean);
   };
 
   return (
@@ -161,7 +169,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
               <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">No Events Found</h3>
               <p className="text-gray-600">
-                {Object.values(activeFilters).some(v => v)
+                {Object.values(activeFilters).some(v => v.length > 0)
                   ? 'No events match the selected filters. Try adjusting your filter criteria.'
                   : 'There are no events scheduled for this day yet. Check back later for updates.'}
               </p>
@@ -211,11 +219,20 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                           </div>
                         )}
 
-                        {/* Goals */}
-                        {item.goals && (
+                        {/* Goals - formatted as labels with icon */}
+                        {item.goals && parseGoals(item.goals).length > 0 && (
                           <div className="mt-4">
-                            <h4 className="text-sm font-medium text-gray-700 mb-2">Goals</h4>
-                            <p className="text-sm text-gray-600">{item.goals}</p>
+                            <div className="flex items-center gap-2 mb-2">
+                              <Goal className="h-4 w-4 text-gray-500" />
+                              <h4 className="text-sm font-medium text-gray-700">Goals</h4>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              {parseGoals(item.goals).map((goal, idx) => (
+                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                  {goal}
+                                </span>
+                              ))}
+                            </div>
                           </div>
                         )}
 

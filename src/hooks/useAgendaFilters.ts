@@ -36,14 +36,14 @@ export interface FilterOptions {
 }
 
 export interface ActiveFilters {
-  'use-cases': string;
-  focus: string;
-  level: string;
-  goals: string;
-  regions: string;
-  'co-organizer': string;
-  'building blocks': string;
-  format: string;
+  'use-cases': string[];
+  focus: string[];
+  level: string[];
+  goals: string[];
+  regions: string[];
+  'co-organizer': string[];
+  'building blocks': string[];
+  format: string[];
 }
 
 // Helper function to parse comma-separated values or arrays
@@ -144,68 +144,69 @@ export function useAgendaFilters(agendaItems: AgendaItem[] | undefined) {
   const filterAgendaItems = (items: AgendaItem[], activeFilters: ActiveFilters): AgendaItem[] => {
     return items.filter(item => {
       // Check use-cases filter
-      if (activeFilters['use-cases']) {
+      if (activeFilters['use-cases'].length > 0) {
         const itemUseCases = parseFilterValues(item['use-cases']);
-        if (!itemUseCases.includes(activeFilters['use-cases'])) {
+        if (!activeFilters['use-cases'].some(filter => itemUseCases.includes(filter))) {
           return false;
         }
       }
 
       // Check focus filter
-      if (activeFilters.focus) {
+      if (activeFilters.focus.length > 0) {
         const itemFocus = parseFilterValues(item.focus);
-        if (!itemFocus.includes(activeFilters.focus)) {
+        if (!activeFilters.focus.some(filter => itemFocus.includes(filter))) {
           return false;
         }
       }
 
       // Check level filter
-      if (activeFilters.level) {
+      if (activeFilters.level.length > 0) {
         const itemLevels = parseFilterValues(item.level);
-        if (!itemLevels.includes(activeFilters.level)) {
+        if (!activeFilters.level.some(filter => itemLevels.includes(filter))) {
           return false;
         }
       }
 
       // Check goals filter - ensure it's a string first
-      if (activeFilters.goals) {
+      if (activeFilters.goals.length > 0) {
         if (!item.goals) {
           return false;
         }
         const goalsString = typeof item.goals === 'string' ? item.goals : String(item.goals);
-        if (!goalsString.toLowerCase().includes(activeFilters.goals.toLowerCase())) {
+        const itemGoals = goalsString.split(/[,\n]/).map(g => g.trim()).filter(Boolean);
+        if (!activeFilters.goals.some(filter => itemGoals.some(goal => goal.toLowerCase().includes(filter.toLowerCase())))) {
           return false;
         }
       }
 
       // Check regions filter
-      if (activeFilters.regions) {
+      if (activeFilters.regions.length > 0) {
         const itemRegions = parseFilterValues(item.regions);
-        if (!itemRegions.includes(activeFilters.regions)) {
+        if (!activeFilters.regions.some(filter => itemRegions.includes(filter))) {
           return false;
         }
       }
 
       // Check co-organizer filter
-      if (activeFilters['co-organizer']) {
+      if (activeFilters['co-organizer'].length > 0) {
         const itemCoOrganizers = parseFilterValues(item['co-organizer']);
-        if (!itemCoOrganizers.includes(activeFilters['co-organizer'])) {
+        if (!activeFilters['co-organizer'].some(filter => itemCoOrganizers.includes(filter))) {
           return false;
         }
       }
 
       // Check building blocks filter
-      if (activeFilters['building blocks']) {
+      if (activeFilters['building blocks'].length > 0) {
         const itemBuildingBlocks = parseFilterValues(item['building blocks']);
-        if (!itemBuildingBlocks.includes(activeFilters['building blocks'])) {
+        if (!activeFilters['building blocks'].some(filter => itemBuildingBlocks.includes(filter))) {
           return false;
         }
       }
 
       // Check format filter
-      if (activeFilters.format) {
+      if (activeFilters.format.length > 0) {
         const itemFormats = parseFilterValues(item.format);
-        if (!itemFormats.includes(activeFilters.format)) {
+        if (!activeFilters.format.some(filter => itemFormats.includes(filter))) {
           return false;
         }
       }
