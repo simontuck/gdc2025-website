@@ -11,6 +11,9 @@ import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
 import PrivacyPage from './pages/PrivacyPage';
 import EventRegistrationTermsPage from './pages/EventRegistrationTermsPage';
+import PaymentPage from './pages/PaymentPage';
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+import PaymentCancelledPage from './pages/PaymentCancelledPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -45,11 +48,14 @@ const AppContent = () => {
         <Route path="/speakers" element={<SpeakersPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/payment-success" element={<PaymentSuccessPage />} />
+        <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
         <Route path="/imprint" element={<ImprintPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/event-registration-terms" element={<EventRegistrationTermsPage />} />
         <Route path="/404" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="/404\" replace />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
 
       <Footer />
