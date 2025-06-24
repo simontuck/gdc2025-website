@@ -5,6 +5,7 @@ import { CheckCircle, ArrowRight, Download, Calendar } from 'lucide-react';
 const PaymentSuccessPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
+  const bookingId = searchParams.get('booking_id');
   const [isLoading, setIsLoading] = useState(true);
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
@@ -16,6 +17,7 @@ const PaymentSuccessPage: React.FC = () => {
       // Mock order details - in reality, fetch from your API
       setOrderDetails({
         sessionId,
+        bookingId,
         productName: 'GC25 Meeting Room',
         amount: '50.00 CHF',
         orderNumber: `GDC25-${Date.now()}`,
@@ -23,7 +25,7 @@ const PaymentSuccessPage: React.FC = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [sessionId]);
+  }, [sessionId, bookingId]);
 
   if (isLoading) {
     return (
@@ -73,6 +75,12 @@ const PaymentSuccessPage: React.FC = () => {
                     <div className="flex justify-between">
                       <span className="text-gray-600">Session ID:</span>
                       <span className="font-mono text-sm">{sessionId}</span>
+                    </div>
+                  )}
+                  {bookingId && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Booking ID:</span>
+                      <span className="font-mono text-sm">{bookingId}</span>
                     </div>
                   )}
                 </div>

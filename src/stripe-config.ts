@@ -9,7 +9,7 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    priceId: 'price_1RdUgqDv9Z2EzZbMgzJKegrA', // Replace with your actual Stripe price ID
+    priceId: 'price_1RdUgqDv9Z2EzZbMgzJKegrA',
     name: 'GC25 Meeting Room',
     description: 'Access to premium meeting room facilities during the Global Digital Collaboration Conference',
     mode: 'payment',
