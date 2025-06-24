@@ -130,6 +130,74 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     return null;
   };
 
+  // Helper function to render metadata table
+  const renderMetadataTable = (item: any) => {
+    const metadata = [
+      {
+        label: 'Format',
+        icon: <Presentation className="h-4 w-4" />,
+        values: parseCommaSeparated(item.format)
+      },
+      {
+        label: 'Goals',
+        icon: <Goal className="h-4 w-4" />,
+        values: parseGoals(item.goals)
+      },
+      {
+        label: 'Focus Areas',
+        icon: <Target className="h-4 w-4" />,
+        values: parseCommaSeparated(item.focus)
+      },
+      {
+        label: 'Building Blocks',
+        icon: <Layers className="h-4 w-4" />,
+        values: parseCommaSeparated(item['building blocks'])
+      },
+      {
+        label: 'Use Cases',
+        icon: <Briefcase className="h-4 w-4" />,
+        values: parseCommaSeparated(item['use-cases'])
+      },
+      {
+        label: 'Regions',
+        icon: <Globe className="h-4 w-4" />,
+        values: parseCommaSeparated(item.regions)
+      },
+      {
+        label: 'Level',
+        icon: <BarChart3 className="h-4 w-4" />,
+        values: parseCommaSeparated(item.level)
+      }
+    ].filter(meta => meta.values.length > 0);
+
+    if (metadata.length === 0) return null;
+
+    return (
+      <div className="mt-4 bg-gray-50 rounded-lg p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {metadata.map((meta, idx) => (
+            <div key={idx} className="flex items-start gap-2">
+              <div className="flex items-center gap-1.5 text-gray-500 min-w-0 flex-shrink-0">
+                {meta.icon}
+                <span className="text-sm font-medium">{meta.label}:</span>
+              </div>
+              <div className="flex flex-wrap gap-1 min-w-0">
+                {meta.values.map((value, valueIdx) => (
+                  <span 
+                    key={valueIdx} 
+                    className="inline-block px-2 py-0.5 text-xs bg-white text-gray-700 rounded border"
+                  >
+                    {value}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16">
@@ -232,124 +300,8 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                           )}
 
-                          {/* Goals - formatted as labels with icon */}
-                          {item.goals && parseGoals(item.goals).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Goal className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Goals</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseGoals(item.goals).map((goal, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {goal}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Format - formatted as labels with icon */}
-                          {item.format && parseCommaSeparated(item.format).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Presentation className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Format</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseCommaSeparated(item.format).map((format, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {format}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Focus Areas */}
-                          {item.focus && parseCommaSeparated(item.focus).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Target className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Focus Areas</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseCommaSeparated(item.focus).map((focus, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {focus}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Building Blocks */}
-                          {item['building blocks'] && parseCommaSeparated(item['building blocks']).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Layers className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Building Blocks</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseCommaSeparated(item['building blocks']).map((block, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {block}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Regions */}
-                          {item.regions && parseCommaSeparated(item.regions).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Globe className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Regions</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseCommaSeparated(item.regions).map((region, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {region}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Use Cases */}
-                          {item['use-cases'] && parseCommaSeparated(item['use-cases']).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Briefcase className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Use Cases</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseCommaSeparated(item['use-cases']).map((useCase, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {useCase}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Level */}
-                          {item.level && parseCommaSeparated(item.level).length > 0 && (
-                            <div className="mt-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <BarChart3 className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Level</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-1">
-                                {parseCommaSeparated(item.level).map((level, idx) => (
-                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                    {level}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+                          {/* Compact metadata table */}
+                          {renderMetadataTable(item)}
 
                           {/* Organizers - using the new logic */}
                           {organizersData && (
