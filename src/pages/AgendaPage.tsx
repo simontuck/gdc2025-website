@@ -199,20 +199,6 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                           </div>
                         )}
                         
-                        {/* Category and Format - all with gray styling */}
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {item.category && (
-                            <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
-                              {item.category}
-                            </span>
-                          )}
-                          {item.format && (
-                            <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
-                              {Array.isArray(item.format) ? item.format.join(', ') : item.format}
-                            </span>
-                          )}
-                        </div>
-                        
                         {item.description && (
                           <div className="mt-4">
                             <p className="text-gray-600 whitespace-pre-line">{item.description}</p>
@@ -327,6 +313,15 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             <p className="text-sm text-gray-600">
                               {Array.isArray(item['co-organizer']) ? item['co-organizer'].join(', ') : item['co-organizer']}
                             </p>
+                          </div>
+                        )}
+
+                        {/* Format */}
+                        {item.format && (
+                          <div className="mt-4">
+                            <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
+                              {Array.isArray(item.format) ? item.format.join(', ') : item.format}
+                            </span>
                           </div>
                         )}
 
