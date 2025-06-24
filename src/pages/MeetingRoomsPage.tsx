@@ -34,7 +34,7 @@ const MeetingRoomsPage: React.FC = () => {
     const fetchAvailability = async () => {
       const availabilityPromises = rooms.map(async (room) => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/room_bookings?room_id=eq.${room.id}&booking_date=eq.${filters.day}&status=in.(pending,confirmed)&select=start_time,end_time`, {
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/room_bookings?room_id=eq.${room.id}&booking_date=eq.${filters.day}&status=eq.confirmed&select=start_time,end_time`, {
             headers: {
               'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
               'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
@@ -82,46 +82,8 @@ const MeetingRoomsPage: React.FC = () => {
     setIsBookingModalOpen(false);
     setBookingSuccess(booking);
     
-    // Create Stripe checkout session for the booking
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/room-booking-checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          bookingId: booking.id,
-          customerEmail: booking.customer_email,
-          customerName: booking.customer_name,
-          successUrl: `${window.location.origin}/payment-success?booking_id=${booking.id}`,
-          cancelUrl: `${window.location.origin}/meeting-rooms?cancelled=${booking.id}`,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create payment session');
-      }
-
-      const { url, testMode } = await response.json();
-      
-      if (url) {
-        // Show test mode indicator if in test mode
-        if (testMode) {
-          console.log('🧪 Test mode: Use test card numbers like 4242424242424242');
-        }
-        
-        // Redirect to Stripe Checkout
-        window.location.href = url;
-      } else {
-        throw new Error('No checkout URL received');
-      }
-    } catch (error: any) {
-      console.error('Payment error:', error);
-      setPaymentError(error.message || 'Failed to create payment session');
-      setBookingSuccess(null);
-    }
+    // The booking is created with 'pending' status and will only be confirmed after payment
+    // No need to handle payment here as it's handled in the BookingModal
   };
 
   const handleCloseModal = () => {
@@ -184,6 +146,11 @@ const MeetingRoomsPage: React.FC = () => {
                 <span>Duration: 30 min - 2 hours</span>
               </div>
             </div>
+            <div className="mt-4 p-3 bg-blue-100 rounded-md">
+              <p className="text-sm text-blue-800 font-medium">
+                ⚠️ Important: Rooms are only reserved after successful payment. Pending bookings without payment will be automatically cancelled.
+              </p>
+            </div>
           </div>
 
           {/* Filters */}
@@ -221,8 +188,8 @@ const MeetingRoomsPage: React.FC = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-green-900">Booking Created Successfully!</h3>
                   <p className="text-green-800">
-                    Your booking for {selectedRoom?.name} has been created. 
-                    You will be redirected to complete the payment.
+                    Your booking for {selectedRoom?.name} has been created and you're being redirected to payment. 
+                    The room will be confirmed once payment is completed.
                   </p>
                 </div>
               </div>
@@ -307,6 +274,7 @@ const MeetingRoomsPage: React.FC = () => {
                   <li>• Maximum booking: 2 hours</li>
                   <li>• Available during conference dates only</li>
                   <li>• Payment required to confirm booking</li>
+                  <li>• Pending bookings expire after 30 minutes</li>
                 </ul>
               </div>
               <div>
