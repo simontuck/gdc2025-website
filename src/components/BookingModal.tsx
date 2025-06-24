@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Calendar, Clock, Users, CreditCard, AlertCircle, Loader2 } from 'lucide-react';
-import { MeetingRoom, useRoomAvailability, useCreateBooking } from '../hooks/useMeetingRooms';
+import { MeetingRoom, useRoomAvailability, useCreateBookingWithPayment } from '../hooks/useMeetingRooms';
 import { 
   generateTimeSlots, 
   getAvailableSlots, 
@@ -36,7 +36,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
     selectedDate
   );
   
-  const createBookingMutation = useCreateBooking();
+  const createBookingMutation = useCreateBookingWithPayment();
 
   const timeSlots = generateTimeSlots(existingBookings);
   const totalAmount = room ? Math.round(room.hourly_rate * duration) : 0;
@@ -67,7 +67,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
     try {
       setError(null);
-      const booking = await createBookingMutation.mutateAsync({
+      const result = await createBookingMutation.mutateAsync({
         room_id: room.id,
         customer_email: customerEmail,
         customer_name: customerName,
@@ -76,7 +76,15 @@ const BookingModal: React.FC<BookingModalProps> = ({
         duration_hours: duration,
       });
 
-      onBookingCreated(booking);
+      // Show test mode indicator if in test mode
+      if (result.testMode) {
+        console.log('🧪 Test mode: Use test card numbers like 4242424242424242');
+      }
+
+      // Redirect to Stripe Checkout
+      window.location.href = result.checkoutUrl;
+      
+      onBookingCreated(result.booking);
     } catch (err: any) {
       setError(err.message || 'Failed to create booking');
     }
@@ -290,6 +298,21 @@ const BookingModal: React.FC<BookingModalProps> = ({
                   </div>
                 </div>
               )}
+
+              {/* Important Notice */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <AlertCircle className="h-5 w-5 text-blue-400 mt-0.5" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-blue-800">Payment Required</h3>
+                    <p className="text-sm text-blue-700 mt-1">
+                      Your room will only be reserved after successful payment. If payment fails or is cancelled, the booking will not be confirmed.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -309,7 +332,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
               {createBookingMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Creating...
+                  Processing...
                 </>
               ) : (
                 <>

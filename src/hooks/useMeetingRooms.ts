@@ -66,7 +66,7 @@ export function useRoomAvailability(roomId: string, date: string) {
         .select('start_time, end_time, duration_hours')
         .eq('room_id', roomId)
         .eq('booking_date', date)
-        .in('status', ['pending', 'confirmed']);
+        .eq('status', 'confirmed'); // Only consider confirmed bookings for availability
 
       if (error) throw error;
       return data;
@@ -75,7 +75,7 @@ export function useRoomAvailability(roomId: string, date: string) {
   });
 }
 
-export function useCreateBooking() {
+export function useCreateBookingWithPayment() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -99,21 +99,55 @@ export function useCreateBooking() {
       // Calculate total amount (hourly rate * duration in hours)
       const total_amount = Math.round(room.hourly_rate * booking.duration_hours);
 
+      // Create booking with 'pending' status - it will only be confirmed after payment
       const { data, error } = await supabase
         .from('room_bookings')
         .insert({
           ...booking,
           end_time,
           total_amount,
+          status: 'pending', // Start as pending until payment is confirmed
         })
         .select()
         .single();
 
       if (error) throw error;
-      return data as RoomBooking;
+
+      // Now create the Stripe checkout session
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/room-booking-checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          bookingId: data.id,
+          customerEmail: booking.customer_email,
+          customerName: booking.customer_name,
+          successUrl: `${window.location.origin}/payment-success?booking_id=${data.id}`,
+          cancelUrl: `${window.location.origin}/payment-cancelled?booking_id=${data.id}`,
+        }),
+      });
+
+      if (!response.ok) {
+        // If payment session creation fails, delete the booking
+        await supabase.from('room_bookings').delete().eq('id', data.id);
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create payment session');
+      }
+
+      const { url, testMode } = await response.json();
+      
+      if (!url) {
+        // If no URL received, delete the booking
+        await supabase.from('room_bookings').delete().eq('id', data.id);
+        throw new Error('No checkout URL received');
+      }
+
+      return { booking: data as RoomBooking, checkoutUrl: url, testMode };
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['room-availability', data.room_id, data.booking_date] });
+      queryClient.invalidateQueries({ queryKey: ['room-availability', data.booking.room_id, data.booking.booking_date] });
       queryClient.invalidateQueries({ queryKey: ['user-bookings'] });
     },
   });
@@ -170,5 +204,23 @@ export function useUserBookings(email: string) {
       return data as RoomBooking[];
     },
     enabled: !!email,
+  });
+}
+
+// Hook to clean up expired pending bookings (optional - could be run periodically)
+export function useCleanupExpiredBookings() {
+  return useMutation({
+    mutationFn: async () => {
+      // Delete pending bookings older than 30 minutes
+      const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+      
+      const { error } = await supabase
+        .from('room_bookings')
+        .delete()
+        .eq('status', 'pending')
+        .lt('created_at', thirtyMinutesAgo);
+
+      if (error) throw error;
+    },
   });
 }
