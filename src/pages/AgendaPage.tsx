@@ -106,6 +106,30 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     return goalsString.split(/[,\n]/).map(g => g.trim()).filter(Boolean);
   };
 
+  // Helper function to get organizers data (prioritize co-organizer over organizers)
+  const getOrganizersData = (item: any): string | null => {
+    // First check if co-organizer field has data (JSONB format)
+    if (item['co-organizer']) {
+      // Handle JSONB data - could be array or object
+      if (Array.isArray(item['co-organizer'])) {
+        return item['co-organizer'].join(', ');
+      } else if (typeof item['co-organizer'] === 'object') {
+        // If it's an object, try to extract meaningful values
+        const values = Object.values(item['co-organizer']).filter(Boolean);
+        return values.length > 0 ? values.join(', ') : null;
+      } else if (typeof item['co-organizer'] === 'string') {
+        return item['co-organizer'];
+      }
+    }
+    
+    // Fallback to organizers field (text format)
+    if (item.organizers && typeof item.organizers === 'string') {
+      return item.organizers;
+    }
+    
+    return null;
+  };
+
   return (
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16">
@@ -176,192 +200,183 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
             </div>
           ) : (
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              {filteredAgendaItems.map((item, index) => (
-                <div key={index} className="border-b border-gray-200 last:border-0">
-                  <div className="p-6 hover:bg-gray-50">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 mt-1">
-                        <Clock className="h-5 w-5 text-primary-400" />
-                      </div>
-                      <div className="ml-4 flex-grow">
-                        <p className="text-sm font-medium text-primary-600">
-                          {item.time}
-                        </p>
-                        <h3 className="text-xl font-semibold text-gray-900 mt-1">
-                          {item.title}
-                        </h3>
-                        
-                        {/* Room information */}
-                        {item.room && (
-                          <div className="flex items-center mt-2 text-gray-600">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            <span className="text-sm">{item.room}</span>
-                          </div>
-                        )}
-                        
-                        {item.description && (
-                          <div className="mt-4">
-                            <p className="text-gray-600 whitespace-pre-line">{item.description}</p>
-                          </div>
-                        )}
+              {filteredAgendaItems.map((item, index) => {
+                const organizersData = getOrganizersData(item);
+                
+                return (
+                  <div key={index} className="border-b border-gray-200 last:border-0">
+                    <div className="p-6 hover:bg-gray-50">
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 mt-1">
+                          <Clock className="h-5 w-5 text-primary-400" />
+                        </div>
+                        <div className="ml-4 flex-grow">
+                          <p className="text-sm font-medium text-primary-600">
+                            {item.time}
+                          </p>
+                          <h3 className="text-xl font-semibold text-gray-900 mt-1">
+                            {item.title}
+                          </h3>
+                          
+                          {/* Room information */}
+                          {item.room && (
+                            <div className="flex items-center mt-2 text-gray-600">
+                              <MapPin className="h-4 w-4 mr-1" />
+                              <span className="text-sm">{item.room}</span>
+                            </div>
+                          )}
+                          
+                          {item.description && (
+                            <div className="mt-4">
+                              <p className="text-gray-600 whitespace-pre-line">{item.description}</p>
+                            </div>
+                          )}
 
-                        {/* Goals - formatted as labels with icon */}
-                        {item.goals && parseGoals(item.goals).length > 0 && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Goal className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Goals</h4>
+                          {/* Goals - formatted as labels with icon */}
+                          {item.goals && parseGoals(item.goals).length > 0 && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Goal className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Goals</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {parseGoals(item.goals).map((goal, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {goal}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-1">
-                              {parseGoals(item.goals).map((goal, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                  {goal}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Focus Areas */}
-                        {item.focus && parseCommaSeparated(item.focus).length > 0 && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Target className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Focus Areas</h4>
+                          {/* Focus Areas */}
+                          {item.focus && parseCommaSeparated(item.focus).length > 0 && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Target className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Focus Areas</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {parseCommaSeparated(item.focus).map((focus, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {focus}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item.focus).map((focus, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                  {focus}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Building Blocks */}
-                        {item['building blocks'] && parseCommaSeparated(item['building blocks']).length > 0 && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Layers className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Building Blocks</h4>
+                          {/* Building Blocks */}
+                          {item['building blocks'] && parseCommaSeparated(item['building blocks']).length > 0 && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Layers className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Building Blocks</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {parseCommaSeparated(item['building blocks']).map((block, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {block}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item['building blocks']).map((block, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                  {block}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Regions */}
-                        {item.regions && parseCommaSeparated(item.regions).length > 0 && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Globe className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Regions</h4>
+                          {/* Regions */}
+                          {item.regions && parseCommaSeparated(item.regions).length > 0 && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Globe className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Regions</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {parseCommaSeparated(item.regions).map((region, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {region}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item.regions).map((region, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                  {region}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Use Cases */}
-                        {item['use-cases'] && parseCommaSeparated(item['use-cases']).length > 0 && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Briefcase className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Use Cases</h4>
+                          {/* Use Cases */}
+                          {item['use-cases'] && parseCommaSeparated(item['use-cases']).length > 0 && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Briefcase className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Use Cases</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {parseCommaSeparated(item['use-cases']).map((useCase, idx) => (
+                                  <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                    {useCase}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item['use-cases']).map((useCase, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                  {useCase}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Level */}
-                        {item.level && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <BarChart3 className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Level</h4>
+                          {/* Level */}
+                          {item.level && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <BarChart3 className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Level</h4>
+                              </div>
+                              <span className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
+                                {Array.isArray(item.level) ? item.level.join(', ') : item.level}
+                              </span>
                             </div>
-                            <span className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                              {Array.isArray(item.level) ? item.level.join(', ') : item.level}
-                            </span>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Co-organizer */}
-                        {item['co-organizer'] && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <UserCheck className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Co-organizer</h4>
+                          {/* Format */}
+                          {item.format && (
+                            <div className="mt-4">
+                              <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
+                                {Array.isArray(item.format) ? item.format.join(', ') : item.format}
+                              </span>
                             </div>
-                            <p className="text-sm text-gray-600">
-                              {Array.isArray(item['co-organizer']) ? item['co-organizer'].join(', ') : item['co-organizer']}
-                            </p>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Format */}
-                        {item.format && (
-                          <div className="mt-4">
-                            <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
-                              {Array.isArray(item.format) ? item.format.join(', ') : item.format}
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Organizers */}
-                        {item.organizers && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Building2 className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Organizers</h4>
+                          {/* Organizers - using the new logic */}
+                          {organizersData && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Building2 className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Organizers</h4>
+                              </div>
+                              <p className="text-sm text-gray-600">{organizersData}</p>
                             </div>
-                            <p className="text-sm text-gray-600">{item.organizers}</p>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Speakers */}
-                        {item.speakers && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Users className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Speakers</h4>
+                          {/* Speakers */}
+                          {item.speakers && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Users className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Speakers</h4>
+                              </div>
+                              <p className="text-sm text-gray-600">{item.speakers}</p>
                             </div>
-                            <p className="text-sm text-gray-600">{item.speakers}</p>
-                          </div>
-                        )}
+                          )}
 
-                        {/* Target Audience */}
-                        {item.target_audience && (
-                          <div className="mt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Users className="h-4 w-4 text-gray-500" />
-                              <h4 className="text-sm font-medium text-gray-700">Target Audience</h4>
+                          {/* Target Audience */}
+                          {item.target_audience && (
+                            <div className="mt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Users className="h-4 w-4 text-gray-500" />
+                                <h4 className="text-sm font-medium text-gray-700">Target Audience</h4>
+                              </div>
+                              <p className="text-sm text-gray-600">{item.target_audience}</p>
                             </div>
-                            <p className="text-sm text-gray-600">{item.target_audience}</p>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
 
