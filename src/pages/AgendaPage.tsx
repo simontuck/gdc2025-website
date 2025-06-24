@@ -270,15 +270,6 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
             onClearFilters={handleClearFilters}
           />
 
-          {/* Tip for clickable metadata */}
-          {Object.values(activeFilters).some(v => v.length > 0) === false && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <p className="text-sm text-blue-800">
-                💡 <strong>Tip:</strong> Click on any metadata badge (like format, focus areas, etc.) in the agenda items below to quickly filter by that value.
-              </p>
-            </div>
-          )}
-
           {isLoading ? (
             <div className="flex justify-center items-center min-h-[200px]">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
