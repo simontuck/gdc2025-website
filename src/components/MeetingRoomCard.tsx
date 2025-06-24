@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Clock, MapPin, Star } from 'lucide-react';
+import { Users, Clock } from 'lucide-react';
 import { MeetingRoom } from '../hooks/useMeetingRooms';
 import { formatPrice } from '../utils/timeSlots';
 
@@ -25,8 +25,7 @@ const MeetingRoomCard: React.FC<MeetingRoomCardProps> = ({ room, onBookNow }) =>
       </div>
       
       <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{room.name}</h3>
-        <p className="text-gray-600 mb-4 line-clamp-2">{room.description}</p>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">{room.name}</h3>
         
         <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
           <div className="flex items-center gap-1">
@@ -35,7 +34,7 @@ const MeetingRoomCard: React.FC<MeetingRoomCardProps> = ({ room, onBookNow }) =>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            <span>30 min - 4 hours</span>
+            <span>30 min - 2 hours</span>
           </div>
         </div>
         
@@ -60,12 +59,7 @@ const MeetingRoomCard: React.FC<MeetingRoomCardProps> = ({ room, onBookNow }) =>
           </div>
         )}
         
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-sm text-green-600">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span>Available</span>
-          </div>
-          
+        <div className="flex items-center justify-end">
           <button
             onClick={() => onBookNow(room)}
             className="btn btn-primary"

@@ -9,9 +9,9 @@ export function generateTimeSlots(
 ): TimeSlot[] {
   const slots: TimeSlot[] = [];
   
-  // Conference hours: 8:00 AM to 6:00 PM, in 30-minute increments
-  for (let hour = 8; hour < 18; hour++) {
-    // Add hour slots (e.g., 8:00, 9:00, etc.)
+  // Conference hours: 9:00 AM to 5:00 PM, in 30-minute increments
+  for (let hour = 9; hour < 17; hour++) {
+    // Add hour slots (e.g., 9:00, 10:00, etc.)
     const hourTime = `${hour.toString().padStart(2, '0')}:00`;
     const hourLabel = formatTime(hourTime);
     
@@ -25,8 +25,8 @@ export function generateTimeSlots(
     
     slots.push({ time: hourTime, label: hourLabel, available: hourAvailable });
     
-    // Add half-hour slots (e.g., 8:30, 9:30, etc.) - but not for the last hour
-    if (hour < 17) {
+    // Add half-hour slots (e.g., 9:30, 10:30, etc.) - but not for the last hour
+    if (hour < 16) {
       const halfHourTime = `${hour.toString().padStart(2, '0')}:30`;
       const halfHourLabel = formatTime(halfHourTime);
       
@@ -53,8 +53,8 @@ export function getAvailableSlots(
   const startMinutes = timeToMinutes(selectedTime);
   const endMinutes = startMinutes + (duration * 60);
   
-  // Check if the booking would extend beyond conference hours (6:00 PM = 18:00)
-  if (endMinutes > timeToMinutes('18:00')) {
+  // Check if the booking would extend beyond conference hours (5:00 PM = 17:00)
+  if (endMinutes > timeToMinutes('17:00')) {
     return false;
   }
   
@@ -104,9 +104,5 @@ export const DURATION_OPTIONS = [
   { value: 0.5, label: '30 minutes' },
   { value: 1, label: '1 hour' },
   { value: 1.5, label: '1.5 hours' },
-  { value: 2, label: '2 hours' },
-  { value: 2.5, label: '2.5 hours' },
-  { value: 3, label: '3 hours' },
-  { value: 3.5, label: '3.5 hours' },
-  { value: 4, label: '4 hours' }
+  { value: 2, label: '2 hours' }
 ];

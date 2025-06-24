@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Users, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, Users, CheckCircle, AlertCircle } from 'lucide-react';
 import { useMeetingRooms, MeetingRoom } from '../hooks/useMeetingRooms';
 import MeetingRoomCard from '../components/MeetingRoomCard';
 import BookingModal from '../components/BookingModal';
@@ -107,11 +107,11 @@ const MeetingRoomsPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 text-blue-800">
                 <Clock className="h-4 w-4" />
-                <span>Hours: 8:00 AM - 6:00 PM</span>
+                <span>Hours: 9:00 AM - 5:00 PM</span>
               </div>
               <div className="flex items-center gap-2 text-blue-800">
                 <Users className="h-4 w-4" />
-                <span>Duration: 30 min - 4 hours</span>
+                <span>Duration: 30 min - 2 hours</span>
               </div>
             </div>
           </div>
@@ -187,7 +187,7 @@ const MeetingRoomsPage: React.FC = () => {
                 <h4 className="font-medium text-gray-900 mb-2">Booking Requirements</h4>
                 <ul className="space-y-1">
                   <li>• Minimum booking: 30 minutes</li>
-                  <li>• Maximum booking: 4 hours</li>
+                  <li>• Maximum booking: 2 hours</li>
                   <li>• Available during conference dates only</li>
                   <li>• Payment required to confirm booking</li>
                 </ul>
