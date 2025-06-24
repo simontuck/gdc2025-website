@@ -25,6 +25,8 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     setIsLoading(true);
 
     try {
+      console.log('Initiating payment for product:', product);
+      
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
         method: 'POST',
         headers: {
@@ -40,22 +42,28 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
         }),
       });
 
+      console.log('Checkout response status:', response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create checkout session');
+        console.error('Checkout error response:', errorData);
+        throw new Error(errorData.error || `HTTP ${response.status}: Failed to create checkout session`);
       }
 
-      const { url } = await response.json();
+      const { url, sessionId } = await response.json();
+      console.log('Checkout session created:', { sessionId, url });
       
       if (url) {
+        onSuccess?.();
         // Redirect to Stripe Checkout
         window.location.href = url;
       } else {
-        throw new Error('No checkout URL received');
+        throw new Error('No checkout URL received from server');
       }
     } catch (error: any) {
       console.error('Payment error:', error);
-      onError?.(error.message || 'Payment failed. Please try again.');
+      const errorMessage = error.message || 'Payment failed. Please try again.';
+      onError?.(errorMessage);
     } finally {
       setIsLoading(false);
     }

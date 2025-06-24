@@ -28,3 +28,21 @@ export const formatPrice = (amount: number, currency: string): string => {
     currency: currency.toUpperCase(),
   }).format(amount / 100);
 };
+
+// Test mode price IDs (these should be created in your Stripe test dashboard)
+export const testProducts: Product[] = [
+  {
+    priceId: 'price_test_meeting_room', // You'll need to create this in Stripe test mode
+    name: 'GC25 Meeting Room (Test)',
+    description: 'Test payment for meeting room access during the Global Digital Collaboration Conference',
+    mode: 'payment',
+    price: 5000, // 50.00 CHF in cents
+    currency: 'chf'
+  }
+];
+
+// Function to get the appropriate products based on environment
+export const getProducts = (): Product[] => {
+  const isTestMode = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.startsWith('pk_test_');
+  return isTestMode ? testProducts : products;
+};

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AlertCircle } from 'lucide-react';
-import { products } from '../stripe-config';
+import { AlertCircle, Info } from 'lucide-react';
+import { getProducts } from '../stripe-config';
 import ProductCard from '../components/ProductCard';
 
 const PaymentPage: React.FC = () => {
@@ -8,6 +8,9 @@ const PaymentPage: React.FC = () => {
   const [customerName, setCustomerName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const products = getProducts();
+  const isTestMode = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.startsWith('pk_test_');
 
   const handlePaymentSuccess = () => {
     setSuccess('Payment initiated successfully! You will be redirected to complete the payment.');
@@ -33,6 +36,21 @@ const PaymentPage: React.FC = () => {
       <section className="py-16">
         <div className="container">
           <div className="max-w-4xl mx-auto">
+            {/* Test Mode Warning */}
+            {isTestMode && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
+                <div className="flex items-center gap-2">
+                  <Info className="h-5 w-5 text-yellow-600" />
+                  <div>
+                    <h3 className="text-sm font-medium text-yellow-800">Test Mode Active</h3>
+                    <p className="text-sm text-yellow-700">
+                      Use test card number <code className="bg-yellow-100 px-1 rounded">4242 4242 4242 4242</code> with any future expiry date and CVC.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Customer Information Form */}
             <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Information</h2>
@@ -74,6 +92,12 @@ const PaymentPage: React.FC = () => {
                   <div>
                     <h3 className="text-sm font-medium text-red-800">Payment Error</h3>
                     <p className="text-sm text-red-700 mt-1">{error}</p>
+                    <button
+                      onClick={() => setError(null)}
+                      className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+                    >
+                      Try again
+                    </button>
                   </div>
                 </div>
               </div>
