@@ -111,7 +111,7 @@ const MeetingRoomsPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 text-blue-800">
                 <Users className="h-4 w-4" />
-                <span>Duration: 1-4 hours</span>
+                <span>Duration: 30 min - 4 hours</span>
               </div>
             </div>
           </div>
@@ -186,7 +186,7 @@ const MeetingRoomsPage: React.FC = () => {
               <div>
                 <h4 className="font-medium text-gray-900 mb-2">Booking Requirements</h4>
                 <ul className="space-y-1">
-                  <li>• Minimum booking: 1 hour</li>
+                  <li>• Minimum booking: 30 minutes</li>
                   <li>• Maximum booking: 4 hours</li>
                   <li>• Available during conference dates only</li>
                   <li>• Payment required to confirm booking</li>

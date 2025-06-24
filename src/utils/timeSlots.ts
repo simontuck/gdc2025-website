@@ -9,21 +9,37 @@ export function generateTimeSlots(
 ): TimeSlot[] {
   const slots: TimeSlot[] = [];
   
-  // Conference hours: 8:00 AM to 6:00 PM
+  // Conference hours: 8:00 AM to 6:00 PM, in 30-minute increments
   for (let hour = 8; hour < 18; hour++) {
-    const time = `${hour.toString().padStart(2, '0')}:00`;
-    const label = formatTime(time);
+    // Add hour slots (e.g., 8:00, 9:00, etc.)
+    const hourTime = `${hour.toString().padStart(2, '0')}:00`;
+    const hourLabel = formatTime(hourTime);
     
-    // Check if this slot conflicts with existing bookings
-    const available = !existingBookings.some(booking => {
+    const hourAvailable = !existingBookings.some(booking => {
       const bookingStart = timeToMinutes(booking.start_time);
       const bookingEnd = timeToMinutes(booking.end_time);
-      const slotTime = timeToMinutes(time);
+      const slotTime = timeToMinutes(hourTime);
       
       return slotTime >= bookingStart && slotTime < bookingEnd;
     });
     
-    slots.push({ time, label, available });
+    slots.push({ time: hourTime, label: hourLabel, available: hourAvailable });
+    
+    // Add half-hour slots (e.g., 8:30, 9:30, etc.) - but not for the last hour
+    if (hour < 17) {
+      const halfHourTime = `${hour.toString().padStart(2, '0')}:30`;
+      const halfHourLabel = formatTime(halfHourTime);
+      
+      const halfHourAvailable = !existingBookings.some(booking => {
+        const bookingStart = timeToMinutes(booking.start_time);
+        const bookingEnd = timeToMinutes(booking.end_time);
+        const slotTime = timeToMinutes(halfHourTime);
+        
+        return slotTime >= bookingStart && slotTime < bookingEnd;
+      });
+      
+      slots.push({ time: halfHourTime, label: halfHourLabel, available: halfHourAvailable });
+    }
   }
   
   return slots;
@@ -72,9 +88,11 @@ export function formatPrice(amount: number, currency: string = 'CHF'): string {
 }
 
 export function calculateEndTime(startTime: string, durationHours: number): string {
-  const startHour = parseInt(startTime.split(':')[0]);
-  const endHour = startHour + durationHours;
-  return `${endHour.toString().padStart(2, '0')}:00`;
+  const startMinutes = timeToMinutes(startTime);
+  const endMinutes = startMinutes + (durationHours * 60);
+  const endHours = Math.floor(endMinutes / 60);
+  const endMins = endMinutes % 60;
+  return `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`;
 }
 
 export const CONFERENCE_DATES = [
@@ -83,8 +101,12 @@ export const CONFERENCE_DATES = [
 ];
 
 export const DURATION_OPTIONS = [
+  { value: 0.5, label: '30 minutes' },
   { value: 1, label: '1 hour' },
+  { value: 1.5, label: '1.5 hours' },
   { value: 2, label: '2 hours' },
+  { value: 2.5, label: '2.5 hours' },
   { value: 3, label: '3 hours' },
+  { value: 3.5, label: '3.5 hours' },
   { value: 4, label: '4 hours' }
 ];

@@ -80,10 +80,12 @@ export function useCreateBooking() {
 
   return useMutation({
     mutationFn: async (booking: BookingRequest) => {
-      // Calculate end time
-      const startHour = parseInt(booking.start_time.split(':')[0]);
-      const endHour = startHour + booking.duration_hours;
-      const end_time = `${endHour.toString().padStart(2, '0')}:00`;
+      // Calculate end time based on duration in hours (including 30-minute increments)
+      const startMinutes = parseInt(booking.start_time.split(':')[0]) * 60 + parseInt(booking.start_time.split(':')[1]);
+      const endMinutes = startMinutes + (booking.duration_hours * 60);
+      const endHours = Math.floor(endMinutes / 60);
+      const endMins = endMinutes % 60;
+      const end_time = `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`;
 
       // Get room details for total calculation
       const { data: room, error: roomError } = await supabase
@@ -94,7 +96,8 @@ export function useCreateBooking() {
 
       if (roomError) throw roomError;
 
-      const total_amount = room.hourly_rate * booking.duration_hours;
+      // Calculate total amount (hourly rate * duration in hours)
+      const total_amount = Math.round(room.hourly_rate * booking.duration_hours);
 
       const { data, error } = await supabase
         .from('room_bookings')

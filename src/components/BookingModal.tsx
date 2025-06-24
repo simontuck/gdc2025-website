@@ -26,7 +26,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState('2025-07-01');
   const [selectedTime, setSelectedTime] = useState('');
-  const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState(0.5); // Default to 30 minutes
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -39,13 +39,13 @@ const BookingModal: React.FC<BookingModalProps> = ({
   const createBookingMutation = useCreateBooking();
 
   const timeSlots = generateTimeSlots(existingBookings);
-  const totalAmount = room ? room.hourly_rate * duration : 0;
+  const totalAmount = room ? Math.round(room.hourly_rate * duration) : 0;
 
   // Reset form when modal opens/closes
   useEffect(() => {
     if (isOpen) {
       setSelectedTime('');
-      setDuration(1);
+      setDuration(0.5); // Reset to 30 minutes
       setError(null);
     }
   }, [isOpen, room]);
@@ -79,6 +79,21 @@ const BookingModal: React.FC<BookingModalProps> = ({
       onBookingCreated(booking);
     } catch (err: any) {
       setError(err.message || 'Failed to create booking');
+    }
+  };
+
+  // Helper function to format duration for display
+  const formatDuration = (hours: number): string => {
+    if (hours < 1) {
+      return `${hours * 60} minutes`;
+    } else if (hours === 1) {
+      return '1 hour';
+    } else if (hours % 1 === 0) {
+      return `${hours} hours`;
+    } else {
+      const wholeHours = Math.floor(hours);
+      const minutes = (hours % 1) * 60;
+      return `${wholeHours} hour${wholeHours > 1 ? 's' : ''} ${minutes} minutes`;
     }
   };
 
@@ -216,7 +231,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                     <span className="ml-2 text-gray-600">Loading availability...</span>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto">
                     {timeSlots.map((slot) => {
                       const isAvailableForDuration = getAvailableSlots(slot.time, duration, existingBookings);
                       const isSelected = selectedTime === slot.time;
@@ -266,7 +281,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Duration:</span>
-                      <span className="font-medium">{duration} hour{duration > 1 ? 's' : ''}</span>
+                      <span className="font-medium">{formatDuration(duration)}</span>
                     </div>
                     <div className="flex justify-between border-t border-gray-200 pt-2 mt-2">
                       <span className="font-medium text-gray-900">Total:</span>

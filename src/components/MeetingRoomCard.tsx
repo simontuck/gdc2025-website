@@ -35,7 +35,7 @@ const MeetingRoomCard: React.FC<MeetingRoomCardProps> = ({ room, onBookNow }) =>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            <span>1-4 hours</span>
+            <span>30 min - 4 hours</span>
           </div>
         </div>
         
