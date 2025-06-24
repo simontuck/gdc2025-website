@@ -169,9 +169,11 @@ Deno.serve(async (req) => {
       sessionParams.customer_email = customerEmail;
     }
 
-    // Only add receipt_email if we have a valid email address
-    if (customerEmail && customerEmail.trim() !== '') {
-      sessionParams.receipt_email = customerEmail;
+    // Enable automatic receipt emails by ensuring we have customer email
+    // Stripe automatically sends receipts when a customer email is available
+    if (!customer && customerEmail) {
+      // When customer_email is set, Stripe will automatically send receipts
+      sessionParams.customer_email = customerEmail;
     }
 
     // Only add shipping for physical products (skip for digital services)
