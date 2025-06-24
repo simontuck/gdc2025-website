@@ -126,7 +126,6 @@ Deno.serve(async (req) => {
         currency: 'chf',
         product_data: {
           name: `[TEST] Meeting Room: ${booking.room.name}`,
-          description: `${booking.duration_hours} hour${booking.duration_hours > 1 ? 's' : ''} on ${booking.booking_date} from ${booking.start_time}`,
           metadata: {
             booking_id: booking.id,
             room_id: booking.room_id,
@@ -145,7 +144,6 @@ Deno.serve(async (req) => {
         currency: 'chf',
         product_data: {
           name: `Meeting Room: ${booking.room.name}`,
-          description: `${booking.duration_hours} hour${booking.duration_hours > 1 ? 's' : ''} on ${booking.booking_date} from ${booking.start_time}`,
           metadata: {
             booking_id: booking.id,
             room_id: booking.room_id,
