@@ -15,7 +15,6 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   const navigate = useNavigate();
   
   const [selectedDay, setSelectedDay] = useState<string>(searchParams.get('day') || '2025-07-01');
-  const [selectedCategory, setSelectedCategory] = useState<string>(searchParams.get('category') || '');
   
   // Initialize active filters
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
@@ -37,14 +36,11 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
   // Update URL when filters change
   useEffect(() => {
     const params = new URLSearchParams();
-    if (selectedCategory) {
-      params.set('category', selectedCategory);
-    }
     if (selectedDay) {
       params.set('day', selectedDay);
     }
     setSearchParams(params);
-  }, [selectedCategory, selectedDay, setSearchParams]);
+  }, [selectedDay, setSearchParams]);
 
   // Filter agenda items by day and published status first
   const dayFilteredItems = useMemo(() => {
@@ -55,32 +51,13 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
     );
   }, [agendaItems, selectedDay]);
 
-  // Get unique categories from the day-filtered items
-  const categories = useMemo(() => {
-    const uniqueCategories = Array.from(
-      new Set(
-        dayFilteredItems
-          .map(item => item.category)
-          .filter(Boolean)
-      )
-    );
-    return uniqueCategories.sort();
-  }, [dayFilteredItems]);
-
   // Use the filtering hook
   const { filterOptions, filterAgendaItems } = useAgendaFilters(dayFilteredItems);
 
-  // Apply category filter first, then custom filters
-  const categoryFilteredItems = useMemo(() => {
-    return dayFilteredItems.filter(item => 
-      !selectedCategory || item.category === selectedCategory
-    );
-  }, [dayFilteredItems, selectedCategory]);
-
   // Apply custom filters
   const filteredAgendaItems = useMemo(() => {
-    return filterAgendaItems(categoryFilteredItems, activeFilters);
-  }, [categoryFilteredItems, activeFilters, filterAgendaItems]);
+    return filterAgendaItems(dayFilteredItems, activeFilters);
+  }, [dayFilteredItems, activeFilters, filterAgendaItems]);
 
   // Handle filter changes
   const handleFilterChange = (category: keyof ActiveFilters, value: string) => {
@@ -142,7 +119,6 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                   key={day.id}
                   onClick={() => {
                     setSelectedDay(day.id);
-                    setSelectedCategory(''); // Reset category when changing day
                     handleClearFilters(); // Clear custom filters when changing day
                   }}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -155,28 +131,6 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                 </button>
               ))}
             </div>
-
-            {/* Category Filter */}
-            {categories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category === selectedCategory ? '' : category)}
-                    className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                      category === selectedCategory
-                        ? 'bg-primary-500 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {category}
-                    {category === selectedCategory && (
-                      <X className="h-4 w-4 ml-1.5" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Advanced Filters */}
@@ -207,7 +161,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
               <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">No Events Found</h3>
               <p className="text-gray-600">
-                {selectedCategory || Object.values(activeFilters).some(v => v)
+                {Object.values(activeFilters).some(v => v)
                   ? 'No events match the selected filters. Try adjusting your filter criteria.'
                   : 'There are no events scheduled for this day yet. Check back later for updates.'}
               </p>
@@ -237,15 +191,15 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                           </div>
                         )}
                         
-                        {/* Category and Format */}
+                        {/* Category and Format - all with gray styling */}
                         <div className="flex flex-wrap gap-2 mt-3">
                           {item.category && (
-                            <span className="inline-block px-3 py-1 text-sm font-medium bg-primary-100 text-primary-800 rounded-full">
+                            <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
                               {item.category}
                             </span>
                           )}
                           {item.format && (
-                            <span className="inline-block px-3 py-1 text-sm font-medium bg-secondary-100 text-secondary-800 rounded-full">
+                            <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
                               {Array.isArray(item.format) ? item.format.join(', ') : item.format}
                             </span>
                           )}
@@ -274,7 +228,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {parseCommaSeparated(item.focus).map((focus, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
                                   {focus}
                                 </span>
                               ))}
@@ -291,7 +245,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {parseCommaSeparated(item['building blocks']).map((block, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
+                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
                                   {block}
                                 </span>
                               ))}
@@ -308,7 +262,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {parseCommaSeparated(item.regions).map((region, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded">
+                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
                                   {region}
                                 </span>
                               ))}
@@ -325,7 +279,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {parseCommaSeparated(item['use-cases']).map((useCase, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-orange-100 text-orange-800 rounded">
+                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
                                   {useCase}
                                 </span>
                               ))}
@@ -340,7 +294,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                               <BarChart3 className="h-4 w-4 text-gray-500" />
                               <h4 className="text-sm font-medium text-gray-700">Level</h4>
                             </div>
-                            <span className="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded">
+                            <span className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
                               {Array.isArray(item.level) ? item.level.join(', ') : item.level}
                             </span>
                           </div>
@@ -389,19 +343,6 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                               <h4 className="text-sm font-medium text-gray-700">Target Audience</h4>
                             </div>
                             <p className="text-sm text-gray-600">{item.target_audience}</p>
-                          </div>
-                        )}
-
-                        {/* Labels */}
-                        {item.labels && parseCommaSeparated(item.labels).length > 0 && (
-                          <div className="mt-4">
-                            <div className="flex flex-wrap gap-1">
-                              {parseCommaSeparated(item.labels).map((label, idx) => (
-                                <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded">
-                                  #{label}
-                                </span>
-                              ))}
-                            </div>
                           </div>
                         )}
                       </div>
