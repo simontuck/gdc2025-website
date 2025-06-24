@@ -278,25 +278,17 @@ const MeetingRoomsPage: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <h4 className="font-medium text-gray-900 mb-2">Cancellation Policy</h4>
-                <ul className="space-y-1">
-                  <li>• Free cancellation up to 24 hours before</li>
-                  <li>• 50% refund for cancellations within 24 hours</li>
-                  <li>• No refund for no-shows</li>
-                  <li>• Contact support for assistance</li>
-                </ul>
+                <h4 className="font-medium text-gray-900 mb-2">Support</h4>
+                <p className="mb-4">
+                  For questions or special requests, contact{' '}
+                  <a 
+                    href="mailto:rooms@globaldigitalcollaboration.org" 
+                    className="text-primary-600 hover:text-primary-700"
+                  >
+                    rooms@globaldigitalcollaboration.org
+                  </a>
+                </p>
               </div>
-            </div>
-            <div className="mt-6 pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-500">
-                For questions or special requests, contact{' '}
-                <a 
-                  href="mailto:rooms@globaldigitalcollaboration.org" 
-                  className="text-primary-600 hover:text-primary-700"
-                >
-                  rooms@globaldigitalcollaboration.org
-                </a>
-              </p>
             </div>
           </div>
         </div>
