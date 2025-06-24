@@ -103,9 +103,14 @@ export function useAgendaFilters(agendaItems: AgendaItem[] | undefined) {
       const levels = parseFilterValues(item.level);
       options.level.push(...levels);
 
-      // Extract goals (split by comma or newline)
-      if (item.goals) {
+      // Extract goals (split by comma or newline) - ensure it's a string first
+      if (item.goals && typeof item.goals === 'string') {
         const goals = item.goals.split(/[,\n]/).map(g => g.trim()).filter(Boolean);
+        options.goals.push(...goals);
+      } else if (item.goals) {
+        // If goals exists but is not a string, convert it to string first
+        const goalsString = String(item.goals);
+        const goals = goalsString.split(/[,\n]/).map(g => g.trim()).filter(Boolean);
         options.goals.push(...goals);
       }
 
@@ -162,9 +167,13 @@ export function useAgendaFilters(agendaItems: AgendaItem[] | undefined) {
         }
       }
 
-      // Check goals filter
+      // Check goals filter - ensure it's a string first
       if (activeFilters.goals) {
-        if (!item.goals || !item.goals.toLowerCase().includes(activeFilters.goals.toLowerCase())) {
+        if (!item.goals) {
+          return false;
+        }
+        const goalsString = typeof item.goals === 'string' ? item.goals : String(item.goals);
+        if (!goalsString.toLowerCase().includes(activeFilters.goals.toLowerCase())) {
           return false;
         }
       }
