@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Calendar, Clock, Users, CheckCircle, AlertCircle } from 'lucide-react';
-import { useMeetingRooms, MeetingRoom } from '../hooks/useMeetingRooms';
+import React, { useState, useEffect } from 'react';
+import { Calendar, Clock, Users, CheckCircle, AlertCircle, Filter } from 'lucide-react';
+import { useMeetingRooms, MeetingRoom, useRoomAvailability } from '../hooks/useMeetingRooms';
+import { useMeetingRoomFilters } from '../hooks/useMeetingRoomFilters';
 import MeetingRoomCard from '../components/MeetingRoomCard';
+import MeetingRoomFilters, { RoomFilters } from '../components/MeetingRoomFilters';
 import BookingModal from '../components/BookingModal';
 
 const MeetingRoomsPage: React.FC = () => {
@@ -10,6 +12,65 @@ const MeetingRoomsPage: React.FC = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState<any>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+  
+  // Filter state
+  const [filters, setFilters] = useState<RoomFilters>({
+    day: '',
+    startTime: '',
+    duration: 0,
+    minCapacity: 0
+  });
+
+  // Fetch availability data for all rooms when filters include day
+  const [roomAvailability, setRoomAvailability] = useState<Record<string, Array<{ start_time: string; end_time: string }>>>({});
+
+  // Fetch availability data when day filter changes
+  useEffect(() => {
+    if (!filters.day || !rooms) {
+      setRoomAvailability({});
+      return;
+    }
+
+    const fetchAvailability = async () => {
+      const availabilityPromises = rooms.map(async (room) => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/room_bookings?room_id=eq.${room.id}&booking_date=eq.${filters.day}&status=in.(pending,confirmed)&select=start_time,end_time`, {
+            headers: {
+              'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+            }
+          });
+          
+          if (response.ok) {
+            const bookings = await response.json();
+            return { roomId: room.id, bookings };
+          }
+          return { roomId: room.id, bookings: [] };
+        } catch (error) {
+          console.error(`Error fetching availability for room ${room.id}:`, error);
+          return { roomId: room.id, bookings: [] };
+        }
+      });
+
+      const results = await Promise.all(availabilityPromises);
+      const availabilityMap: Record<string, Array<{ start_time: string; end_time: string }>> = {};
+      
+      results.forEach(({ roomId, bookings }) => {
+        availabilityMap[roomId] = bookings;
+      });
+      
+      setRoomAvailability(availabilityMap);
+    };
+
+    fetchAvailability();
+  }, [filters.day, rooms]);
+
+  // Apply filters
+  const { filteredRooms, totalRooms, availableRooms } = useMeetingRoomFilters(
+    rooms,
+    filters,
+    roomAvailability
+  );
 
   const handleBookNow = (room: MeetingRoom) => {
     setSelectedRoom(room);
@@ -68,6 +129,15 @@ const MeetingRoomsPage: React.FC = () => {
     setSelectedRoom(null);
   };
 
+  const handleClearFilters = () => {
+    setFilters({
+      day: '',
+      startTime: '',
+      duration: 0,
+      minCapacity: 0
+    });
+  };
+
   return (
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16">
@@ -115,6 +185,32 @@ const MeetingRoomsPage: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Filters */}
+          <MeetingRoomFilters
+            filters={filters}
+            onFiltersChange={setFilters}
+            onClearFilters={handleClearFilters}
+          />
+
+          {/* Results Summary */}
+          {rooms && (
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Filter className="h-4 w-4" />
+                  <span className="text-sm">
+                    Showing {availableRooms} of {totalRooms} rooms
+                  </span>
+                </div>
+                {filters.day && filters.startTime && filters.duration > 0 && (
+                  <div className="text-sm text-green-600 font-medium">
+                    ✓ Filtered for availability
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Success Message */}
           {bookingSuccess && (
@@ -167,9 +263,29 @@ const MeetingRoomsPage: React.FC = () => {
                 </div>
               </div>
             </div>
+          ) : filteredRooms.length === 0 ? (
+            <div className="bg-gray-50 rounded-lg p-8 text-center">
+              <div className="text-gray-400 mb-4">
+                <Calendar className="h-12 w-12 mx-auto" />
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No Rooms Available</h3>
+              <p className="text-gray-600">
+                {rooms && rooms.length > 0
+                  ? 'No rooms match your current filter criteria. Try adjusting your filters or selecting different times.'
+                  : 'There are no meeting rooms available at this time.'}
+              </p>
+              {rooms && rooms.length > 0 && (
+                <button
+                  onClick={handleClearFilters}
+                  className="mt-4 btn btn-secondary"
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {rooms?.map((room) => (
+              {filteredRooms.map((room) => (
                 <MeetingRoomCard
                   key={room.id}
                   room={room}
