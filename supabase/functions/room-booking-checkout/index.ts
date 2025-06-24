@@ -156,11 +156,13 @@ Deno.serve(async (req) => {
       priceId = price.id;
     }
 
+    // Determine the email for receipt
+    const receiptEmail = customerEmail || booking.customer_email;
+
     // Create checkout session
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: Stripe.Checkout.SessionCreateParams = {
       customer: customer?.id,
-      customer_email: !customer ? (customerEmail || booking.customer_email) : undefined,
-      receipt_email: customerEmail || booking.customer_email, // Add receipt email
+      customer_email: !customer ? receiptEmail : undefined,
       line_items: [
         {
           price: priceId,
@@ -180,7 +182,14 @@ Deno.serve(async (req) => {
         duration_hours: booking.duration_hours.toString(),
         test_mode: isTestMode ? 'true' : 'false',
       },
-    });
+    };
+
+    // Only add receipt_email if we have a valid email address
+    if (receiptEmail && receiptEmail.trim() !== '') {
+      sessionParams.receipt_email = receiptEmail;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     // Update booking with Stripe session ID
     await supabase

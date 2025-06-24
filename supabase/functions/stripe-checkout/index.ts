@@ -157,7 +157,6 @@ Deno.serve(async (req) => {
       cancel_url: cancelUrl || `${origin}/payment-cancelled`,
       automatic_tax: { enabled: false },
       billing_address_collection: 'required',
-      receipt_email: customerEmail, // Add receipt email
       metadata: {
         priceId: priceId,
       },
@@ -168,6 +167,11 @@ Deno.serve(async (req) => {
       sessionParams.customer = customer.id;
     } else if (customerEmail) {
       sessionParams.customer_email = customerEmail;
+    }
+
+    // Only add receipt_email if we have a valid email address
+    if (customerEmail && customerEmail.trim() !== '') {
+      sessionParams.receipt_email = customerEmail;
     }
 
     // Only add shipping for physical products (skip for digital services)
