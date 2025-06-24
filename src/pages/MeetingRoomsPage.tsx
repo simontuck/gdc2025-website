@@ -144,7 +144,7 @@ const MeetingRoomsPage: React.FC = () => {
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Meeting Room Booking</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            Book premium meeting rooms during the Global Digital Collaboration Conference. 
+            Book meeting rooms during the Global Digital Collaboration Conference. 
             Available July 1-2, 2025 in Geneva, Switzerland.
           </p>
         </div>
