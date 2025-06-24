@@ -191,6 +191,7 @@ const MeetingRoomsPage: React.FC = () => {
             filters={filters}
             onFiltersChange={setFilters}
             onClearFilters={handleClearFilters}
+            rooms={rooms}
           />
 
           {/* Results Summary */}

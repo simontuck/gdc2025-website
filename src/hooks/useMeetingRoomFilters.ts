@@ -25,10 +25,10 @@ export function useMeetingRoomFilters(
 
     let filteredRooms = [...rooms];
 
-    // Filter by minimum capacity
+    // Filter by exact capacity match (not minimum capacity)
     if (filters.minCapacity > 0) {
       filteredRooms = filteredRooms.filter(room => 
-        room.seating_capacity >= filters.minCapacity
+        room.seating_capacity === filters.minCapacity
       );
     }
 

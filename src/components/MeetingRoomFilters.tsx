@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, X, Calendar, Clock, Users, Timer } from 'lucide-react';
 import { CONFERENCE_DATES, DURATION_OPTIONS, generateTimeSlots } from '../utils/timeSlots';
+import { MeetingRoom } from '../hooks/useMeetingRooms';
 
 export interface RoomFilters {
   day: string;
@@ -13,6 +14,7 @@ interface MeetingRoomFiltersProps {
   filters: RoomFilters;
   onFiltersChange: (filters: RoomFilters) => void;
   onClearFilters: () => void;
+  rooms?: MeetingRoom[];
 }
 
 interface DropdownProps {
@@ -94,7 +96,8 @@ const Dropdown: React.FC<DropdownProps> = ({
 const MeetingRoomFilters: React.FC<MeetingRoomFiltersProps> = ({
   filters,
   onFiltersChange,
-  onClearFilters
+  onClearFilters,
+  rooms
 }) => {
   const hasActiveFilters = filters.day || filters.startTime || filters.duration > 0 || filters.minCapacity > 0;
 
@@ -117,18 +120,24 @@ const MeetingRoomFilters: React.FC<MeetingRoomFiltersProps> = ({
     }))
   ];
 
-  // Capacity options
-  const capacityOptions = [
-    { value: '0', label: 'Any capacity' },
-    { value: '2', label: '2+ people' },
-    { value: '4', label: '4+ people' },
-    { value: '6', label: '6+ people' },
-    { value: '8', label: '8+ people' },
-    { value: '10', label: '10+ people' },
-    { value: '12', label: '12+ people' },
-    { value: '15', label: '15+ people' },
-    { value: '20', label: '20+ people' }
-  ];
+  // Generate capacity options from actual room data
+  const capacityOptions = React.useMemo(() => {
+    if (!rooms || rooms.length === 0) {
+      return [{ value: '0', label: 'Any capacity' }];
+    }
+
+    // Get unique capacity values from rooms and sort them
+    const uniqueCapacities = [...new Set(rooms.map(room => room.seating_capacity))]
+      .sort((a, b) => a - b);
+
+    return [
+      { value: '0', label: 'Any capacity' },
+      ...uniqueCapacities.map(capacity => ({
+        value: capacity.toString(),
+        label: `${capacity} people`
+      }))
+    ];
+  }, [rooms]);
 
   // Day options
   const dayOptions = [
@@ -195,7 +204,7 @@ const MeetingRoomFilters: React.FC<MeetingRoomFiltersProps> = ({
         />
 
         <Dropdown
-          label="Minimum Capacity"
+          label="Capacity"
           value={filters.minCapacity.toString()}
           options={capacityOptions}
           onChange={(value) => handleFilterChange('minCapacity', value)}
@@ -247,7 +256,7 @@ const MeetingRoomFilters: React.FC<MeetingRoomFiltersProps> = ({
             
             {filters.minCapacity > 0 && (
               <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
-                Capacity: {filters.minCapacity}+ people
+                Capacity: {filters.minCapacity} people
                 <button
                   onClick={() => handleFilterChange('minCapacity', '0')}
                   className="ml-1.5 h-3 w-3 rounded-full hover:bg-primary-200 flex items-center justify-center"
