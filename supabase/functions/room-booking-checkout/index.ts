@@ -113,22 +113,50 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Create a dynamic price for this booking
-    const price = await stripe.prices.create({
-      unit_amount: booking.total_amount,
-      currency: 'chf',
-      product_data: {
-        name: `Meeting Room: ${booking.room.name}`,
-        description: `${booking.duration_hours} hour${booking.duration_hours > 1 ? 's' : ''} on ${booking.booking_date} from ${booking.start_time}`,
-        metadata: {
-          booking_id: booking.id,
-          room_id: booking.room_id,
-          booking_date: booking.booking_date,
-          start_time: booking.start_time,
-          duration_hours: booking.duration_hours.toString(),
+    // Check if we're in test mode
+    const isTestMode = stripeSecret.startsWith('sk_test_');
+    
+    let priceId: string;
+    
+    if (isTestMode) {
+      // For test mode, create a dynamic price each time
+      // In production, you might want to use pre-created prices
+      const price = await stripe.prices.create({
+        unit_amount: booking.total_amount,
+        currency: 'chf',
+        product_data: {
+          name: `[TEST] Meeting Room: ${booking.room.name}`,
+          description: `${booking.duration_hours} hour${booking.duration_hours > 1 ? 's' : ''} on ${booking.booking_date} from ${booking.start_time}`,
+          metadata: {
+            booking_id: booking.id,
+            room_id: booking.room_id,
+            booking_date: booking.booking_date,
+            start_time: booking.start_time,
+            duration_hours: booking.duration_hours.toString(),
+            test_mode: 'true',
+          },
         },
-      },
-    });
+      });
+      priceId = price.id;
+    } else {
+      // For production, create dynamic prices as before
+      const price = await stripe.prices.create({
+        unit_amount: booking.total_amount,
+        currency: 'chf',
+        product_data: {
+          name: `Meeting Room: ${booking.room.name}`,
+          description: `${booking.duration_hours} hour${booking.duration_hours > 1 ? 's' : ''} on ${booking.booking_date} from ${booking.start_time}`,
+          metadata: {
+            booking_id: booking.id,
+            room_id: booking.room_id,
+            booking_date: booking.booking_date,
+            start_time: booking.start_time,
+            duration_hours: booking.duration_hours.toString(),
+          },
+        },
+      });
+      priceId = price.id;
+    }
 
     // Create checkout session
     const session = await stripe.checkout.sessions.create({
@@ -136,7 +164,7 @@ Deno.serve(async (req) => {
       customer_email: !customer ? (customerEmail || booking.customer_email) : undefined,
       line_items: [
         {
-          price: price.id,
+          price: priceId,
           quantity: 1,
         },
       ],
@@ -151,6 +179,7 @@ Deno.serve(async (req) => {
         booking_date: booking.booking_date,
         start_time: booking.start_time,
         duration_hours: booking.duration_hours.toString(),
+        test_mode: isTestMode ? 'true' : 'false',
       },
     });
 
@@ -163,7 +192,8 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         sessionId: session.id,
-        url: session.url 
+        url: session.url,
+        testMode: isTestMode
       }),
       { 
         status: 200, 

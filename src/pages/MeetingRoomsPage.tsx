@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Users, MapPin, CheckCircle } from 'lucide-react';
+import { Calendar, Clock, Users, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
 import { useMeetingRooms, MeetingRoom } from '../hooks/useMeetingRooms';
 import MeetingRoomCard from '../components/MeetingRoomCard';
 import BookingModal from '../components/BookingModal';
@@ -9,10 +9,12 @@ const MeetingRoomsPage: React.FC = () => {
   const [selectedRoom, setSelectedRoom] = useState<MeetingRoom | null>(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState<any>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const handleBookNow = (room: MeetingRoom) => {
     setSelectedRoom(room);
     setIsBookingModalOpen(true);
+    setPaymentError(null);
   };
 
   const handleBookingCreated = async (booking: any) => {
@@ -21,41 +23,43 @@ const MeetingRoomsPage: React.FC = () => {
     
     // Create Stripe checkout session for the booking
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/room-booking-checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
-          priceId: 'price_room_booking', // This would be a dynamic price based on the booking
+          bookingId: booking.id,
           customerEmail: booking.customer_email,
           customerName: booking.customer_name,
           successUrl: `${window.location.origin}/payment-success?booking_id=${booking.id}`,
           cancelUrl: `${window.location.origin}/meeting-rooms?cancelled=${booking.id}`,
-          metadata: {
-            booking_id: booking.id,
-            room_name: selectedRoom?.name,
-            booking_date: booking.booking_date,
-            start_time: booking.start_time,
-            duration: booking.duration_hours,
-          },
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create payment session');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create payment session');
       }
 
-      const { url } = await response.json();
+      const { url, testMode } = await response.json();
       
       if (url) {
+        // Show test mode indicator if in test mode
+        if (testMode) {
+          console.log('🧪 Test mode: Use test card numbers like 4242424242424242');
+        }
+        
         // Redirect to Stripe Checkout
         window.location.href = url;
+      } else {
+        throw new Error('No checkout URL received');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Payment error:', error);
-      // Handle payment error - maybe show an error message
+      setPaymentError(error.message || 'Failed to create payment session');
+      setBookingSuccess(null);
     }
   };
 
@@ -78,6 +82,21 @@ const MeetingRoomsPage: React.FC = () => {
 
       <section className="py-16">
         <div className="container">
+          {/* Test Mode Warning */}
+          {import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.startsWith('pk_test_') && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
+              <div className="flex items-center gap-2">
+                <div className="text-yellow-600">🧪</div>
+                <div>
+                  <h3 className="text-sm font-medium text-yellow-800">Test Mode Active</h3>
+                  <p className="text-sm text-yellow-700">
+                    Use test card number <code className="bg-yellow-100 px-1 rounded">4242 4242 4242 4242</code> with any future expiry date and CVC.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Booking Information */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
             <h2 className="text-lg font-semibold text-blue-900 mb-4">Booking Information</h2>
@@ -108,6 +127,25 @@ const MeetingRoomsPage: React.FC = () => {
                     Your booking for {selectedRoom?.name} has been created. 
                     You will be redirected to complete the payment.
                   </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Payment Error Message */}
+          {paymentError && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="h-6 w-6 text-red-500" />
+                <div>
+                  <h3 className="text-lg font-semibold text-red-900">Payment Error</h3>
+                  <p className="text-red-800">{paymentError}</p>
+                  <button
+                    onClick={() => setPaymentError(null)}
+                    className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+                  >
+                    Try again
+                  </button>
                 </div>
               </div>
             </div>
