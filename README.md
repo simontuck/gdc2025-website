@@ -10,6 +10,7 @@ Key features:
 - Venue information and hotel recommendations
 - Registration system integration
 - Co-organizer application process
+- Meeting room booking system with Stripe payments
 
 ## Built With
 
@@ -22,6 +23,7 @@ Key features:
 - [React Query 5.24](https://tanstack.com/query/latest) - Data fetching and caching
 - [Lucide React](https://lucide.dev/) - Icon system
 - [Leaflet](https://leafletjs.com/) - Interactive maps
+- [Stripe](https://stripe.com/) - Payment processing
 
 ## Built by
 
@@ -36,6 +38,7 @@ Trust Square Ecosystem AG on behalf of the Swiss Confederation
 - Node.js 18.x or higher
 - npm 9.x or higher
 - Supabase account for database access
+- Stripe account for payment processing
 
 ### Installation
 
@@ -55,10 +58,13 @@ Trust Square Ecosystem AG on behalf of the Swiss Confederation
    cp .env.example .env
    ```
 
-4. Update the `.env` file with your Supabase credentials:
+4. Update the `.env` file with your credentials:
    ```
    VITE_SUPABASE_URL=your_supabase_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
+   STRIPE_SECRET_KEY=sk_test_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
    ```
 
 5. Start the development server
@@ -70,8 +76,40 @@ Trust Square Ecosystem AG on behalf of the Swiss Confederation
 
 Environment variables required for the project:
 
+**Supabase Configuration:**
 - `VITE_SUPABASE_URL`: Supabase project URL
 - `VITE_SUPABASE_ANON_KEY`: Supabase anonymous key for public access
+
+**Stripe Configuration:**
+- `VITE_STRIPE_PUBLISHABLE_KEY`: Stripe publishable key (starts with pk_test_ for test mode)
+- `STRIPE_SECRET_KEY`: Stripe secret key (starts with sk_test_ for test mode) - Used in Supabase Edge Functions
+- `STRIPE_WEBHOOK_SECRET`: Stripe webhook secret for verifying webhook signatures
+
+### Stripe Setup
+
+1. **Create a Stripe Account**: Sign up at [stripe.com](https://stripe.com)
+
+2. **Get API Keys**: 
+   - Go to Developers → API keys in your Stripe dashboard
+   - Copy the Publishable key and Secret key
+   - For testing, use the test keys (they start with `pk_test_` and `sk_test_`)
+
+3. **Create Products in Stripe**:
+   - Go to Products in your Stripe dashboard
+   - Create a product called "GC25 Meeting Room"
+   - Set the price to 50.00 CHF
+   - Copy the Price ID and update `src/stripe-config.ts`
+
+4. **Set up Webhooks**:
+   - Go to Developers → Webhooks in your Stripe dashboard
+   - Add endpoint: `https://your-supabase-project.supabase.co/functions/v1/stripe-webhook`
+   - Select events: `checkout.session.completed`, `payment_intent.succeeded`
+   - Copy the webhook secret and add it to your environment variables
+
+5. **Configure Supabase Edge Functions**:
+   - The Stripe environment variables need to be set in your Supabase project
+   - Go to Project Settings → Edge Functions in your Supabase dashboard
+   - Add the `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables
 
 ## Usage
 
@@ -96,6 +134,17 @@ npm run preview
 
 Database migrations are stored in `/supabase/migrations/` and are automatically applied when deploying to Supabase.
 
+### Payment System
+
+The application includes a meeting room booking system with Stripe integration:
+
+- **Meeting Rooms**: Premium rooms available during conference dates
+- **Booking System**: Real-time availability checking and booking creation
+- **Payment Processing**: Secure payments through Stripe Checkout
+- **Webhook Handling**: Automatic booking confirmation upon successful payment
+
+**Test Mode**: When using test API keys, the system automatically uses test mode with test card numbers.
+
 ## Deployment
 
 The website is automatically deployed to Netlify when changes are pushed to the main branch. The deployment process includes:
@@ -119,6 +168,7 @@ Key contacts for specific areas:
 - Conference Organization: info@globaldigitalcollaboration.org
 - Technical Support: tech@globaldigitalcollaboration.org
 - Media Inquiries: media@globaldigitalcollaboration.org
+- Room Bookings: rooms@globaldigitalcollaboration.org
 
 ### Roadmap
 
@@ -129,6 +179,7 @@ Planned features and improvements:
 - Mobile application
 - Integration with virtual conference platforms
 - Multi-language support
+- Advanced room booking features
 
 ### Support
 
@@ -139,6 +190,9 @@ For technical issues:
 For conference-related questions:
 - Email: info@globaldigitalcollaboration.org
 - LinkedIn: [Global Digital Collaboration Conference](https://www.linkedin.com/company/global-digital-collaboration-event/)
+
+For payment or booking issues:
+- Email: rooms@globaldigitalcollaboration.org
 
 ## License
 
