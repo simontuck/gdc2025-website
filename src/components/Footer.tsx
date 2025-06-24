@@ -38,8 +38,6 @@ const Footer: React.FC = () => {
               <li><Link to="/#code-of-conduct" className="text-gray-300 hover:text-white transition-colors">Code of Conduct</Link></li>
               <li><Link to="/#venue" className="text-gray-300 hover:text-white transition-colors">Venue</Link></li>
               <li><Link to="/hotels" className="text-gray-300 hover:text-white transition-colors">Hotels</Link></li>
-              <li><Link to="/meeting-rooms" className="text-gray-300 hover:text-white transition-colors">Meeting Rooms</Link></li>
-              <li><Link to="/payment" className="text-gray-300 hover:text-white transition-colors">Services</Link></li>
               <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
@@ -60,14 +58,6 @@ const Footer: React.FC = () => {
                   <p className="text-sm text-gray-300">Agenda Submissions:</p>
                   <a href="mailto:agenda@globaldigitalcollaboration.org" className="text-white hover:underline">
                     agenda@globaldigitalcollaboration.org
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <p className="text-sm text-gray-300">Meeting Rooms:</p>
-                  <a href="mailto:rooms@globaldigitalcollaboration.org" className="text-white hover:underline">
-                    rooms@globaldigitalcollaboration.org
                   </a>
                 </div>
               </li>

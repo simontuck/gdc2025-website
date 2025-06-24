@@ -95,7 +95,6 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               <Link to="/#venue" className="text-gray-700 hover:text-primary-500 transition-colors">Venue</Link>
             )}
             <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
-            <Link to="/meeting-rooms" className="text-gray-700 hover:text-primary-500 transition-colors">Meeting Rooms</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <a
               href="https://lu.ma/gc25?utm_source=gdc-website"
@@ -176,13 +175,6 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Hotels
-              </Link>
-              <Link 
-                to="/meeting-rooms"
-                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Meeting Rooms
               </Link>
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
               <a
