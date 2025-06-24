@@ -103,12 +103,66 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     onConflict: 'customer_id'
   });
 
-  // Handle one-time payments
-  if (session.mode === 'payment' && session.payment_status === 'paid') {
+  // Check if this is a room booking payment
+  const bookingId = session.metadata?.booking_id;
+  
+  if (bookingId) {
+    // Handle room booking payment
+    await handleRoomBookingPayment(session, bookingId);
+  } else {
+    // Handle regular one-time payments
+    if (session.mode === 'payment' && session.payment_status === 'paid') {
+      const { error: orderError } = await supabase.from('stripe_orders').upsert({
+        checkout_session_id: session.id,
+        payment_intent_id: session.payment_intent as string,
+        customer_id: customerId,
+        amount_subtotal: session.amount_subtotal,
+        amount_total: session.amount_total,
+        currency: session.currency,
+        payment_status: session.payment_status,
+        status: 'completed',
+      }, {
+        onConflict: 'checkout_session_id'
+      });
+
+      if (orderError) {
+        console.error('Error inserting order:', orderError);
+        throw orderError;
+      }
+
+      console.log(`Successfully processed one-time payment for session: ${session.id}`);
+    }
+  }
+
+  // Handle subscriptions
+  if (session.mode === 'subscription' && session.subscription) {
+    await syncSubscriptionFromStripe(customerId);
+  }
+}
+
+async function handleRoomBookingPayment(session: Stripe.Checkout.Session, bookingId: string) {
+  console.log(`Processing room booking payment for booking: ${bookingId}`);
+
+  try {
+    // Update the booking status to confirmed
+    const { error: bookingError } = await supabase
+      .from('room_bookings')
+      .update({
+        stripe_payment_intent_id: session.payment_intent as string,
+        status: 'confirmed'
+      })
+      .eq('id', bookingId);
+
+    if (bookingError) {
+      console.error('Error updating booking status:', bookingError);
+      throw bookingError;
+    }
+
+    // Also create an order record for the room booking
     const { error: orderError } = await supabase.from('stripe_orders').upsert({
       checkout_session_id: session.id,
       payment_intent_id: session.payment_intent as string,
-      customer_id: customerId,
+      customer_id: session.customer as string,
       amount_subtotal: session.amount_subtotal,
       amount_total: session.amount_total,
       currency: session.currency,
@@ -119,16 +173,14 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     });
 
     if (orderError) {
-      console.error('Error inserting order:', orderError);
+      console.error('Error inserting room booking order:', orderError);
       throw orderError;
     }
 
-    console.log(`Successfully processed one-time payment for session: ${session.id}`);
-  }
-
-  // Handle subscriptions
-  if (session.mode === 'subscription' && session.subscription) {
-    await syncSubscriptionFromStripe(customerId);
+    console.log(`Successfully confirmed room booking: ${bookingId}`);
+  } catch (error) {
+    console.error(`Failed to process room booking payment for ${bookingId}:`, error);
+    throw error;
   }
 }
 
@@ -146,6 +198,18 @@ async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent)
 
   if (error) {
     console.error('Error updating order status:', error);
+  }
+
+  // Also update room booking if it exists
+  const { error: bookingError } = await supabase
+    .from('room_bookings')
+    .update({ 
+      status: 'confirmed' 
+    })
+    .eq('stripe_payment_intent_id', paymentIntent.id);
+
+  if (bookingError) {
+    console.error('Error updating room booking status:', bookingError);
   }
 }
 
