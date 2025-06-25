@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Download, Calendar, Loader2 } from 'lucide-react';
+import { CheckCircle, ArrowRight, Download, Calendar, Loader2, Mail } from 'lucide-react';
 import { usePaymentDetails } from '../hooks/usePaymentDetails';
 import { downloadReceipt, ReceiptData } from '../utils/receiptGenerator';
 
@@ -86,6 +86,20 @@ const PaymentSuccessPage: React.FC = () => {
             <p className="text-lg text-gray-600 mb-8">
               Thank you for your purchase. Your payment has been processed successfully.
             </p>
+
+            {/* Email Confirmation Notice */}
+            {details?.roomDetails && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <div className="flex items-center justify-center mb-2">
+                  <Mail className="h-5 w-5 text-blue-500 mr-2" />
+                  <span className="text-sm font-medium text-blue-900">Confirmation Email Sent</span>
+                </div>
+                <p className="text-sm text-blue-700">
+                  A detailed booking confirmation has been sent to{' '}
+                  <span className="font-medium">{details.customerEmail}</span> with all your meeting room details.
+                </p>
+              </div>
+            )}
 
             {details && (
               <div className="bg-gray-50 rounded-lg p-6 mb-8 text-left">
@@ -190,14 +204,29 @@ const PaymentSuccessPage: React.FC = () => {
 
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-500">
-                A confirmation email has been sent to your email address with all the details.
-                If you have any questions, please contact{' '}
-                <a 
-                  href="mailto:info@globaldigitalcollaboration.org" 
-                  className="text-primary-600 hover:text-primary-700"
-                >
-                  info@globaldigitalcollaboration.org
-                </a>
+                {details?.roomDetails ? (
+                  <>
+                    A detailed confirmation email with your booking information has been sent to your email address.
+                    If you have any questions, please contact{' '}
+                    <a 
+                      href="mailto:rooms@globaldigitalcollaboration.org" 
+                      className="text-primary-600 hover:text-primary-700"
+                    >
+                      rooms@globaldigitalcollaboration.org
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    A confirmation email has been sent to your email address with all the details.
+                    If you have any questions, please contact{' '}
+                    <a 
+                      href="mailto:info@globaldigitalcollaboration.org" 
+                      className="text-primary-600 hover:text-primary-700"
+                    >
+                      info@globaldigitalcollaboration.org
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           </div>

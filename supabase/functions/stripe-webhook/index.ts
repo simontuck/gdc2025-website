@@ -177,10 +177,53 @@ async function handleRoomBookingPayment(session: Stripe.Checkout.Session, bookin
       throw orderError;
     }
 
+    // Send confirmation email
+    await sendBookingConfirmationEmail(bookingId, session);
+
     console.log(`Successfully confirmed room booking: ${bookingId}`);
   } catch (error) {
     console.error(`Failed to process room booking payment for ${bookingId}:`, error);
     throw error;
+  }
+}
+
+async function sendBookingConfirmationEmail(bookingId: string, session: Stripe.Checkout.Session) {
+  try {
+    // Get booking details to extract customer information
+    const { data: booking, error: bookingError } = await supabase
+      .from('room_bookings')
+      .select('customer_email, customer_name')
+      .eq('id', bookingId)
+      .single();
+
+    if (bookingError || !booking) {
+      console.error('Could not fetch booking details for email:', bookingError);
+      return;
+    }
+
+    // Call the email confirmation function
+    const emailResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-booking-confirmation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+      },
+      body: JSON.stringify({
+        bookingId: bookingId,
+        customerEmail: booking.customer_email,
+        customerName: booking.customer_name,
+      }),
+    });
+
+    if (!emailResponse.ok) {
+      const errorData = await emailResponse.json();
+      console.error('Failed to send confirmation email:', errorData);
+    } else {
+      console.log(`✅ Confirmation email sent for booking ${bookingId}`);
+    }
+  } catch (error) {
+    console.error('Error sending confirmation email:', error);
+    // Don't throw here - we don't want email failures to break the payment processing
   }
 }
 
