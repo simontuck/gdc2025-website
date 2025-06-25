@@ -177,8 +177,13 @@ async function handleRoomBookingPayment(session: Stripe.Checkout.Session, bookin
       throw orderError;
     }
 
-    // Send confirmation email
-    await sendBookingConfirmationEmail(bookingId, session);
+    // Send confirmation email - but don't fail the webhook if email fails
+    try {
+      await sendBookingConfirmationEmail(bookingId, session);
+    } catch (emailError) {
+      console.error('Failed to send confirmation email, but continuing with payment processing:', emailError);
+      // Don't throw here - we don't want email failures to break payment processing
+    }
 
     console.log(`Successfully confirmed room booking: ${bookingId}`);
   } catch (error) {
@@ -189,6 +194,8 @@ async function handleRoomBookingPayment(session: Stripe.Checkout.Session, bookin
 
 async function sendBookingConfirmationEmail(bookingId: string, session: Stripe.Checkout.Session) {
   try {
+    console.log(`📧 Attempting to send confirmation email for booking: ${bookingId}`);
+    
     // Get booking details to extract customer information
     const { data: booking, error: bookingError } = await supabase
       .from('room_bookings')
@@ -200,6 +207,8 @@ async function sendBookingConfirmationEmail(bookingId: string, session: Stripe.C
       console.error('Could not fetch booking details for email:', bookingError);
       return;
     }
+
+    console.log(`📧 Sending confirmation email to: ${booking.customer_email}`);
 
     // Call the email confirmation function
     const emailResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-booking-confirmation`, {
@@ -215,15 +224,26 @@ async function sendBookingConfirmationEmail(bookingId: string, session: Stripe.C
       }),
     });
 
+    const emailResponseText = await emailResponse.text();
+    console.log(`📧 Email function response status: ${emailResponse.status}`);
+    console.log(`📧 Email function response: ${emailResponseText}`);
+
     if (!emailResponse.ok) {
-      const errorData = await emailResponse.json();
+      let errorData;
+      try {
+        errorData = JSON.parse(emailResponseText);
+      } catch {
+        errorData = { error: emailResponseText };
+      }
       console.error('Failed to send confirmation email:', errorData);
+      throw new Error(`Email function failed: ${errorData.error || 'Unknown error'}`);
     } else {
-      console.log(`✅ Confirmation email sent for booking ${bookingId}`);
+      const emailResult = JSON.parse(emailResponseText);
+      console.log(`✅ Confirmation email sent successfully for booking ${bookingId}:`, emailResult);
     }
   } catch (error) {
     console.error('Error sending confirmation email:', error);
-    // Don't throw here - we don't want email failures to break the payment processing
+    throw error; // Re-throw so caller can handle appropriately
   }
 }
 

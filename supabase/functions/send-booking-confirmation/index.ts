@@ -222,7 +222,7 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
 
           <div class="room-info">
             <div class="room-title">${booking.room.name}</div>
-            <p>${booking.room.description}</p>
+            <p>${booking.room.description || 'Premium meeting room with modern amenities'}</p>
             <div class="detail-row">
               <span class="label">Capacity:</span>
               <span class="value">${booking.room.seating_capacity} people</span>
@@ -412,13 +412,14 @@ Deno.serve(async (req) => {
 
     console.log(`📋 Booking found: ${booking.id}, Status: ${booking.status}, Room: ${booking.room?.name}`);
 
-    // Check if booking is confirmed (we'll send emails for both confirmed and pending for testing)
-    if (booking.status !== 'confirmed' && booking.status !== 'pending') {
-      console.warn(`⚠️ Booking ${bookingId} has status: ${booking.status}`);
+    // Only send emails for confirmed bookings
+    if (booking.status !== 'confirmed') {
+      console.warn(`⚠️ Booking ${bookingId} has status: ${booking.status} - skipping email`);
       return new Response(
         JSON.stringify({ 
-          error: 'Booking is not in a valid state for confirmation email',
-          status: booking.status 
+          error: 'Booking is not confirmed yet',
+          status: booking.status,
+          message: 'Email will be sent when booking is confirmed after payment'
         }),
         { 
           status: 400, 
