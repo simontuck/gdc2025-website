@@ -278,7 +278,7 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
           <p><strong>Global Digital Collaboration Conference (GDC25)</strong><br>
           July 1-2, 2025 • Geneva, Switzerland</p>
           
-          <p>Need help? Contact us at <a href="mailto:rooms@globaldigitalcollaboration.org">rooms@globaldigitalcollaboration.org</a></p>
+          <p>Need help? Contact us at <a href="mailto:rooms@gc25.trustsquare.com">rooms@gc25.trustsquare.com</a></p>
           
           <p style="margin-top: 20px; font-size: 12px; color: #999;">
             This is an automated confirmation email. Please do not reply to this email.
@@ -304,7 +304,7 @@ async function sendEmailWithResend(to: string, subject: string, htmlContent: str
   }
 
   try {
-    // Use direct Resend API call for better reliability
+    // Use direct Resend API call with the correct domain
     console.log('📤 Sending email via direct Resend API...');
     
     const response = await fetch('https://api.resend.com/emails', {
@@ -314,11 +314,11 @@ async function sendEmailWithResend(to: string, subject: string, htmlContent: str
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
+        from: 'GDC25 Conference <noreply@gc25.trustsquare.com>',
         to: [to],
         subject: subject,
         html: htmlContent,
-        reply_to: 'rooms@globaldigitalcollaboration.org'
+        reply_to: 'rooms@gc25.trustsquare.com'
       }),
     });
 

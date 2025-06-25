@@ -94,13 +94,14 @@ Deno.serve(async (req) => {
             <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
             <p><strong>Recipient:</strong> ${to}</p>
             <p>If you received this email, the email system is working correctly!</p>
+            <p><strong>Domain:</strong> gc25.trustsquare.com</p>
           </div>
         </div>
       </body>
       </html>
     `;
 
-    // Send test email
+    // Send test email with the correct domain
     console.log('📤 Sending test email via Resend API...');
     
     const response = await fetch('https://api.resend.com/emails', {
@@ -110,11 +111,11 @@ Deno.serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'GDC25 Test <noreply@globaldigitalcollaboration.org>',
+        from: 'GDC25 Test <noreply@gc25.trustsquare.com>',
         to: [to],
         subject: subject,
         html: testEmailHTML,
-        reply_to: 'rooms@globaldigitalcollaboration.org'
+        reply_to: 'rooms@gc25.trustsquare.com'
       }),
     });
 
@@ -153,6 +154,7 @@ Deno.serve(async (req) => {
         message: 'Test email sent successfully',
         to: to,
         subject: subject,
+        from_domain: 'gc25.trustsquare.com',
         resend_response: result,
         timestamp: new Date().toISOString()
       }),
