@@ -290,47 +290,65 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
   `;
 }
 
-async function sendEmail(to: string, subject: string, htmlContent: string): Promise<boolean> {
+async function sendEmailWithResend(to: string, subject: string, htmlContent: string): Promise<boolean> {
   try {
-    // In a real implementation, you would use a service like:
-    // - Resend (resend.com)
-    // - SendGrid
-    // - AWS SES
-    // - Postmark
-    // etc.
-    
-    // For now, we'll simulate sending an email and log the details
-    console.log('📧 Email would be sent to:', to);
-    console.log('📧 Subject:', subject);
-    console.log('📧 HTML content length:', htmlContent.length);
-    
-    // Simulate email sending delay
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    // In production, replace this with actual email service integration
-    // Example with Resend:
-    /*
-    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
-    
-    const { data, error } = await resend.emails.send({
-      from: 'GDC25 <noreply@globaldigitalcollaboration.org>',
-      to: [to],
-      subject: subject,
-      html: htmlContent,
+    // Use Supabase's built-in Resend integration
+    const { data, error } = await supabase.functions.invoke('resend', {
+      body: {
+        to: [to],
+        subject: subject,
+        html: htmlContent,
+        from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
+        reply_to: 'rooms@globaldigitalcollaboration.org'
+      }
     });
-    
+
     if (error) {
-      console.error('Email sending failed:', error);
+      console.error('Resend email error:', error);
       return false;
     }
-    
-    console.log('Email sent successfully:', data);
-    */
-    
+
+    console.log('✅ Email sent successfully via Resend:', data);
     return true;
   } catch (error) {
-    console.error('Error sending email:', error);
-    return false;
+    console.error('Error sending email via Resend:', error);
+    
+    // Fallback: Try direct Resend API call if Supabase integration fails
+    try {
+      const resendApiKey = Deno.env.get('RESEND_API_KEY');
+      if (!resendApiKey) {
+        console.error('RESEND_API_KEY not found in environment variables');
+        return false;
+      }
+
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
+          to: [to],
+          subject: subject,
+          html: htmlContent,
+          reply_to: 'rooms@globaldigitalcollaboration.org'
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Direct Resend API error:', errorData);
+        return false;
+      }
+
+      const result = await response.json();
+      console.log('✅ Email sent successfully via direct Resend API:', result);
+      return true;
+    } catch (fallbackError) {
+      console.error('Fallback Resend API also failed:', fallbackError);
+      return false;
+    }
   }
 }
 
@@ -366,6 +384,8 @@ Deno.serve(async (req) => {
       );
     }
 
+    console.log(`📧 Processing confirmation email for booking ${bookingId} to ${customerEmail}`);
+
     // Get booking details with room information
     const { data: booking, error: bookingError } = await supabase
       .from('room_bookings')
@@ -392,14 +412,16 @@ Deno.serve(async (req) => {
     const emailSubject = `Meeting Room Booking Confirmed - ${booking.room.name} | GDC25`;
     const emailHTML = generateConfirmationEmailHTML(booking as BookingDetails);
 
-    // Send confirmation email
-    const emailSent = await sendEmail(customerEmail, emailSubject, emailHTML);
+    // Send confirmation email using Resend
+    const emailSent = await sendEmailWithResend(customerEmail, emailSubject, emailHTML);
 
     if (!emailSent) {
+      console.error(`❌ Failed to send confirmation email for booking ${bookingId}`);
       return new Response(
         JSON.stringify({ 
           error: 'Failed to send confirmation email',
-          booking: booking
+          booking: booking,
+          message: 'Booking was confirmed but email delivery failed. Customer should contact support.'
         }),
         { 
           status: 500, 
@@ -408,13 +430,14 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`✅ Confirmation email sent for booking ${bookingId} to ${customerEmail}`);
+    console.log(`✅ Confirmation email sent successfully for booking ${bookingId} to ${customerEmail}`);
 
     return new Response(
       JSON.stringify({ 
         success: true,
         message: 'Confirmation email sent successfully',
-        bookingId: bookingId
+        bookingId: bookingId,
+        emailSent: true
       }),
       { 
         status: 200, 
@@ -423,10 +446,10 @@ Deno.serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('Error sending booking confirmation:', error);
+    console.error('Error in send-booking-confirmation function:', error);
     return new Response(
       JSON.stringify({ 
-        error: 'Failed to send confirmation email',
+        error: 'Internal server error while sending confirmation email',
         details: error.message 
       }),
       { 
