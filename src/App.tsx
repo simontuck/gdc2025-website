@@ -15,6 +15,7 @@ import PaymentPage from './pages/PaymentPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelledPage from './pages/PaymentCancelledPage';
 import MeetingRoomsPage from './pages/MeetingRoomsPage';
+import EmailTestPage from './pages/EmailTestPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -53,6 +54,7 @@ const AppContent = () => {
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
         <Route path="/meeting-rooms" element={<MeetingRoomsPage />} />
+        <Route path="/email-test" element={<EmailTestPage />} />
         <Route path="/imprint" element={<ImprintPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/event-registration-terms" element={<EventRegistrationTermsPage />} />

@@ -290,65 +290,68 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
   `;
 }
 
-async function sendEmailWithResend(to: string, subject: string, htmlContent: string): Promise<boolean> {
+async function sendEmailWithResend(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
+  console.log(`📧 Attempting to send email to: ${to}`);
+  console.log(`📧 Subject: ${subject}`);
+
+  // Check if we have the Resend API key
+  const resendApiKey = Deno.env.get('RESEND_API_KEY');
+  console.log(`🔑 Resend API Key available: ${resendApiKey ? 'Yes' : 'No'}`);
+
+  if (!resendApiKey) {
+    console.error('❌ RESEND_API_KEY not found in environment variables');
+    return { success: false, error: 'RESEND_API_KEY not configured' };
+  }
+
   try {
-    // Use Supabase's built-in Resend integration
-    const { data, error } = await supabase.functions.invoke('resend', {
-      body: {
+    // Use direct Resend API call for better reliability
+    console.log('📤 Sending email via direct Resend API...');
+    
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
         to: [to],
         subject: subject,
         html: htmlContent,
-        from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
         reply_to: 'rooms@globaldigitalcollaboration.org'
-      }
+      }),
     });
 
-    if (error) {
-      console.error('Resend email error:', error);
-      return false;
+    const responseText = await response.text();
+    console.log(`📧 Resend API Response Status: ${response.status}`);
+    console.log(`📧 Resend API Response: ${responseText}`);
+
+    if (!response.ok) {
+      let errorData;
+      try {
+        errorData = JSON.parse(responseText);
+      } catch {
+        errorData = { message: responseText };
+      }
+      console.error('❌ Resend API error:', errorData);
+      return { 
+        success: false, 
+        error: `Resend API error: ${errorData.message || 'Unknown error'}`,
+        method: 'direct_api'
+      };
     }
 
-    console.log('✅ Email sent successfully via Resend:', data);
-    return true;
+    const result = JSON.parse(responseText);
+    console.log('✅ Email sent successfully via Resend API:', result);
+    return { success: true, method: 'direct_api' };
+
   } catch (error) {
-    console.error('Error sending email via Resend:', error);
-    
-    // Fallback: Try direct Resend API call if Supabase integration fails
-    try {
-      const resendApiKey = Deno.env.get('RESEND_API_KEY');
-      if (!resendApiKey) {
-        console.error('RESEND_API_KEY not found in environment variables');
-        return false;
-      }
-
-      const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${resendApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
-          to: [to],
-          subject: subject,
-          html: htmlContent,
-          reply_to: 'rooms@globaldigitalcollaboration.org'
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Direct Resend API error:', errorData);
-        return false;
-      }
-
-      const result = await response.json();
-      console.log('✅ Email sent successfully via direct Resend API:', result);
-      return true;
-    } catch (fallbackError) {
-      console.error('Fallback Resend API also failed:', fallbackError);
-      return false;
-    }
+    console.error('❌ Error sending email via Resend:', error);
+    return { 
+      success: false, 
+      error: `Network error: ${error.message}`,
+      method: 'direct_api'
+    };
   }
 }
 
@@ -394,13 +397,12 @@ Deno.serve(async (req) => {
         room:meeting_rooms(*)
       `)
       .eq('id', bookingId)
-      .eq('status', 'confirmed')
       .single();
 
     if (bookingError || !booking) {
-      console.error('Booking not found or not confirmed:', bookingError);
+      console.error('❌ Booking not found:', bookingError);
       return new Response(
-        JSON.stringify({ error: 'Booking not found or not confirmed' }),
+        JSON.stringify({ error: 'Booking not found', details: bookingError }),
         { 
           status: 404, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -408,20 +410,42 @@ Deno.serve(async (req) => {
       );
     }
 
+    console.log(`📋 Booking found: ${booking.id}, Status: ${booking.status}, Room: ${booking.room?.name}`);
+
+    // Check if booking is confirmed (we'll send emails for both confirmed and pending for testing)
+    if (booking.status !== 'confirmed' && booking.status !== 'pending') {
+      console.warn(`⚠️ Booking ${bookingId} has status: ${booking.status}`);
+      return new Response(
+        JSON.stringify({ 
+          error: 'Booking is not in a valid state for confirmation email',
+          status: booking.status 
+        }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
     // Generate email content
-    const emailSubject = `Meeting Room Booking Confirmed - ${booking.room.name} | GDC25`;
+    const emailSubject = `Meeting Room Booking Confirmation - ${booking.room.name} | GDC25`;
     const emailHTML = generateConfirmationEmailHTML(booking as BookingDetails);
 
     // Send confirmation email using Resend
-    const emailSent = await sendEmailWithResend(customerEmail, emailSubject, emailHTML);
+    const emailResult = await sendEmailWithResend(customerEmail, emailSubject, emailHTML);
 
-    if (!emailSent) {
-      console.error(`❌ Failed to send confirmation email for booking ${bookingId}`);
+    if (!emailResult.success) {
+      console.error(`❌ Failed to send confirmation email for booking ${bookingId}: ${emailResult.error}`);
       return new Response(
         JSON.stringify({ 
           error: 'Failed to send confirmation email',
-          booking: booking,
-          message: 'Booking was confirmed but email delivery failed. Customer should contact support.'
+          details: emailResult.error,
+          method: emailResult.method,
+          booking: {
+            id: booking.id,
+            status: booking.status,
+            customer_email: booking.customer_email
+          }
         }),
         { 
           status: 500, 
@@ -437,7 +461,9 @@ Deno.serve(async (req) => {
         success: true,
         message: 'Confirmation email sent successfully',
         bookingId: bookingId,
-        emailSent: true
+        emailSent: true,
+        method: emailResult.method,
+        customerEmail: customerEmail
       }),
       { 
         status: 200, 
@@ -446,11 +472,12 @@ Deno.serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('Error in send-booking-confirmation function:', error);
+    console.error('❌ Error in send-booking-confirmation function:', error);
     return new Response(
       JSON.stringify({ 
         error: 'Internal server error while sending confirmation email',
-        details: error.message 
+        details: error.message,
+        stack: error.stack
       }),
       { 
         status: 500, 
