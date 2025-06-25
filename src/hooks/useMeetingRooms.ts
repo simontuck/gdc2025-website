@@ -49,7 +49,7 @@ export function useMeetingRooms() {
         .from('meeting_rooms')
         .select('*')
         .eq('is_active', true)
-        .order('hourly_rate', { ascending: true });
+        .order('name', { ascending: true }); // Sort by name alphabetically
 
       if (error) throw error;
       return data as MeetingRoom[];
