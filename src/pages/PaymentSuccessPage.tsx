@@ -38,7 +38,7 @@ const PaymentSuccessPage: React.FC = () => {
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-md mx-auto text-center">
             <Loader2 className="h-12 w-12 animate-spin text-primary-500 mx-auto mb-4" />
-            <p className="text-gray-600">Confirming your payment...</p>
+            <p className="text-gray-600">Confirming your booking...</p>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@ const PaymentSuccessPage: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">Unable to Load Payment Details</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">Unable to Load Booking Details</h1>
               <p className="text-gray-600 mb-6">{error}</p>
               <Link
                 to="/"
@@ -80,11 +80,11 @@ const PaymentSuccessPage: React.FC = () => {
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
             
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Payment Successful!
+              Booking Confirmed!
             </h1>
             
             <p className="text-lg text-gray-600 mb-8">
-              Thank you for your purchase. Your payment has been processed successfully.
+              Your meeting room booking has been confirmed successfully.
             </p>
 
             {/* Email Confirmation Notice */}
@@ -103,34 +103,28 @@ const PaymentSuccessPage: React.FC = () => {
 
             {details && (
               <div className="bg-gray-50 rounded-lg p-6 mb-8 text-left">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Details</h2>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Booking Details</h2>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Receipt Number:</span>
+                    <span className="text-gray-600">Booking Number:</span>
                     <span className="font-medium">{details.orderNumber}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Product/Service:</span>
+                    <span className="text-gray-600">Service:</span>
                     <span className="font-medium">{details.productName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Amount:</span>
-                    <span className="font-medium">{details.amount}</span>
+                    <span className="text-gray-600">Cost:</span>
+                    <span className="font-medium text-green-600">Free of Charge</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Payment Date:</span>
+                    <span className="text-gray-600">Booking Date:</span>
                     <span className="font-medium">{details.paymentDate}</span>
                   </div>
                   {details.customerName && (
                     <div className="flex justify-between">
                       <span className="text-gray-600">Customer:</span>
                       <span className="font-medium">{details.customerName}</span>
-                    </div>
-                  )}
-                  {sessionId && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Transaction ID:</span>
-                      <span className="font-mono text-sm">{sessionId}</span>
                     </div>
                   )}
                   {bookingId && (
@@ -189,7 +183,7 @@ const PaymentSuccessPage: React.FC = () => {
                   className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Download className="h-5 w-5 mr-2" />
-                  Download Receipt
+                  Download Confirmation
                 </button>
                 
                 <Link

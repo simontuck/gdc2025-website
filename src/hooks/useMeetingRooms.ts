@@ -75,7 +75,7 @@ export function useRoomAvailability(roomId: string, date: string) {
   });
 }
 
-export function useCreateBookingWithPayment() {
+export function useCreateFreeBooking() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -87,7 +87,7 @@ export function useCreateBookingWithPayment() {
       const endMins = endMinutes % 60;
       const end_time = `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`;
 
-      // Get room details for total calculation
+      // Get room details for total calculation (keeping for compatibility)
       const { data: room, error: roomError } = await supabase
         .from('meeting_rooms')
         .select('hourly_rate')
@@ -96,58 +96,50 @@ export function useCreateBookingWithPayment() {
 
       if (roomError) throw roomError;
 
-      // Calculate total amount (hourly rate * duration in hours)
-      const total_amount = Math.round(room.hourly_rate * booking.duration_hours);
+      // Calculate total amount (set to 0 for free bookings)
+      const total_amount = 0;
 
-      // Create booking with 'pending' status - it will only be confirmed after payment
+      // Create booking with 'confirmed' status since no payment is required
       const { data, error } = await supabase
         .from('room_bookings')
         .insert({
           ...booking,
           end_time,
           total_amount,
-          status: 'pending', // Start as pending until payment is confirmed
+          status: 'confirmed', // Immediately confirmed since it's free
         })
         .select()
         .single();
 
       if (error) throw error;
 
-      // Now create the Stripe checkout session
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/room-booking-checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          bookingId: data.id,
-          customerEmail: booking.customer_email,
-          customerName: booking.customer_name,
-          successUrl: `${window.location.origin}/payment-success?booking_id=${data.id}`,
-          cancelUrl: `${window.location.origin}/payment-cancelled?booking_id=${data.id}`,
-        }),
-      });
+      // Send confirmation email
+      try {
+        const emailResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-booking-confirmation`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            bookingId: data.id,
+            customerEmail: booking.customer_email,
+            customerName: booking.customer_name,
+          }),
+        });
 
-      if (!response.ok) {
-        // If payment session creation fails, delete the booking
-        await supabase.from('room_bookings').delete().eq('id', data.id);
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create payment session');
+        if (!emailResponse.ok) {
+          console.warn('Failed to send confirmation email, but booking was created successfully');
+        }
+      } catch (emailError) {
+        console.warn('Error sending confirmation email:', emailError);
+        // Don't fail the booking if email fails
       }
 
-      const { url, testMode } = await response.json();
-      
-      if (!url) {
-        // If no URL received, delete the booking
-        await supabase.from('room_bookings').delete().eq('id', data.id);
-        throw new Error('No checkout URL received');
-      }
-
-      return { booking: data as RoomBooking, checkoutUrl: url, testMode };
+      return data as RoomBooking;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['room-availability', data.booking.room_id, data.booking.booking_date] });
+      queryClient.invalidateQueries({ queryKey: ['room-availability', data.room_id, data.booking_date] });
       queryClient.invalidateQueries({ queryKey: ['user-bookings'] });
     },
   });

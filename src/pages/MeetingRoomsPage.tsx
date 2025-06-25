@@ -11,7 +11,7 @@ const MeetingRoomsPage: React.FC = () => {
   const [selectedRoom, setSelectedRoom] = useState<MeetingRoom | null>(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState<any>(null);
-  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [bookingError, setBookingError] = useState<string | null>(null);
   
   // Filter state
   const [filters, setFilters] = useState<RoomFilters>({
@@ -75,15 +75,13 @@ const MeetingRoomsPage: React.FC = () => {
   const handleBookNow = (room: MeetingRoom) => {
     setSelectedRoom(room);
     setIsBookingModalOpen(true);
-    setPaymentError(null);
+    setBookingError(null);
   };
 
   const handleBookingCreated = async (booking: any) => {
     setIsBookingModalOpen(false);
     setBookingSuccess(booking);
-    
-    // The booking is created with 'pending' status and will only be confirmed after payment
-    // No need to handle payment here as it's handled in the BookingModal
+    setBookingError(null);
   };
 
   const handleCloseModal = () => {
@@ -107,27 +105,26 @@ const MeetingRoomsPage: React.FC = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Meeting Room Booking</h1>
           <p className="text-xl text-white/90 max-w-3xl">
             Book meeting rooms during the Global Digital Collaboration Conference. 
-            Available July 1-2, 2025 in Geneva, Switzerland.
+            Available July 1-2, 2025 in Geneva, Switzerland - completely free of charge!
           </p>
         </div>
       </section>
 
       <section className="py-16">
         <div className="container">
-          {/* Test Mode Warning */}
-          {import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.startsWith('pk_test_') && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-              <div className="flex items-center gap-2">
-                <div className="text-yellow-600">🧪</div>
-                <div>
-                  <h3 className="text-sm font-medium text-yellow-800">Test Mode Active</h3>
-                  <p className="text-sm text-yellow-700">
-                    Use test card number <code className="bg-yellow-100 px-1 rounded">4242 4242 4242 4242</code> with any future expiry date and CVC.
-                  </p>
-                </div>
+          {/* Free Booking Notice */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+            <div className="flex items-center gap-3">
+              <CheckCircle className="h-6 w-6 text-green-500" />
+              <div>
+                <h2 className="text-lg font-semibold text-green-900">Free Meeting Rooms</h2>
+                <p className="text-green-800">
+                  All meeting rooms are now available free of charge for conference attendees. 
+                  Simply book your preferred time slot and receive instant confirmation.
+                </p>
               </div>
             </div>
-          )}
+          </div>
 
           {/* Booking Information */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
@@ -145,11 +142,6 @@ const MeetingRoomsPage: React.FC = () => {
                 <Users className="h-4 w-4" />
                 <span>Duration: 30 min - 2 hours</span>
               </div>
-            </div>
-            <div className="mt-4 p-3 bg-blue-100 rounded-md">
-              <p className="text-sm text-blue-800 font-medium">
-                ⚠️ Important: Rooms are only reserved after successful payment. Pending bookings without payment will be automatically cancelled.
-              </p>
             </div>
           </div>
 
@@ -186,26 +178,26 @@ const MeetingRoomsPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <CheckCircle className="h-6 w-6 text-green-500" />
                 <div>
-                  <h3 className="text-lg font-semibold text-green-900">Booking Created Successfully!</h3>
+                  <h3 className="text-lg font-semibold text-green-900">Booking Confirmed!</h3>
                   <p className="text-green-800">
-                    Your booking for {selectedRoom?.name} has been created and you're being redirected to payment. 
-                    The room will be confirmed once payment is completed.
+                    Your booking for {selectedRoom?.name} has been confirmed. 
+                    A confirmation email has been sent to your email address.
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Payment Error Message */}
-          {paymentError && (
+          {/* Error Message */}
+          {bookingError && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
               <div className="flex items-center gap-3">
                 <AlertCircle className="h-6 w-6 text-red-500" />
                 <div>
-                  <h3 className="text-lg font-semibold text-red-900">Payment Error</h3>
-                  <p className="text-red-800">{paymentError}</p>
+                  <h3 className="text-lg font-semibold text-red-900">Booking Error</h3>
+                  <p className="text-red-800">{bookingError}</p>
                   <button
-                    onClick={() => setPaymentError(null)}
+                    onClick={() => setBookingError(null)}
                     className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
                   >
                     Try again
@@ -273,8 +265,8 @@ const MeetingRoomsPage: React.FC = () => {
                   <li>• Minimum booking: 30 minutes</li>
                   <li>• Maximum booking: 2 hours</li>
                   <li>• Available during conference dates only</li>
-                  <li>• Payment required to confirm booking</li>
-                  <li>• Pending bookings expire after 30 minutes</li>
+                  <li>• Free of charge for all attendees</li>
+                  <li>• Instant confirmation via email</li>
                 </ul>
               </div>
               <div>

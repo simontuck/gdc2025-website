@@ -52,13 +52,6 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
     return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
   };
 
-  const formatPrice = (amount: number) => {
-    return new Intl.NumberFormat('en-CH', {
-      style: 'currency',
-      currency: 'CHF',
-    }).format(amount / 100);
-  };
-
   return `
     <!DOCTYPE html>
     <html>
@@ -129,7 +122,7 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
           font-weight: bold;
           font-size: 18px;
           color: #18181b;
-          background: #18181b;
+          background: #10b060;
           color: white;
           margin: 20px -20px -20px -20px;
           padding: 15px 20px;
@@ -170,15 +163,15 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
           font-size: 12px;
         }
         .important-info {
-          background: #fff3cd;
-          border: 1px solid #ffeaa7;
+          background: #e8f5e8;
+          border: 1px solid #10b060;
           border-radius: 8px;
           padding: 15px;
           margin: 20px 0;
         }
         .important-info h3 {
           margin: 0 0 10px 0;
-          color: #856404;
+          color: #10b060;
         }
         .footer {
           background: #f8f9fa;
@@ -213,12 +206,12 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
 
         <div class="content">
           <div class="confirmation-badge">
-            ✓ Payment Successful
+            ✓ Free Booking Confirmed
           </div>
 
           <p>Dear ${booking.customer_name},</p>
           
-          <p>Thank you for your payment! Your meeting room booking has been confirmed for the Global Digital Collaboration Conference.</p>
+          <p>Great news! Your meeting room booking has been confirmed for the Global Digital Collaboration Conference. This booking is completely free of charge.</p>
 
           <div class="room-info">
             <div class="room-title">${booking.room.name}</div>
@@ -253,8 +246,8 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
               <span class="value">${booking.duration_hours} hour${booking.duration_hours > 1 ? 's' : ''}</span>
             </div>
             <div class="detail-row">
-              <span class="label">Total Paid:</span>
-              <span class="value">${formatPrice(booking.total_amount)}</span>
+              <span class="label">Cost:</span>
+              <span class="value">Free of Charge</span>
             </div>
           </div>
 
@@ -265,6 +258,7 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
               <li>The room will be available exactly during your booked time slot</li>
               <li>For any changes or questions, contact our support team</li>
               <li>Conference venue: Centre International de Conférences Genève (CICG)</li>
+              <li>This booking is free of charge - no payment required</li>
             </ul>
           </div>
 
@@ -412,14 +406,14 @@ Deno.serve(async (req) => {
 
     console.log(`📋 Booking found: ${booking.id}, Status: ${booking.status}, Room: ${booking.room?.name}`);
 
-    // Only send emails for confirmed bookings
+    // Send emails for confirmed bookings (free bookings are immediately confirmed)
     if (booking.status !== 'confirmed') {
       console.warn(`⚠️ Booking ${bookingId} has status: ${booking.status} - skipping email`);
       return new Response(
         JSON.stringify({ 
           error: 'Booking is not confirmed yet',
           status: booking.status,
-          message: 'Email will be sent when booking is confirmed after payment'
+          message: 'Email will be sent when booking is confirmed'
         }),
         { 
           status: 400, 
@@ -429,7 +423,7 @@ Deno.serve(async (req) => {
     }
 
     // Generate email content
-    const emailSubject = `Meeting Room Booking Confirmation - ${booking.room.name} | GDC25`;
+    const emailSubject = `Free Meeting Room Booking Confirmed - ${booking.room.name} | GDC25`;
     const emailHTML = generateConfirmationEmailHTML(booking as BookingDetails);
 
     // Send confirmation email using Resend
@@ -465,7 +459,8 @@ Deno.serve(async (req) => {
         emailSent: true,
         method: emailResult.method,
         customerEmail: customerEmail,
-        replyTo: 'info@globaldigitalcollaboration.org'
+        replyTo: 'info@globaldigitalcollaboration.org',
+        bookingType: 'free'
       }),
       { 
         status: 200, 

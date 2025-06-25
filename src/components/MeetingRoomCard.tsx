@@ -1,7 +1,6 @@
 import React from 'react';
-import { Users, Clock } from 'lucide-react';
+import { Users, Clock, CheckCircle } from 'lucide-react';
 import { MeetingRoom } from '../hooks/useMeetingRooms';
-import { formatPrice } from '../utils/timeSlots';
 
 interface MeetingRoomCardProps {
   room: MeetingRoom;
@@ -17,10 +16,8 @@ const MeetingRoomCard: React.FC<MeetingRoomCardProps> = ({ room, onBookNow }) =>
           alt={room.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full shadow-md">
-          <span className="text-sm font-semibold text-primary-600">
-            {formatPrice(room.hourly_rate)}/hour
-          </span>
+        <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full shadow-md">
+          <span className="text-sm font-semibold">Free</span>
         </div>
       </div>
       
@@ -35,6 +32,10 @@ const MeetingRoomCard: React.FC<MeetingRoomCardProps> = ({ room, onBookNow }) =>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
             <span>30 min - 2 hours</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <CheckCircle className="h-4 w-4 text-green-500" />
+            <span className="text-green-600">Free</span>
           </div>
         </div>
         

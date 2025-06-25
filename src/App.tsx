@@ -11,7 +11,6 @@ import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
 import PrivacyPage from './pages/PrivacyPage';
 import EventRegistrationTermsPage from './pages/EventRegistrationTermsPage';
-import PaymentPage from './pages/PaymentPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelledPage from './pages/PaymentCancelledPage';
 import MeetingRoomsPage from './pages/MeetingRoomsPage';
@@ -50,7 +49,6 @@ const AppContent = () => {
         <Route path="/speakers" element={<SpeakersPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
-        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
         <Route path="/meeting-rooms" element={<MeetingRoomsPage />} />
