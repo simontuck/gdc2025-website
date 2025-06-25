@@ -119,7 +119,7 @@ const MeetingRoomsPage: React.FC = () => {
               <div>
                 <h2 className="text-lg font-semibold text-green-900">Free Meeting Rooms</h2>
                 <p className="text-green-800">
-                  All meeting rooms are now available free of charge for conference attendees. 
+                  All meeting rooms are available free of charge for conference attendees. 
                   Simply book your preferred time slot and receive instant confirmation.
                 </p>
               </div>
