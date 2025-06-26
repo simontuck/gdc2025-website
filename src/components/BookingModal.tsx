@@ -52,9 +52,29 @@ const BookingModal: React.FC<BookingModalProps> = ({
   const isTimeSlotAvailable = selectedTime ? 
     getAvailableSlots(selectedTime, duration, existingBookings) : false;
 
+  // Check if room is available on selected date
+  const isRoomAvailableOnDate = room ? 
+    selectedDate === '2025-07-01' || (selectedDate === '2025-07-02' && room.available_day2) : false;
+
+  // Get available dates for this room
+  const getAvailableDates = () => {
+    if (!room) return CONFERENCE_DATES;
+    
+    return CONFERENCE_DATES.filter(date => {
+      if (date.value === '2025-07-01') return true; // Day 1 is always available
+      if (date.value === '2025-07-02') return room.available_day2; // Day 2 depends on room setting
+      return false;
+    });
+  };
+
   const handleBooking = async () => {
     if (!room || !selectedTime || !customerName || !customerEmail) {
       setError('Please fill in all required fields');
+      return;
+    }
+
+    if (!isRoomAvailableOnDate) {
+      setError('This room is not available on the selected date');
       return;
     }
 
@@ -96,6 +116,8 @@ const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   if (!isOpen || !room) return null;
+
+  const availableDates = getAvailableDates();
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
@@ -147,6 +169,21 @@ const BookingModal: React.FC<BookingModalProps> = ({
               </div>
             )}
 
+            {/* Room availability notice for day 2 */}
+            {!room.available_day2 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                <div className="flex">
+                  <AlertCircle className="h-5 w-5 text-yellow-400 mr-2 mt-0.5" />
+                  <div>
+                    <h3 className="text-sm font-medium text-yellow-800">Limited Availability</h3>
+                    <p className="text-sm text-yellow-700 mt-1">
+                      This room is only available on Day 1 (July 1st) of the conference.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="space-y-6">
               {/* Customer Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -189,12 +226,17 @@ const BookingModal: React.FC<BookingModalProps> = ({
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 >
-                  {CONFERENCE_DATES.map(date => (
+                  {availableDates.map(date => (
                     <option key={date.value} value={date.value}>
                       {date.label}
                     </option>
                   ))}
                 </select>
+                {availableDates.length < CONFERENCE_DATES.length && (
+                  <p className="text-sm text-yellow-600 mt-1">
+                    Some dates are not available for this room.
+                  </p>
+                )}
               </div>
 
               {/* Duration Selection */}
@@ -257,7 +299,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
               </div>
 
               {/* Booking Summary */}
-              {selectedTime && (
+              {selectedTime && isRoomAvailableOnDate && (
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h4 className="font-medium text-gray-900 mb-3">Booking Summary</h4>
                   <div className="space-y-2 text-sm">
@@ -268,7 +310,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                     <div className="flex justify-between">
                       <span className="text-gray-600">Date:</span>
                       <span className="font-medium">
-                        {CONFERENCE_DATES.find(d => d.value === selectedDate)?.label}
+                        {availableDates.find(d => d.value === selectedDate)?.label}
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -316,6 +358,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                 !customerName || 
                 !customerEmail || 
                 !isTimeSlotAvailable ||
+                !isRoomAvailableOnDate ||
                 createBookingMutation.isPending
               }
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"

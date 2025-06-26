@@ -7,12 +7,6 @@ import MeetingRoomFilters, { RoomFilters } from '../components/MeetingRoomFilter
 import BookingModal from '../components/BookingModal';
 
 const MeetingRoomsPage: React.FC = () => {
-  const { data: rooms, isLoading, error } = useMeetingRooms();
-  const [selectedRoom, setSelectedRoom] = useState<MeetingRoom | null>(null);
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-  const [bookingSuccess, setBookingSuccess] = useState<any>(null);
-  const [bookingError, setBookingError] = useState<string | null>(null);
-  
   // Filter state
   const [filters, setFilters] = useState<RoomFilters>({
     day: '',
@@ -21,6 +15,12 @@ const MeetingRoomsPage: React.FC = () => {
     minCapacity: 0
   });
 
+  const { data: rooms, isLoading, error } = useMeetingRooms(filters.day);
+  const [selectedRoom, setSelectedRoom] = useState<MeetingRoom | null>(null);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [bookingSuccess, setBookingSuccess] = useState<any>(null);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  
   // Fetch availability data for all rooms when filters include day
   const [roomAvailability, setRoomAvailability] = useState<Record<string, Array<{ start_time: string; end_time: string }>>>({});
 
@@ -126,6 +126,22 @@ const MeetingRoomsPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Day 2 Availability Notice */}
+          {filters.day === '2025-07-02' && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+              <div className="flex items-center gap-3">
+                <Calendar className="h-6 w-6 text-blue-500" />
+                <div>
+                  <h2 className="text-lg font-semibold text-blue-900">Day 2 Availability</h2>
+                  <p className="text-blue-800">
+                    Some meeting rooms may not be available on day 2 of the conference. 
+                    Only rooms available on July 2nd are shown below.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Booking Information */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
             <h2 className="text-lg font-semibold text-blue-900 mb-4">Booking Information</h2>
@@ -161,6 +177,9 @@ const MeetingRoomsPage: React.FC = () => {
                   <Filter className="h-4 w-4" />
                   <span className="text-sm">
                     Showing {availableRooms} of {totalRooms} rooms
+                    {filters.day === '2025-07-02' && totalRooms > 0 && (
+                      <span className="text-blue-600 ml-1">(Day 2 available only)</span>
+                    )}
                   </span>
                 </div>
                 {filters.day && filters.startTime && filters.duration > 0 && (
@@ -231,7 +250,9 @@ const MeetingRoomsPage: React.FC = () => {
               <h3 className="text-lg font-medium text-gray-900 mb-2">No Rooms Available</h3>
               <p className="text-gray-600">
                 {rooms && rooms.length > 0
-                  ? 'No rooms match your current filter criteria. Try adjusting your filters or selecting different times.'
+                  ? filters.day === '2025-07-02'
+                    ? 'No rooms are available on day 2 with your current filter criteria. Some rooms may not be available on the second day of the conference.'
+                    : 'No rooms match your current filter criteria. Try adjusting your filters or selecting different times.'
                   : 'There are no meeting rooms available at this time.'}
               </p>
               {rooms && rooms.length > 0 && (
@@ -267,6 +288,7 @@ const MeetingRoomsPage: React.FC = () => {
                   <li>• Available during conference dates only</li>
                   <li>• Free of charge for all attendees</li>
                   <li>• Instant confirmation via email</li>
+                  <li>• Some rooms may not be available on day 2</li>
                 </ul>
               </div>
               <div>

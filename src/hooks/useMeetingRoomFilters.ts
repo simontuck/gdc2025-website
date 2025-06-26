@@ -25,6 +25,11 @@ export function useMeetingRoomFilters(
 
     let filteredRooms = [...rooms];
 
+    // Filter by day availability (this is now handled in the query, but we keep this for safety)
+    if (filters.day === '2025-07-02') {
+      filteredRooms = filteredRooms.filter(room => room.available_day2);
+    }
+
     // Filter by exact capacity match (not minimum capacity)
     if (filters.minCapacity > 0) {
       filteredRooms = filteredRooms.filter(room => 

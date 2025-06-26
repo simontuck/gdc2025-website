@@ -10,6 +10,7 @@ export interface MeetingRoom {
   amenities: string[];
   image_url: string;
   is_active: boolean;
+  available_day2: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -41,15 +42,21 @@ export interface BookingRequest {
   duration_hours: number;
 }
 
-export function useMeetingRooms() {
+export function useMeetingRooms(selectedDate?: string) {
   return useQuery({
-    queryKey: ['meeting-rooms'],
+    queryKey: ['meeting-rooms', selectedDate],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from('meeting_rooms')
         .select('*')
-        .eq('is_active', true)
-        .order('name', { ascending: true }); // Sort by name alphabetically
+        .eq('is_active', true);
+
+      // Filter out rooms that are not available on day 2 if day 2 is selected
+      if (selectedDate === '2025-07-02') {
+        query = query.eq('available_day2', true);
+      }
+
+      const { data, error } = await query.order('name', { ascending: true });
 
       if (error) throw error;
       return data as MeetingRoom[];
@@ -80,21 +87,26 @@ export function useCreateFreeBooking() {
 
   return useMutation({
     mutationFn: async (booking: BookingRequest) => {
+      // First, check if the room is available on the selected date
+      const { data: room, error: roomError } = await supabase
+        .from('meeting_rooms')
+        .select('hourly_rate, available_day2')
+        .eq('id', booking.room_id)
+        .single();
+
+      if (roomError) throw roomError;
+
+      // Check if trying to book on day 2 when room is not available
+      if (booking.booking_date === '2025-07-02' && !room.available_day2) {
+        throw new Error('This room is not available on day 2 of the conference');
+      }
+
       // Calculate end time based on duration in hours (including 30-minute increments)
       const startMinutes = parseInt(booking.start_time.split(':')[0]) * 60 + parseInt(booking.start_time.split(':')[1]);
       const endMinutes = startMinutes + (booking.duration_hours * 60);
       const endHours = Math.floor(endMinutes / 60);
       const endMins = endMinutes % 60;
       const end_time = `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`;
-
-      // Get room details for total calculation (keeping for compatibility)
-      const { data: room, error: roomError } = await supabase
-        .from('meeting_rooms')
-        .select('hourly_rate')
-        .eq('id', booking.room_id)
-        .single();
-
-      if (roomError) throw roomError;
 
       // Calculate total amount (set to 0 for free bookings)
       const total_amount = 0;
@@ -141,6 +153,7 @@ export function useCreateFreeBooking() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['room-availability', data.room_id, data.booking_date] });
       queryClient.invalidateQueries({ queryKey: ['user-bookings'] });
+      queryClient.invalidateQueries({ queryKey: ['meeting-rooms'] });
     },
   });
 }
