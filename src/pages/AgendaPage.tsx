@@ -354,12 +354,12 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
                           {/* Compact metadata table with clickable badges */}
                           {renderMetadataTable(item)}
 
-                          {/* Organizers - using the new logic */}
+                          {/* Co-organizers - using the new logic */}
                           {organizersData && (
                             <div className="mt-4">
                               <div className="flex items-center gap-2 mb-2">
                                 <Building2 className="h-4 w-4 text-gray-500" />
-                                <h4 className="text-sm font-medium text-gray-700">Organizers</h4>
+                                <h4 className="text-sm font-medium text-gray-700">Co-organizers</h4>
                               </div>
                               <p className="text-sm text-gray-600">{organizersData}</p>
                             </div>

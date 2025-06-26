@@ -15,7 +15,7 @@ const filterLabels: Record<keyof FilterOptions, string> = {
   level: 'Level',
   goals: 'Goals',
   regions: 'Regions',
-  'co-organizer': 'Organizer',
+  'co-organizer': 'Co-organizer',
   'building blocks': 'Building Blocks',
   format: 'Format'
 };
