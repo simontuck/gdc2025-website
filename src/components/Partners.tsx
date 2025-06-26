@@ -10,7 +10,9 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/01_Intergovernmental_Organisation/european_commission.png',
     '/GC25_logos/01_Intergovernmental_Organisation/ITU.png',
     '/GC25_logos/01_Intergovernmental_Organisation/OECD.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/unctad.jpeg',
     '/GC25_logos/01_Intergovernmental_Organisation/unece.png',
+    '/GC25_logos/01_Intergovernmental_Organisation/unhcr_logo_black_and_white_1.png',
     '/GC25_logos/01_Intergovernmental_Organisation/UNICC.png',
     '/GC25_logos/01_Intergovernmental_Organisation/who.png',
     '/GC25_logos/01_Intergovernmental_Organisation/world_bank.png',
@@ -18,6 +20,8 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
 
   const standardsLogos = [
     '/GC25_logos/02_Standard_development_Organisations/ccc_logo_grayscale.png',
+    '/GC25_logos/02_Standard_development_Organisations/cen_541c_no_background_black.png',
+    '/GC25_logos/02_Standard_development_Organisations/cenelec_logo_simple_cmjn_grey_1.png',
     '/GC25_logos/02_Standard_development_Organisations/csc.png',
     '/GC25_logos/02_Standard_development_Organisations/dif.png',
     '/GC25_logos/02_Standard_development_Organisations/etsi.png',
@@ -31,6 +35,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/03_Open_Source_Organisations/eclipse_foundation.png',
     '/GC25_logos/03_Open_Source_Organisations/FINOS.png',
     '/GC25_logos/03_Open_Source_Organisations/LFDT.png',
+    '/GC25_logos/03_Open_Source_Organisations/openmobilehub_horizontal_black.svg',
     '/GC25_logos/03_Open_Source_Organisations/openwallet_logo_color_with_descriptor.webp',
     '/GC25_logos/03_Open_Source_Organisations/tanzania_logo.png',
   ].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
@@ -55,6 +60,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
     '/GC25_logos/04_Non-Governmental_Organisations/EReg.png',
     '/GC25_logos/04_Non-Governmental_Organisations/fides.png',
     '/GC25_logos/04_Non-Governmental_Organisations/gleif.png',
+    '/GC25_logos/04_Non-Governmental_Organisations/gtf_logo_hi_res.png',
     '/GC25_logos/04_Non-Governmental_Organisations/ispirt.png',
     '/GC25_logos/04_Non-Governmental_Organisations/Mosip.png',
     '/GC25_logos/04_Non-Governmental_Organisations/pli.png',
