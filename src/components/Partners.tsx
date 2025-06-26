@@ -116,7 +116,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
                 {category.logos.map((logo, logoIndex) => (
                   <div 
                     key={logoIndex} 
-                    className="flex items-center justify-center h-24 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="flex items-center justify-center h-24 p-4"
                   >
                     <img
                       src={logo}
