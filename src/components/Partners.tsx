@@ -21,7 +21,7 @@ const CoOrganizers: React.FC<CoOrganizersProps> = ({ onCoOrganizerClick }) => {
   const standardsLogos = [
     '/GC25_logos/02_Standard_development_Organisations/ccc_logo_grayscale.png',
     '/GC25_logos/02_Standard_development_Organisations/cen_541c_no_background_black.png',
-    '/GC25_logos/02_Standard_development_Organisations/cenelec_logo_simple_cmjn_grey_1.png',
+    '/GC25_logos/02_Standard_development_Organisations/cenelec_logo_simple_cmjn_grey_1_resized.png',
     '/GC25_logos/02_Standard_development_Organisations/csc.png',
     '/GC25_logos/02_Standard_development_Organisations/dif.png',
     '/GC25_logos/02_Standard_development_Organisations/etsi.png',
