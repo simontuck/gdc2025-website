@@ -131,10 +131,11 @@ export function useAgendaFilters(agendaItems: AgendaItem[] | undefined) {
       options.format.push(...formats);
     });
 
-    // Remove duplicates and sort
+    // Remove duplicates and sort alphabetically (case-insensitive)
     Object.keys(options).forEach(key => {
       const filterKey = key as keyof FilterOptions;
-      options[filterKey] = [...new Set(options[filterKey])].sort();
+      options[filterKey] = [...new Set(options[filterKey])]
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
     });
 
     return options;
