@@ -14,6 +14,7 @@ import EventRegistrationTermsPage from './pages/EventRegistrationTermsPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelledPage from './pages/PaymentCancelledPage';
 import MeetingRoomsPage from './pages/MeetingRoomsPage';
+import NameTagGeneratorPage from './pages/NameTagGeneratorPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -51,6 +52,7 @@ const AppContent = () => {
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
         <Route path="/meeting-rooms" element={<MeetingRoomsPage />} />
+        <Route path="/visual-generator" element={<NameTagGeneratorPage />} />
         <Route path="/imprint" element={<ImprintPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/event-registration-terms" element={<EventRegistrationTermsPage />} />
