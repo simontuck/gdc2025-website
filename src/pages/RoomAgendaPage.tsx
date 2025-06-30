@@ -255,31 +255,78 @@ const RoomAgendaPage: React.FC = () => {
     return title.substring(0, maxLength).trim() + '...';
   };
 
+  // Helper function to format time properly
+  const formatTime = (timeString: string): string => {
+    if (!timeString || typeof timeString !== 'string') {
+      return '';
+    }
+
+    // Handle different time formats
+    const timeMatch = timeString.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+    if (!timeMatch) {
+      return timeString; // Return original if it doesn't match expected format
+    }
+
+    const hours = parseInt(timeMatch[1], 10);
+    const minutes = parseInt(timeMatch[2], 10);
+
+    // Validate hours and minutes
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+      return timeString; // Return original if invalid
+    }
+
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const displayHour = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+    
+    return `${displayHour}:${minutes.toString().padStart(2, '0')} ${period}`;
+  };
+
   // Helper function to calculate end time and format time range
   const formatTimeRange = (startTime: string): string => {
-    if (!startTime) return '';
+    if (!startTime || typeof startTime !== 'string') {
+      return '';
+    }
     
-    const [hours, minutes] = startTime.split(':').map(Number);
-    const startDate = new Date();
-    startDate.setHours(hours, minutes, 0, 0);
-    
-    // Assume 1 hour duration for most sessions
-    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
-    
-    const formatTime = (date: Date) => {
-      const h = date.getHours();
-      const m = date.getMinutes();
-      const period = h >= 12 ? 'PM' : 'AM';
-      const displayHour = h > 12 ? h - 12 : h === 0 ? 12 : h;
-      return `${displayHour}:${m.toString().padStart(2, '0')} ${period}`;
+    // Parse the start time
+    const timeMatch = startTime.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+    if (!timeMatch) {
+      return startTime; // Return original if it doesn't match expected format
+    }
+
+    const startHours = parseInt(timeMatch[1], 10);
+    const startMinutes = parseInt(timeMatch[2], 10);
+
+    // Validate the parsed time
+    if (isNaN(startHours) || isNaN(startMinutes) || startHours < 0 || startHours > 23 || startMinutes < 0 || startMinutes > 59) {
+      return startTime; // Return original if invalid
+    }
+
+    // Calculate end time (assume 1 hour duration)
+    let endHours = startHours + 1;
+    let endMinutes = startMinutes;
+
+    // Handle hour overflow
+    if (endHours > 23) {
+      endHours = 23;
+      endMinutes = 59;
+    }
+
+    // Format both times
+    const formatSingleTime = (hours: number, minutes: number) => {
+      const period = hours >= 12 ? 'PM' : 'AM';
+      const displayHour = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+      return `${displayHour}:${minutes.toString().padStart(2, '0')} ${period}`;
     };
-    
-    const startFormatted = formatTime(startDate);
-    const endFormatted = formatTime(endDate);
+
+    const startFormatted = formatSingleTime(startHours, startMinutes);
+    const endFormatted = formatSingleTime(endHours, endMinutes);
     
     // If both times have the same period, only show period once
-    if (startFormatted.endsWith(endFormatted.slice(-2))) {
-      const startWithoutPeriod = startFormatted.slice(0, -3);
+    const startPeriod = startHours >= 12 ? 'PM' : 'AM';
+    const endPeriod = endHours >= 12 ? 'PM' : 'AM';
+    
+    if (startPeriod === endPeriod) {
+      const startWithoutPeriod = startFormatted.replace(/ (AM|PM)$/, '');
       return `${startWithoutPeriod} - ${endFormatted}`;
     }
     
