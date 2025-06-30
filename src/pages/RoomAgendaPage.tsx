@@ -57,12 +57,14 @@ const RoomAgendaPage: React.FC = () => {
     // You could add logic here to determine session length and apply different styles
     const baseClass = 'p-3 rounded-lg border-l-4 hover:shadow-md transition-shadow cursor-pointer';
     
-    // Color coding by format or category
-    if (item.format?.toLowerCase().includes('keynote')) {
+    // Color coding by format or category - safely convert format to string
+    const formatString = String(item.format || '').toLowerCase();
+    
+    if (formatString.includes('keynote')) {
       return `${baseClass} bg-purple-50 border-purple-400 hover:bg-purple-100`;
-    } else if (item.format?.toLowerCase().includes('workshop')) {
+    } else if (formatString.includes('workshop')) {
       return `${baseClass} bg-blue-50 border-blue-400 hover:bg-blue-100`;
-    } else if (item.format?.toLowerCase().includes('panel')) {
+    } else if (formatString.includes('panel')) {
       return `${baseClass} bg-green-50 border-green-400 hover:bg-green-100`;
     } else {
       return `${baseClass} bg-gray-50 border-gray-400 hover:bg-gray-100`;
@@ -210,7 +212,7 @@ const RoomAgendaPage: React.FC = () => {
                                   {session.format && (
                                     <div className="flex items-center gap-2 mb-2">
                                       <span className="inline-block px-2 py-1 text-xs font-medium bg-white rounded border">
-                                        {session.format}
+                                        {String(session.format)}
                                       </span>
                                     </div>
                                   )}
