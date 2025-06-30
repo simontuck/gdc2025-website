@@ -215,11 +215,75 @@ const RoomAgendaPage: React.FC = () => {
     return roomName.trim().replace(/^Room\s+/i, '');
   };
 
+  // Helper function for natural/numeric sorting
+  const naturalSort = (a: string, b: string): number => {
+    // Split strings into parts (text and numbers)
+    const aParts = a.match(/(\d+|\D+)/g) || [];
+    const bParts = b.match(/(\d+|\D+)/g) || [];
+    
+    const maxLength = Math.max(aParts.length, bParts.length);
+    
+    for (let i = 0; i < maxLength; i++) {
+      const aPart = aParts[i] || '';
+      const bPart = bParts[i] || '';
+      
+      // Check if both parts are numbers
+      const aNum = parseInt(aPart, 10);
+      const bNum = parseInt(bPart, 10);
+      
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        // Both are numbers, compare numerically
+        if (aNum !== bNum) {
+          return aNum - bNum;
+        }
+      } else {
+        // At least one is text, compare as strings
+        const comparison = aPart.localeCompare(bPart, undefined, { numeric: true, sensitivity: 'base' });
+        if (comparison !== 0) {
+          return comparison;
+        }
+      }
+    }
+    
+    return 0;
+  };
+
   // Helper function to truncate title for print view
   const truncateTitle = (title: string, maxLength: number = 50): string => {
     if (!title) return '';
     if (title.length <= maxLength) return title;
     return title.substring(0, maxLength).trim() + '...';
+  };
+
+  // Helper function to calculate end time and format time range
+  const formatTimeRange = (startTime: string): string => {
+    if (!startTime) return '';
+    
+    const [hours, minutes] = startTime.split(':').map(Number);
+    const startDate = new Date();
+    startDate.setHours(hours, minutes, 0, 0);
+    
+    // Assume 1 hour duration for most sessions
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+    
+    const formatTime = (date: Date) => {
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const period = h >= 12 ? 'PM' : 'AM';
+      const displayHour = h > 12 ? h - 12 : h === 0 ? 12 : h;
+      return `${displayHour}:${m.toString().padStart(2, '0')} ${period}`;
+    };
+    
+    const startFormatted = formatTime(startDate);
+    const endFormatted = formatTime(endDate);
+    
+    // If both times have the same period, only show period once
+    if (startFormatted.endsWith(endFormatted.slice(-2))) {
+      const startWithoutPeriod = startFormatted.slice(0, -3);
+      return `${startWithoutPeriod} - ${endFormatted}`;
+    }
+    
+    return `${startFormatted} - ${endFormatted}`;
   };
 
   // Filter and process agenda items for Day 2
@@ -246,7 +310,7 @@ const RoomAgendaPage: React.FC = () => {
   const { roomSchedule, timeSlots, rooms } = useMemo(() => {
     // Extract unique rooms and time slots, cleaning room names
     const cleanedRooms = filteredAgendaItems.map(item => cleanRoomName(item.room));
-    const uniqueRooms = [...new Set(cleanedRooms)].filter(Boolean).sort();
+    const uniqueRooms = [...new Set(cleanedRooms)].filter(Boolean).sort(naturalSort);
     const uniqueTimeSlots = [...new Set(filteredAgendaItems.map(item => item.time))].sort();
 
     // Create schedule object: { timeSlot: { cleanedRoom: item } }
@@ -273,7 +337,7 @@ const RoomAgendaPage: React.FC = () => {
   const allAvailableRooms = useMemo(() => {
     if (!dayFilteredItems) return [];
     const cleanedRooms = dayFilteredItems.map(item => cleanRoomName(item.room));
-    return [...new Set(cleanedRooms)].filter(Boolean).sort();
+    return [...new Set(cleanedRooms)].filter(Boolean).sort(naturalSort);
   }, [dayFilteredItems]);
 
   const handleRoomToggle = (room: string) => {
@@ -286,16 +350,6 @@ const RoomAgendaPage: React.FC = () => {
 
   const clearRoomFilters = () => {
     setSelectedRooms([]);
-  };
-
-  // Helper function to format time
-  const formatTime = (time: string) => {
-    if (!time) return '';
-    const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours);
-    const period = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
-    return `${displayHour}:${minutes} ${period}`;
   };
 
   const handleSessionClick = (session: any) => {
@@ -513,7 +567,7 @@ const RoomAgendaPage: React.FC = () => {
                         <tr key={timeSlot} className="hover:bg-gray-50 print:hover:bg-white">
                           <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black sticky left-0 z-10">
                             <div className="print:text-2xs">
-                              {formatTime(timeSlot)}
+                              {formatTimeRange(timeSlot)}
                             </div>
                           </td>
                           {rooms.map((room) => {
