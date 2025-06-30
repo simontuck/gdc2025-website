@@ -118,100 +118,165 @@ const RoomAgendaFilters: React.FC<RoomAgendaFiltersProps> = ({
   availableRooms
 }) => {
   const hasActiveFilters = Object.values(activeFilters).some(values => values.length > 0);
+  const hasRoomFilters = activeFilters.selectedRooms.length > 0;
+  const hasOtherFilters = Object.entries(activeFilters).some(([key, values]) => 
+    key !== 'selectedRooms' && values.length > 0
+  );
+
+  const handleRoomToggle = (room: string) => {
+    const newSelectedRooms = activeFilters.selectedRooms.includes(room)
+      ? activeFilters.selectedRooms.filter(r => r !== room)
+      : [...activeFilters.selectedRooms, room];
+    onFilterChange('selectedRooms', newSelectedRooms);
+  };
+
+  const clearRoomFilters = () => {
+    onFilterChange('selectedRooms', []);
+  };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Filter Sessions</h3>
-        {hasActiveFilters && (
-          <button
-            onClick={onClearFilters}
-            className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-          >
-            <X className="h-4 w-4 mr-1" />
-            Clear All
-          </button>
+    <div className="space-y-6 mb-8">
+      {/* Room Filter Pills */}
+      {availableRooms.length > 0 && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-primary-500" />
+              <h3 className="text-lg font-semibold text-gray-900">Filter by Room</h3>
+            </div>
+            {hasRoomFilters && (
+              <button
+                onClick={clearRoomFilters}
+                className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear Rooms
+              </button>
+            )}
+          </div>
+          
+          <div className="flex flex-wrap gap-2">
+            {availableRooms.map((room) => {
+              const isSelected = activeFilters.selectedRooms.includes(room);
+              return (
+                <button
+                  key={room}
+                  onClick={() => handleRoomToggle(room)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    isSelected
+                      ? 'bg-primary-500 text-white shadow-md hover:bg-primary-600'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+                  }`}
+                >
+                  {room}
+                </button>
+              );
+            })}
+          </div>
+          
+          {hasRoomFilters && (
+            <div className="mt-3 text-sm text-gray-600">
+              {activeFilters.selectedRooms.length === 0 
+                ? 'Showing all rooms' 
+                : `Showing ${activeFilters.selectedRooms.length} of ${availableRooms.length} rooms`
+              }
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Main Filters */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Filter Sessions</h3>
+          {hasOtherFilters && (
+            <button
+              onClick={() => {
+                // Clear all filters except room filters
+                const clearedFilters = { ...activeFilters };
+                Object.keys(clearedFilters).forEach(key => {
+                  if (key !== 'selectedRooms') {
+                    (clearedFilters as any)[key] = [];
+                  }
+                });
+                Object.entries(clearedFilters).forEach(([key, value]) => {
+                  if (key !== 'selectedRooms') {
+                    onFilterChange(key as keyof RoomActiveFilters, value as string[]);
+                  }
+                });
+              }}
+              className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear Filters
+            </button>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Other filters */}
+          {(Object.keys(filterOptions) as Array<keyof FilterOptions>).map((category) => {
+            if (category === 'rooms') return null; // Skip rooms as we handle it separately
+            
+            const options = filterOptions[category];
+            const selectedValues = activeFilters[category as keyof RoomActiveFilters] as string[];
+            
+            if (options.length === 0) return null;
+
+            return (
+              <MultiSelectDropdown
+                key={category}
+                label={filterLabels[category as keyof typeof filterLabels]}
+                options={options}
+                selectedValues={selectedValues}
+                onChange={(values) => onFilterChange(category as keyof RoomActiveFilters, values)}
+              />
+            );
+          })}
+        </div>
+
+        {hasOtherFilters && (
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm text-gray-600">Active filters:</span>
+              
+              {/* Other filters */}
+              {(Object.entries(activeFilters) as Array<[keyof RoomActiveFilters, string[]]>).map(([category, values]) => {
+                if (category === 'selectedRooms' || values.length === 0) return null;
+                
+                return values.map((value) => (
+                  <span
+                    key={`${category}-${value}`}
+                    className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
+                  >
+                    {filterLabels[category as keyof typeof filterLabels]}: {value}
+                    <button
+                      onClick={() => {
+                        const newValues = values.filter(v => v !== value);
+                        onFilterChange(category, newValues);
+                      }}
+                      className="ml-1.5 h-3 w-3 rounded-full hover:bg-primary-200 flex items-center justify-center"
+                    >
+                      <X className="h-2 w-2" />
+                    </button>
+                  </span>
+                ));
+              })}
+            </div>
+          </div>
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Room Filter */}
-        <MultiSelectDropdown
-          label="Rooms"
-          options={availableRooms}
-          selectedValues={activeFilters.selectedRooms}
-          onChange={(values) => onFilterChange('selectedRooms', values)}
-          icon={<MapPin className="h-4 w-4 text-gray-500" />}
-        />
-
-        {/* Other filters */}
-        {(Object.keys(filterOptions) as Array<keyof FilterOptions>).map((category) => {
-          if (category === 'rooms') return null; // Skip rooms as we handle it separately
-          
-          const options = filterOptions[category];
-          const selectedValues = activeFilters[category as keyof RoomActiveFilters] as string[];
-          
-          if (options.length === 0) return null;
-
-          return (
-            <MultiSelectDropdown
-              key={category}
-              label={filterLabels[category as keyof typeof filterLabels]}
-              options={options}
-              selectedValues={selectedValues}
-              onChange={(values) => onFilterChange(category as keyof RoomActiveFilters, values)}
-            />
-          );
-        })}
-      </div>
-
+      {/* Clear All Button */}
       {hasActiveFilters && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <div className="flex flex-wrap gap-2">
-            <span className="text-sm text-gray-600">Active filters:</span>
-            
-            {/* Room filters */}
-            {activeFilters.selectedRooms.map((room) => (
-              <span
-                key={`room-${room}`}
-                className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
-              >
-                Room: {room}
-                <button
-                  onClick={() => {
-                    const newValues = activeFilters.selectedRooms.filter(r => r !== room);
-                    onFilterChange('selectedRooms', newValues);
-                  }}
-                  className="ml-1.5 h-3 w-3 rounded-full hover:bg-primary-200 flex items-center justify-center"
-                >
-                  <X className="h-2 w-2" />
-                </button>
-              </span>
-            ))}
-
-            {/* Other filters */}
-            {(Object.entries(activeFilters) as Array<[keyof RoomActiveFilters, string[]]>).map(([category, values]) => {
-              if (category === 'selectedRooms' || values.length === 0) return null;
-              
-              return values.map((value) => (
-                <span
-                  key={`${category}-${value}`}
-                  className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
-                >
-                  {filterLabels[category as keyof typeof filterLabels]}: {value}
-                  <button
-                    onClick={() => {
-                      const newValues = values.filter(v => v !== value);
-                      onFilterChange(category, newValues);
-                    }}
-                    className="ml-1.5 h-3 w-3 rounded-full hover:bg-primary-200 flex items-center justify-center"
-                  >
-                    <X className="h-2 w-2" />
-                  </button>
-                </span>
-              ));
-            })}
-          </div>
+        <div className="text-center">
+          <button
+            onClick={onClearFilters}
+            className="inline-flex items-center px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Clear All Filters
+          </button>
         </div>
       )}
     </div>
