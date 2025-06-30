@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2, Filter } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2, Filter, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
 import { useAgendaFilters } from '../hooks/useAgendaFilters';
@@ -60,7 +60,7 @@ const SessionModal: React.FC<SessionModalProps> = ({ session, isOpen, onClose })
   const organizersData = getOrganizersData(session);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <div className="fixed inset-0 z-50 overflow-y-auto print:hidden">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" onClick={onClose}>
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -334,6 +334,11 @@ const RoomAgendaPage: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  // Handle print
+  const handlePrint = () => {
+    window.print();
+  };
+
   if (isLoading) {
     return (
       <div className="pt-20">
@@ -386,10 +391,10 @@ const RoomAgendaPage: React.FC = () => {
   }
 
   return (
-    <div className="pt-20">
-      <section className="bg-primary-700 text-white py-16">
+    <div className="pt-20 print:pt-0">
+      <section className="bg-primary-700 text-white py-16 print:bg-white print:text-black print:py-4">
         <div className="container">
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-6 print:hidden">
             <Link 
               to="/agenda" 
               className="inline-flex items-center text-white/80 hover:text-white transition-colors"
@@ -398,40 +403,53 @@ const RoomAgendaPage: React.FC = () => {
               Back to Full Agenda
             </Link>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Agenda by Room</h1>
-          <p className="text-xl text-white/90 max-w-3xl">
-            Day 2 (Wednesday, July 2, 2025) schedule organized by meeting rooms for easier navigation
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-2xl print:mb-2">Agenda by Room</h1>
+          <p className="text-xl text-white/90 max-w-3xl print:text-gray-700 print:text-base">
+            Day 2 (Wednesday, July 2, 2025) schedule organized by meeting rooms
           </p>
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="py-16 print:py-4">
         <div className="container">
-          {/* Filters */}
-          <RoomAgendaFilters
-            filterOptions={filterOptions}
-            activeFilters={activeFilters}
-            onFilterChange={handleFilterChange}
-            onClearFilters={handleClearFilters}
-            availableRooms={allAvailableRooms}
-          />
-
-          {/* Results Summary */}
-          {dayFilteredItems && (
+          {/* Print Button and Filters - Hidden in print */}
+          <div className="print:hidden">
             <div className="mb-6 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Filter className="h-4 w-4" />
-                  <span className="text-sm">
-                    Showing {rooms.length} room{rooms.length !== 1 ? 's' : ''} with {filteredAgendaItems.length} session{filteredAgendaItems.length !== 1 ? 's' : ''}
-                  </span>
+              <button
+                onClick={handlePrint}
+                className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                Print Schedule
+              </button>
+            </div>
+
+            {/* Filters */}
+            <RoomAgendaFilters
+              filterOptions={filterOptions}
+              activeFilters={activeFilters}
+              onFilterChange={handleFilterChange}
+              onClearFilters={handleClearFilters}
+              availableRooms={allAvailableRooms}
+            />
+
+            {/* Results Summary */}
+            {dayFilteredItems && (
+              <div className="mb-6 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Filter className="h-4 w-4" />
+                    <span className="text-sm">
+                      Showing {rooms.length} room{rooms.length !== 1 ? 's' : ''} with {filteredAgendaItems.length} session{filteredAgendaItems.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {rooms.length === 0 ? (
-            <div className="bg-gray-50 rounded-lg p-8 text-center">
+            <div className="bg-gray-50 rounded-lg p-8 text-center print:hidden">
               <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">
                 {allAvailableRooms.length === 0 ? 'No Room Assignments Yet' : 'No Sessions Match Filters'}
@@ -452,25 +470,25 @@ const RoomAgendaPage: React.FC = () => {
               )}
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none">
               {/* Table Header */}
               <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
+                <table className="w-full print:text-xs">
+                  <thead className="bg-gray-50 print:bg-gray-100">
                     <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px]">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px] print:px-2 print:py-2 print:text-xs print:min-w-[80px]">
                         <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4" />
+                          <Clock className="h-4 w-4 print:h-3 print:w-3" />
                           Time
                         </div>
                       </th>
                       {rooms.map((room) => (
                         <th 
                           key={room} 
-                          className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[250px]"
+                          className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[250px] print:px-2 print:py-2 print:text-xs print:min-w-[120px]"
                         >
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-primary-500" />
+                            <MapPin className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
                             {room}
                           </div>
                         </th>
@@ -479,8 +497,8 @@ const RoomAgendaPage: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {timeSlots.map((timeSlot) => (
-                      <tr key={timeSlot} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top">
+                      <tr key={timeSlot} className="hover:bg-gray-50 print:hover:bg-white">
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-2 print:py-2 print:text-xs print:bg-gray-100">
                           {formatTime(timeSlot)}
                         </td>
                         {rooms.map((room) => {
@@ -488,38 +506,41 @@ const RoomAgendaPage: React.FC = () => {
                           return (
                             <td 
                               key={`${timeSlot}-${room}`} 
-                              className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top"
+                              className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top print:px-2 print:py-2"
                             >
                               {session ? (
                                 <div 
-                                  className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300"
-                                  onClick={() => handleSessionClick(session)}
+                                  className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300"
+                                  onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
                                 >
-                                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2 print:text-xs print:mb-1 print:font-medium">
                                     {session.title}
                                   </h4>
-                                  {session.format && (
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded border">
-                                        {String(session.format)}
-                                      </span>
-                                    </div>
-                                  )}
-                                  {session.speakers && (
-                                    <div className="flex items-center gap-1 text-xs text-gray-600">
-                                      <Users className="h-3 w-3" />
-                                      <span className="line-clamp-1">{session.speakers}</span>
-                                    </div>
-                                  )}
-                                  {session.description && (
-                                    <p className="text-xs text-gray-600 mt-2 line-clamp-2">
-                                      {session.description}
-                                    </p>
-                                  )}
+                                  {/* Hide details in print view */}
+                                  <div className="print:hidden">
+                                    {session.format && (
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded border">
+                                          {String(session.format)}
+                                        </span>
+                                      </div>
+                                    )}
+                                    {session.speakers && (
+                                      <div className="flex items-center gap-1 text-xs text-gray-600">
+                                        <Users className="h-3 w-3" />
+                                        <span className="line-clamp-1">{session.speakers}</span>
+                                      </div>
+                                    )}
+                                    {session.description && (
+                                      <p className="text-xs text-gray-600 mt-2 line-clamp-2">
+                                        {session.description}
+                                      </p>
+                                    )}
+                                  </div>
                                 </div>
                               ) : (
-                                <div className="h-16 flex items-center justify-center text-gray-400 text-sm">
-                                  No session
+                                <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-8 print:text-xs">
+                                  —
                                 </div>
                               )}
                             </td>
@@ -533,8 +554,8 @@ const RoomAgendaPage: React.FC = () => {
             </div>
           )}
 
-          {/* Back to Full Agenda */}
-          <div className="mt-8 text-center">
+          {/* Back to Full Agenda - Hidden in print */}
+          <div className="mt-8 text-center print:hidden">
             <Link 
               to="/agenda" 
               className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
