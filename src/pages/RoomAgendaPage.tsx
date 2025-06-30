@@ -419,7 +419,7 @@ const RoomAgendaPage: React.FC = () => {
       <div className="pt-20">
         <section className="bg-primary-700 text-white py-16">
           <div className="container">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Agenda by Room</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Conference Agenda</h1>
             <p className="text-xl text-white/90 max-w-3xl">
               Day 2 schedule organized by meeting rooms
             </p>
@@ -441,7 +441,7 @@ const RoomAgendaPage: React.FC = () => {
       <div className="pt-20">
         <section className="bg-primary-700 text-white py-16">
           <div className="container">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Agenda by Room</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Conference Agenda</h1>
             <p className="text-xl text-white/90 max-w-3xl">
               Day 2 schedule organized by meeting rooms
             </p>
@@ -475,11 +475,11 @@ const RoomAgendaPage: React.FC = () => {
               className="inline-flex items-center text-white/80 hover:text-white transition-colors"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Full Agenda
+              View Detailed Agenda
             </Link>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-lg print:mb-1 print:text-black print:font-bold">
-            Day 2 Agenda by Room
+            Conference Agenda
           </h1>
           <p className="text-xl text-white/90 max-w-3xl print:text-gray-700 print:text-2xs print:mb-2">
             Wednesday, July 2, 2025 - Schedule organized by meeting rooms
@@ -665,14 +665,14 @@ const RoomAgendaPage: React.FC = () => {
             </div>
           )}
 
-          {/* Back to Full Agenda - Hidden in print */}
+          {/* Back to Detailed Agenda - Hidden in print */}
           <div className="mt-8 text-center print:hidden">
             <Link 
               to="/agenda" 
               className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
-              View Full Conference Agenda
+              View Detailed Conference Agenda
             </Link>
           </div>
         </div>

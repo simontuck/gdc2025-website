@@ -17,7 +17,7 @@ const Agenda: React.FC<AgendaProps> = ({ onIdeaClick }) => {
           </p>
           <div className="mt-8">
             <Link 
-              to="/agenda" 
+              to="/agenda-by-room" 
               className="btn btn-primary inline-flex items-center justify-center w-full md:w-auto md:min-w-[300px]"
             >
               View Conference Agenda

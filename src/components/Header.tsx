@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             ) : (
               <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
             )}
-            <Link to="/agenda" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
+            <Link to="/agenda-by-room" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
             <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
             {location.pathname === '/' ? (
               <button
@@ -130,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">Co-Organizers</Link>
               )}
               <Link 
-                to="/agenda" 
+                to="/agenda-by-room" 
                 className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
