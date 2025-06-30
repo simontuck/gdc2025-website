@@ -249,7 +249,7 @@ const RoomAgendaPage: React.FC = () => {
   };
 
   // Helper function to truncate title for print view
-  const truncateTitle = (title: string, maxLength: number = 50): string => {
+  const truncateTitle = (title: string, maxLength: number = 40): string => {
     if (!title) return '';
     if (title.length <= maxLength) return title;
     return title.substring(0, maxLength).trim() + '...';
@@ -353,24 +353,24 @@ const RoomAgendaPage: React.FC = () => {
     });
   }, [dayFilteredItems, selectedRooms]);
 
-  // Generate room schedule from filtered items
+  // Generate room schedule from filtered items - FLIPPED: rooms as rows, time slots as columns
   const { roomSchedule, timeSlots, rooms } = useMemo(() => {
     // Extract unique rooms and time slots, cleaning room names
     const cleanedRooms = filteredAgendaItems.map(item => cleanRoomName(item.room));
     const uniqueRooms = [...new Set(cleanedRooms)].filter(Boolean).sort(naturalSort);
     const uniqueTimeSlots = [...new Set(filteredAgendaItems.map(item => item.time))].sort();
 
-    // Create schedule object: { timeSlot: { cleanedRoom: item } }
+    // Create schedule object: { cleanedRoom: { timeSlot: item } }
     const schedule: Record<string, Record<string, any>> = {};
     
     filteredAgendaItems.forEach(item => {
       const cleanedRoom = cleanRoomName(item.room);
       if (!cleanedRoom) return; // Skip items without valid room names
       
-      if (!schedule[item.time]) {
-        schedule[item.time] = {};
+      if (!schedule[cleanedRoom]) {
+        schedule[cleanedRoom] = {};
       }
-      schedule[item.time][cleanedRoom] = item;
+      schedule[cleanedRoom][item.time] = item;
     });
 
     return {
@@ -585,43 +585,43 @@ const RoomAgendaPage: React.FC = () => {
           ) : (
             <div className="print-table-wrapper">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none print-table-container">
-                {/* Table with sticky headers */}
+                {/* FLIPPED TABLE: Time slots as columns, rooms as rows */}
                 <div className="overflow-x-auto relative">
                   <table className="w-full print:text-2xs">
                     <thead className="bg-gray-50 print:bg-gray-100 sticky top-0 z-10">
                       <tr>
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px] print:px-1 print:py-1 print:text-2xs print:min-w-[60px] print:max-w-[60px] print:font-bold print:text-black sticky left-0 bg-gray-50 print:bg-gray-100 z-20">
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[150px] print:px-1 print:py-1 print:text-2xs print:min-w-[80px] print:font-bold print:text-black sticky left-0 bg-gray-50 print:bg-gray-100 z-20">
                           <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4 print:h-3 print:w-3" />
-                            <span className="print:text-2xs">Time</span>
+                            <MapPin className="h-4 w-4 print:h-3 print:w-3" />
+                            <span className="print:text-2xs">Room</span>
                           </div>
                         </th>
-                        {rooms.map((room) => (
+                        {timeSlots.map((timeSlot) => (
                           <th 
-                            key={room} 
-                            className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[250px] print:px-1 print:py-1 print:text-2xs print:font-bold print:text-black"
+                            key={timeSlot} 
+                            className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[200px] print:px-1 print:py-1 print:text-2xs print:font-bold print:text-black print:min-w-[120px]"
                           >
                             <div className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
-                              <span className="print:text-2xs">{room}</span>
+                              <Clock className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
+                              <span className="print:text-2xs">{formatTimeRange(timeSlot)}</span>
                             </div>
                           </th>
                         ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {timeSlots.map((timeSlot) => (
-                        <tr key={timeSlot} className="hover:bg-gray-50 print:hover:bg-white">
+                      {rooms.map((room) => (
+                        <tr key={room} className="hover:bg-gray-50 print:hover:bg-white">
                           <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black sticky left-0 z-10">
                             <div className="print:text-2xs">
-                              {formatTimeRange(timeSlot)}
+                              {room}
                             </div>
                           </td>
-                          {rooms.map((room) => {
-                            const session = roomSchedule[timeSlot]?.[room];
+                          {timeSlots.map((timeSlot) => {
+                            const session = roomSchedule[room]?.[timeSlot];
                             return (
                               <td 
-                                key={`${timeSlot}-${room}`} 
+                                key={`${room}-${timeSlot}`} 
                                 className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top print:px-1 print:py-1"
                               >
                                 {session ? (
@@ -630,14 +630,23 @@ const RoomAgendaPage: React.FC = () => {
                                     onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
                                   >
                                     {/* Title - smaller font size and truncated in print view */}
-                                    <div className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 print:text-xs print:font-medium print:text-black print:mb-0 print:leading-tight">
+                                    <div className="text-sm font-semibold text-gray-900 mb-2 line-clamp-3 print:text-xs print:font-medium print:text-black print:mb-0 print:leading-tight">
                                       <span className="hidden print:inline print-title-truncated">
-                                        {truncateTitle(session.title, 50)}
+                                        {truncateTitle(session.title, 40)}
                                       </span>
                                       <span className="print:hidden">
                                         {session.title}
                                       </span>
                                     </div>
+                                    
+                                    {/* Format badge - hidden in print for space */}
+                                    {session.format && (
+                                      <div className="print:hidden">
+                                        <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded">
+                                          {String(session.format)}
+                                        </span>
+                                      </div>
+                                    )}
                                   </div>
                                 ) : (
                                   <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-4 print:text-2xs">
