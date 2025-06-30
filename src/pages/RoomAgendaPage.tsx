@@ -6,6 +6,14 @@ import { useAgenda } from '../hooks/useAgenda';
 const RoomAgendaPage: React.FC = () => {
   const { data: agendaItems, isLoading, error } = useAgenda();
 
+  // Helper function to clean room names
+  const cleanRoomName = (roomName: string): string => {
+    if (!roomName) return '';
+    
+    // Trim whitespace and remove "Room " prefix (case insensitive)
+    return roomName.trim().replace(/^Room\s+/i, '');
+  };
+
   // Filter and process agenda items for Day 2
   const { roomSchedule, timeSlots, rooms } = useMemo(() => {
     if (!agendaItems) {
@@ -19,18 +27,22 @@ const RoomAgendaPage: React.FC = () => {
       item.room // Only include items that have a room assigned
     );
 
-    // Extract unique rooms and time slots
-    const uniqueRooms = [...new Set(day2Items.map(item => item.room))].sort();
+    // Extract unique rooms and time slots, cleaning room names
+    const cleanedRooms = day2Items.map(item => cleanRoomName(item.room));
+    const uniqueRooms = [...new Set(cleanedRooms)].filter(Boolean).sort();
     const uniqueTimeSlots = [...new Set(day2Items.map(item => item.time))].sort();
 
-    // Create schedule object: { timeSlot: { room: item } }
+    // Create schedule object: { timeSlot: { cleanedRoom: item } }
     const schedule: Record<string, Record<string, any>> = {};
     
     day2Items.forEach(item => {
+      const cleanedRoom = cleanRoomName(item.room);
+      if (!cleanedRoom) return; // Skip items without valid room names
+      
       if (!schedule[item.time]) {
         schedule[item.time] = {};
       }
-      schedule[item.time][item.room] = item;
+      schedule[item.time][cleanedRoom] = item;
     });
 
     return {
