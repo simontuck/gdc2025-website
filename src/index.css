@@ -47,12 +47,12 @@
 @media print {
   @page {
     margin: 0.5in;
-    size: A4 landscape; /* Set landscape orientation */
+    size: A3 landscape; /* Use A3 landscape for more space */
   }
 
   body {
-    font-size: 10pt;
-    line-height: 1.3;
+    font-size: 9pt;
+    line-height: 1.2;
     color: black !important;
     background: white !important;
   }
@@ -111,6 +111,11 @@
     padding-right: 0.5rem !important;
   }
 
+  .print\:px-1 {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+
   .print\:mb-6 {
     margin-bottom: 1.5rem !important;
   }
@@ -161,12 +166,29 @@
     line-height: 1rem !important;
   }
 
+  .print\:text-2xs {
+    font-size: 0.625rem !important;
+    line-height: 0.875rem !important;
+  }
+
   .print\:font-medium {
     font-weight: 500 !important;
   }
 
+  .print\:font-bold {
+    font-weight: 700 !important;
+  }
+
   .print\:h-8 {
     height: 2rem !important;
+  }
+
+  .print\:h-6 {
+    height: 1.5rem !important;
+  }
+
+  .print\:h-4 {
+    height: 1rem !important;
   }
 
   .print\:h-3 {
@@ -185,6 +207,14 @@
     min-width: 80px !important;
   }
 
+  .print\:min-w-\[60px\] {
+    min-width: 60px !important;
+  }
+
+  .print\:max-w-\[100px\] {
+    max-width: 100px !important;
+  }
+
   /* Print-specific colors */
   .print\:bg-white {
     background-color: white !important;
@@ -194,12 +224,20 @@
     background-color: #f3f4f6 !important;
   }
 
+  .print\:bg-gray-50 {
+    background-color: #f9fafb !important;
+  }
+
   .print\:text-black {
     color: black !important;
   }
 
   .print\:text-gray-700 {
     color: #374151 !important;
+  }
+
+  .print\:text-gray-900 {
+    color: #111827 !important;
   }
 
   .print\:border {
@@ -278,18 +316,38 @@
   /* Optimize table for landscape print */
   table {
     width: 100% !important;
-    font-size: 9pt !important;
+    font-size: 8pt !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
   }
 
   th, td {
-    padding: 4px !important;
+    padding: 2px 4px !important;
     border: 1px solid #d1d5db !important;
     vertical-align: top !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
   }
 
   th {
     background-color: #f3f4f6 !important;
     font-weight: bold !important;
+    font-size: 7pt !important;
+  }
+
+  /* Time column should be narrow */
+  th:first-child,
+  td:first-child {
+    width: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
+  }
+
+  /* Room columns should be equal width */
+  th:not(:first-child),
+  td:not(:first-child) {
+    width: auto !important;
   }
 
   /* Ensure table fits on landscape page */
@@ -300,7 +358,43 @@
   /* Compact spacing for print */
   .container {
     max-width: none !important;
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+
+  /* Session content in table cells */
+  .print-session-content {
+    font-size: 7pt !important;
+    line-height: 1.1 !important;
+    padding: 1px !important;
+  }
+
+  .print-session-title {
+    font-weight: bold !important;
+    font-size: 7pt !important;
+    margin-bottom: 1px !important;
+    display: block !important;
+  }
+
+  /* Force table to use available width efficiently */
+  .print-table-container {
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Ensure proper page breaks for tables */
+  .print-table-wrapper {
+    page-break-inside: auto !important;
+  }
+
+  /* Make sure rows can break across pages if needed */
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* But allow the table to break between rows */
+  tbody tr {
+    page-break-after: auto !important;
   }
 }

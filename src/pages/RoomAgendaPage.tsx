@@ -392,7 +392,7 @@ const RoomAgendaPage: React.FC = () => {
 
   return (
     <div className="pt-20 print:pt-0">
-      <section className="bg-primary-700 text-white py-16 print:bg-white print:text-black print:py-4">
+      <section className="bg-primary-700 text-white py-16 print:bg-white print:text-black print:py-2">
         <div className="container">
           <div className="flex items-center gap-4 mb-6 print:hidden">
             <Link 
@@ -403,14 +403,16 @@ const RoomAgendaPage: React.FC = () => {
               Back to Full Agenda
             </Link>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-2xl print:mb-2">Agenda by Room</h1>
-          <p className="text-xl text-white/90 max-w-3xl print:text-gray-700 print:text-base">
-            Day 2 (Wednesday, July 2, 2025) schedule organized by meeting rooms
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-lg print:mb-1 print:text-black print:font-bold">
+            Day 2 Agenda by Room
+          </h1>
+          <p className="text-xl text-white/90 max-w-3xl print:text-gray-700 print:text-2xs print:mb-2">
+            Wednesday, July 2, 2025 - Schedule organized by meeting rooms
           </p>
         </div>
       </section>
 
-      <section className="py-16 print:py-4">
+      <section className="py-16 print:py-2">
         <div className="container">
           {/* Print Button and Filters - Hidden in print */}
           <div className="print:hidden">
@@ -470,86 +472,90 @@ const RoomAgendaPage: React.FC = () => {
               )}
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none">
-              {/* Table Header */}
-              <div className="overflow-x-auto">
-                <table className="w-full print:text-xs">
-                  <thead className="bg-gray-50 print:bg-gray-100">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px] print:px-2 print:py-2 print:text-xs print:min-w-[80px]">
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 print:h-3 print:w-3" />
-                          Time
-                        </div>
-                      </th>
-                      {rooms.map((room) => (
-                        <th 
-                          key={room} 
-                          className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[250px] print:px-2 print:py-2 print:text-xs print:min-w-[120px]"
-                        >
+            <div className="print-table-wrapper">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none print-table-container">
+                {/* Table */}
+                <div className="overflow-x-auto">
+                  <table className="w-full print:text-2xs">
+                    <thead className="bg-gray-50 print:bg-gray-100">
+                      <tr>
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px] print:px-1 print:py-1 print:text-2xs print:min-w-[60px] print:max-w-[60px] print:font-bold print:text-black">
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
-                            {room}
+                            <Clock className="h-4 w-4 print:h-3 print:w-3" />
+                            <span className="print:text-2xs">Time</span>
                           </div>
                         </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {timeSlots.map((timeSlot) => (
-                      <tr key={timeSlot} className="hover:bg-gray-50 print:hover:bg-white">
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-2 print:py-2 print:text-xs print:bg-gray-100">
-                          {formatTime(timeSlot)}
-                        </td>
-                        {rooms.map((room) => {
-                          const session = roomSchedule[timeSlot]?.[room];
-                          return (
-                            <td 
-                              key={`${timeSlot}-${room}`} 
-                              className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top print:px-2 print:py-2"
-                            >
-                              {session ? (
-                                <div 
-                                  className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300"
-                                  onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
-                                >
-                                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2 print:text-xs print:mb-1 print:font-medium">
-                                    {session.title}
-                                  </h4>
-                                  {/* Hide details in print view */}
-                                  <div className="print:hidden">
-                                    {session.format && (
-                                      <div className="flex items-center gap-2 mb-2">
-                                        <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded border">
-                                          {String(session.format)}
-                                        </span>
-                                      </div>
-                                    )}
-                                    {session.speakers && (
-                                      <div className="flex items-center gap-1 text-xs text-gray-600">
-                                        <Users className="h-3 w-3" />
-                                        <span className="line-clamp-1">{session.speakers}</span>
-                                      </div>
-                                    )}
-                                    {session.description && (
-                                      <p className="text-xs text-gray-600 mt-2 line-clamp-2">
-                                        {session.description}
-                                      </p>
-                                    )}
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-8 print:text-xs">
-                                  —
-                                </div>
-                              )}
-                            </td>
-                          );
-                        })}
+                        {rooms.map((room) => (
+                          <th 
+                            key={room} 
+                            className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[250px] print:px-1 print:py-1 print:text-2xs print:font-bold print:text-black"
+                          >
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
+                              <span className="print:text-2xs">{room}</span>
+                            </div>
+                          </th>
+                        ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {timeSlots.map((timeSlot) => (
+                        <tr key={timeSlot} className="hover:bg-gray-50 print:hover:bg-white">
+                          <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black">
+                            <div className="print:text-2xs">
+                              {formatTime(timeSlot)}
+                            </div>
+                          </td>
+                          {rooms.map((room) => {
+                            const session = roomSchedule[timeSlot]?.[room];
+                            return (
+                              <td 
+                                key={`${timeSlot}-${room}`} 
+                                className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top print:px-1 print:py-1"
+                              >
+                                {session ? (
+                                  <div 
+                                    className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300 print-session-content"
+                                    onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
+                                  >
+                                    <div className="print-session-title print:text-2xs print:font-bold print:text-black print:mb-0">
+                                      {session.title}
+                                    </div>
+                                    {/* Hide details in print view */}
+                                    <div className="print:hidden">
+                                      {session.format && (
+                                        <div className="flex items-center gap-2 mb-2">
+                                          <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded border">
+                                            {String(session.format)}
+                                          </span>
+                                        </div>
+                                      )}
+                                      {session.speakers && (
+                                        <div className="flex items-center gap-1 text-xs text-gray-600">
+                                          <Users className="h-3 w-3" />
+                                          <span className="line-clamp-1">{session.speakers}</span>
+                                        </div>
+                                      )}
+                                      {session.description && (
+                                        <p className="text-xs text-gray-600 mt-2 line-clamp-2">
+                                          {session.description}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-4 print:text-2xs">
+                                    —
+                                  </div>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
