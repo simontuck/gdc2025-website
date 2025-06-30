@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
+import { useAgendaFilters } from '../hooks/useAgendaFilters';
+import RoomAgendaFilters, { RoomActiveFilters } from '../components/RoomAgendaFilters';
 
 interface SessionModalProps {
   session: any;
@@ -206,6 +208,19 @@ const RoomAgendaPage: React.FC = () => {
   const [selectedSession, setSelectedSession] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Initialize active filters with arrays
+  const [activeFilters, setActiveFilters] = useState<RoomActiveFilters>({
+    'use-cases': [],
+    focus: [],
+    level: [],
+    goals: [],
+    regions: [],
+    'co-organizer': [],
+    'building blocks': [],
+    format: [],
+    selectedRooms: []
+  });
+
   // Helper function to clean room names
   const cleanRoomName = (roomName: string): string => {
     if (!roomName) return '';
@@ -215,27 +230,44 @@ const RoomAgendaPage: React.FC = () => {
   };
 
   // Filter and process agenda items for Day 2
-  const { roomSchedule, timeSlots, rooms } = useMemo(() => {
-    if (!agendaItems) {
-      return { roomSchedule: {}, timeSlots: [], rooms: [] };
-    }
-
-    // Filter for Day 2 and published items
-    const day2Items = agendaItems.filter(item => 
+  const dayFilteredItems = useMemo(() => {
+    if (!agendaItems) return [];
+    return agendaItems.filter(item => 
       item.day === '2025-07-02' && 
       item.ready_to_publish === true &&
       item.room // Only include items that have a room assigned
     );
+  }, [agendaItems]);
 
+  // Use the filtering hook
+  const { filterOptions, filterAgendaItems } = useAgendaFilters(dayFilteredItems);
+
+  // Apply custom filters including room filter
+  const filteredAgendaItems = useMemo(() => {
+    let filtered = filterAgendaItems(dayFilteredItems, activeFilters);
+    
+    // Apply room filter
+    if (activeFilters.selectedRooms.length > 0) {
+      filtered = filtered.filter(item => {
+        const cleanedRoom = cleanRoomName(item.room);
+        return activeFilters.selectedRooms.includes(cleanedRoom);
+      });
+    }
+    
+    return filtered;
+  }, [dayFilteredItems, activeFilters, filterAgendaItems]);
+
+  // Generate room schedule from filtered items
+  const { roomSchedule, timeSlots, rooms } = useMemo(() => {
     // Extract unique rooms and time slots, cleaning room names
-    const cleanedRooms = day2Items.map(item => cleanRoomName(item.room));
+    const cleanedRooms = filteredAgendaItems.map(item => cleanRoomName(item.room));
     const uniqueRooms = [...new Set(cleanedRooms)].filter(Boolean).sort();
-    const uniqueTimeSlots = [...new Set(day2Items.map(item => item.time))].sort();
+    const uniqueTimeSlots = [...new Set(filteredAgendaItems.map(item => item.time))].sort();
 
     // Create schedule object: { timeSlot: { cleanedRoom: item } }
     const schedule: Record<string, Record<string, any>> = {};
     
-    day2Items.forEach(item => {
+    filteredAgendaItems.forEach(item => {
       const cleanedRoom = cleanRoomName(item.room);
       if (!cleanedRoom) return; // Skip items without valid room names
       
@@ -250,7 +282,37 @@ const RoomAgendaPage: React.FC = () => {
       timeSlots: uniqueTimeSlots,
       rooms: uniqueRooms
     };
-  }, [agendaItems]);
+  }, [filteredAgendaItems]);
+
+  // Get all available rooms for filter options
+  const allAvailableRooms = useMemo(() => {
+    if (!dayFilteredItems) return [];
+    const cleanedRooms = dayFilteredItems.map(item => cleanRoomName(item.room));
+    return [...new Set(cleanedRooms)].filter(Boolean).sort();
+  }, [dayFilteredItems]);
+
+  // Handle filter changes
+  const handleFilterChange = (category: keyof RoomActiveFilters, values: string[]) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [category]: values
+    }));
+  };
+
+  // Clear all filters
+  const handleClearFilters = () => {
+    setActiveFilters({
+      'use-cases': [],
+      focus: [],
+      level: [],
+      goals: [],
+      regions: [],
+      'co-organizer': [],
+      'building blocks': [],
+      format: [],
+      selectedRooms: []
+    });
+  };
 
   // Helper function to format time
   const formatTime = (time: string) => {
@@ -345,13 +407,49 @@ const RoomAgendaPage: React.FC = () => {
 
       <section className="py-16">
         <div className="container">
+          {/* Filters */}
+          <RoomAgendaFilters
+            filterOptions={filterOptions}
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+            availableRooms={allAvailableRooms}
+          />
+
+          {/* Results Summary */}
+          {dayFilteredItems && (
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Filter className="h-4 w-4" />
+                  <span className="text-sm">
+                    Showing {rooms.length} room{rooms.length !== 1 ? 's' : ''} with {filteredAgendaItems.length} session{filteredAgendaItems.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
           {rooms.length === 0 ? (
             <div className="bg-gray-50 rounded-lg p-8 text-center">
               <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Room Assignments Yet</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                {allAvailableRooms.length === 0 ? 'No Room Assignments Yet' : 'No Sessions Match Filters'}
+              </h3>
               <p className="text-gray-600">
-                Room assignments for Day 2 sessions are still being finalized. Check back later for updates.
+                {allAvailableRooms.length === 0 
+                  ? 'Room assignments for Day 2 sessions are still being finalized. Check back later for updates.'
+                  : 'No sessions match your current filter criteria. Try adjusting your filters or clearing them to see more results.'
+                }
               </p>
+              {allAvailableRooms.length > 0 && (
+                <button
+                  onClick={handleClearFilters}
+                  className="mt-4 btn btn-secondary"
+                >
+                  Clear Filters
+                </button>
+              )}
             </div>
           ) : (
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
