@@ -229,6 +229,13 @@ const RoomAgendaPage: React.FC = () => {
     return roomName.trim().replace(/^Room\s+/i, '');
   };
 
+  // Helper function to truncate title for print view
+  const truncateTitle = (title: string, maxLength: number = 50): string => {
+    if (!title) return '';
+    if (title.length <= maxLength) return title;
+    return title.substring(0, maxLength).trim() + '...';
+  };
+
   // Filter and process agenda items for Day 2
   const dayFilteredItems = useMemo(() => {
     if (!agendaItems) return [];
@@ -518,8 +525,14 @@ const RoomAgendaPage: React.FC = () => {
                                     className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300 print-session-content"
                                     onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
                                   >
+                                    {/* Title - truncated in print view */}
                                     <div className="print-session-title print:text-2xs print:font-bold print:text-black print:mb-0">
-                                      {session.title}
+                                      <span className="hidden print:inline print-title-truncated">
+                                        {truncateTitle(session.title, 50)}
+                                      </span>
+                                      <span className="print:hidden">
+                                        {session.title}
+                                      </span>
                                     </div>
                                     {/* Hide details in print view */}
                                     <div className="print:hidden">

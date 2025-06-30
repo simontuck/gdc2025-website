@@ -374,6 +374,18 @@
     font-size: 7pt !important;
     margin-bottom: 1px !important;
     display: block !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+  }
+
+  /* Truncate long titles in print */
+  .print-title-truncated {
+    display: block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
   }
 
   /* Force table to use available width efficiently */
