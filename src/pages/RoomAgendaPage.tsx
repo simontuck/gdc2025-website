@@ -484,12 +484,12 @@ const RoomAgendaPage: React.FC = () => {
           ) : (
             <div className="print-table-wrapper">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none print-table-container">
-                {/* Table */}
-                <div className="overflow-x-auto">
+                {/* Table with sticky headers */}
+                <div className="overflow-x-auto relative">
                   <table className="w-full print:text-2xs">
-                    <thead className="bg-gray-50 print:bg-gray-100">
+                    <thead className="bg-gray-50 print:bg-gray-100 sticky top-0 z-10">
                       <tr>
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px] print:px-1 print:py-1 print:text-2xs print:min-w-[60px] print:max-w-[60px] print:font-bold print:text-black">
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[120px] print:px-1 print:py-1 print:text-2xs print:min-w-[60px] print:max-w-[60px] print:font-bold print:text-black sticky left-0 bg-gray-50 print:bg-gray-100 z-20">
                           <div className="flex items-center gap-2">
                             <Clock className="h-4 w-4 print:h-3 print:w-3" />
                             <span className="print:text-2xs">Time</span>
@@ -511,7 +511,7 @@ const RoomAgendaPage: React.FC = () => {
                     <tbody className="divide-y divide-gray-200">
                       {timeSlots.map((timeSlot) => (
                         <tr key={timeSlot} className="hover:bg-gray-50 print:hover:bg-white">
-                          <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black">
+                          <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black sticky left-0 z-10">
                             <div className="print:text-2xs">
                               {formatTime(timeSlot)}
                             </div>
@@ -528,8 +528,8 @@ const RoomAgendaPage: React.FC = () => {
                                     className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300 print-session-content"
                                     onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
                                   >
-                                    {/* Title - truncated in print view */}
-                                    <div className="print-session-title print:text-2xs print:font-bold print:text-black print:mb-0">
+                                    {/* Title - smaller font size and truncated in print view */}
+                                    <div className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 print:text-xs print:font-medium print:text-black print:mb-0 print:leading-tight">
                                       <span className="hidden print:inline print-title-truncated">
                                         {truncateTitle(session.title, 50)}
                                       </span>
