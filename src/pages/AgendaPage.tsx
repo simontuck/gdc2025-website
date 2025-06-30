@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation, Printer } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation, Printer, Table } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
@@ -245,7 +245,7 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
 
       <section className="py-16 print:py-8">
         <div className="container">
-          {/* Day Filter and Print Button */}
+          {/* Day Filter, Print Button, and Day 2 Timetable Button */}
           <div className="mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:gap-6 print:hidden">
             <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
               {days.map((day) => (
@@ -272,6 +272,14 @@ const AgendaPage: React.FC<AgendaPageProps> = ({ onIdeaClick }) => {
             >
               <Printer className="h-4 w-4 mr-2" />
               Print Agenda
+            </button>
+
+            <button
+              onClick={() => navigate('/agenda-by-room')}
+              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white border border-primary-600 rounded-md text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            >
+              <Table className="h-4 w-4 mr-2" />
+              Day 2 Sessions Timetable
             </button>
           </div>
 

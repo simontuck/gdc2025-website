@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ArrowRight, Linkedin } from 'lucide-react';
+import { ExternalLink, ArrowRight, Linkedin, Table } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -34,6 +34,12 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li><Link to="/#co-organizers" className="text-gray-300 hover:text-white transition-colors">Co-organizers</Link></li>
               <li><Link to="/agenda" className="text-gray-300 hover:text-white transition-colors">Agenda</Link></li>
+              <li>
+                <Link to="/agenda-by-room" className="text-gray-300 hover:text-white transition-colors inline-flex items-center">
+                  <Table className="h-4 w-4 mr-1" />
+                  Day 2 Sessions Timetable
+                </Link>
+              </li>
               <li><Link to="/speakers" className="text-gray-300 hover:text-white transition-colors">Speakers</Link></li>
               <li><Link to="/#code-of-conduct" className="text-gray-300 hover:text-white transition-colors">Code of Conduct</Link></li>
               <li><Link to="/#venue" className="text-gray-300 hover:text-white transition-colors">Venue</Link></li>
