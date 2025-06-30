@@ -1,9 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2, Filter, Printer } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
-import { useAgendaFilters } from '../hooks/useAgendaFilters';
-import RoomAgendaFilters, { RoomActiveFilters } from '../components/RoomAgendaFilters';
 
 interface SessionModalProps {
   session: any;
@@ -207,19 +205,7 @@ const RoomAgendaPage: React.FC = () => {
   const { data: agendaItems, isLoading, error } = useAgenda();
   const [selectedSession, setSelectedSession] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Initialize active filters with arrays
-  const [activeFilters, setActiveFilters] = useState<RoomActiveFilters>({
-    'use-cases': [],
-    focus: [],
-    level: [],
-    goals: [],
-    regions: [],
-    'co-organizer': [],
-    'building blocks': [],
-    format: [],
-    selectedRooms: []
-  });
+  const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
 
   // Helper function to clean room names
   const cleanRoomName = (roomName: string): string => {
@@ -246,23 +232,15 @@ const RoomAgendaPage: React.FC = () => {
     );
   }, [agendaItems]);
 
-  // Use the filtering hook
-  const { filterOptions, filterAgendaItems } = useAgendaFilters(dayFilteredItems);
-
-  // Apply custom filters including room filter
+  // Apply room filter
   const filteredAgendaItems = useMemo(() => {
-    let filtered = filterAgendaItems(dayFilteredItems, activeFilters);
+    if (selectedRooms.length === 0) return dayFilteredItems;
     
-    // Apply room filter
-    if (activeFilters.selectedRooms.length > 0) {
-      filtered = filtered.filter(item => {
-        const cleanedRoom = cleanRoomName(item.room);
-        return activeFilters.selectedRooms.includes(cleanedRoom);
-      });
-    }
-    
-    return filtered;
-  }, [dayFilteredItems, activeFilters, filterAgendaItems]);
+    return dayFilteredItems.filter(item => {
+      const cleanedRoom = cleanRoomName(item.room);
+      return selectedRooms.includes(cleanedRoom);
+    });
+  }, [dayFilteredItems, selectedRooms]);
 
   // Generate room schedule from filtered items
   const { roomSchedule, timeSlots, rooms } = useMemo(() => {
@@ -298,27 +276,16 @@ const RoomAgendaPage: React.FC = () => {
     return [...new Set(cleanedRooms)].filter(Boolean).sort();
   }, [dayFilteredItems]);
 
-  // Handle filter changes
-  const handleFilterChange = (category: keyof RoomActiveFilters, values: string[]) => {
-    setActiveFilters(prev => ({
-      ...prev,
-      [category]: values
-    }));
+  const handleRoomToggle = (room: string) => {
+    setSelectedRooms(prev => 
+      prev.includes(room)
+        ? prev.filter(r => r !== room)
+        : [...prev, room]
+    );
   };
 
-  // Clear all filters
-  const handleClearFilters = () => {
-    setActiveFilters({
-      'use-cases': [],
-      focus: [],
-      level: [],
-      goals: [],
-      regions: [],
-      'co-organizer': [],
-      'building blocks': [],
-      format: [],
-      selectedRooms: []
-    });
+  const clearRoomFilters = () => {
+    setSelectedRooms([]);
   };
 
   // Helper function to format time
@@ -421,7 +388,7 @@ const RoomAgendaPage: React.FC = () => {
 
       <section className="py-16 print:py-2">
         <div className="container">
-          {/* Print Button and Filters - Hidden in print */}
+          {/* Print Button and Room Filters - Hidden in print */}
           <div className="print:hidden">
             <div className="mb-6 flex items-center justify-between">
               <button
@@ -433,21 +400,57 @@ const RoomAgendaPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Filters */}
-            <RoomAgendaFilters
-              filterOptions={filterOptions}
-              activeFilters={activeFilters}
-              onFilterChange={handleFilterChange}
-              onClearFilters={handleClearFilters}
-              availableRooms={allAvailableRooms}
-            />
+            {/* Room Filter Pills */}
+            {allAvailableRooms.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-primary-500" />
+                    <h3 className="text-lg font-semibold text-gray-900">Filter by Room</h3>
+                  </div>
+                  {selectedRooms.length > 0 && (
+                    <button
+                      onClick={clearRoomFilters}
+                      className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                    >
+                      <X className="h-4 w-4 mr-1" />
+                      Clear Rooms
+                    </button>
+                  )}
+                </div>
+                
+                <div className="flex flex-wrap gap-2">
+                  {allAvailableRooms.map((room) => {
+                    const isSelected = selectedRooms.includes(room);
+                    return (
+                      <button
+                        key={room}
+                        onClick={() => handleRoomToggle(room)}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                          isSelected
+                            ? 'bg-primary-500 text-white shadow-md hover:bg-primary-600'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+                        }`}
+                      >
+                        {room}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                {selectedRooms.length > 0 && (
+                  <div className="mt-3 text-sm text-gray-600">
+                    Showing {selectedRooms.length} of {allAvailableRooms.length} rooms
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Results Summary */}
             {dayFilteredItems && (
               <div className="mb-6 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 text-gray-600">
-                    <Filter className="h-4 w-4" />
                     <span className="text-sm">
                       Showing {rooms.length} room{rooms.length !== 1 ? 's' : ''} with {filteredAgendaItems.length} session{filteredAgendaItems.length !== 1 ? 's' : ''}
                     </span>
@@ -466,15 +469,15 @@ const RoomAgendaPage: React.FC = () => {
               <p className="text-gray-600">
                 {allAvailableRooms.length === 0 
                   ? 'Room assignments for Day 2 sessions are still being finalized. Check back later for updates.'
-                  : 'No sessions match your current filter criteria. Try adjusting your filters or clearing them to see more results.'
+                  : 'No sessions match your current room selection. Try selecting different rooms or clearing the filter to see more results.'
                 }
               </p>
-              {allAvailableRooms.length > 0 && (
+              {allAvailableRooms.length > 0 && selectedRooms.length > 0 && (
                 <button
-                  onClick={handleClearFilters}
+                  onClick={clearRoomFilters}
                   className="mt-4 btn btn-secondary"
                 >
-                  Clear Filters
+                  Clear Room Filter
                 </button>
               )}
             </div>
@@ -533,27 +536,6 @@ const RoomAgendaPage: React.FC = () => {
                                       <span className="print:hidden">
                                         {session.title}
                                       </span>
-                                    </div>
-                                    {/* Hide details in print view */}
-                                    <div className="print:hidden">
-                                      {session.format && (
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded border">
-                                            {String(session.format)}
-                                          </span>
-                                        </div>
-                                      )}
-                                      {session.speakers && (
-                                        <div className="flex items-center gap-1 text-xs text-gray-600">
-                                          <Users className="h-3 w-3" />
-                                          <span className="line-clamp-1">{session.speakers}</span>
-                                        </div>
-                                      )}
-                                      {session.description && (
-                                        <p className="text-xs text-gray-600 mt-2 line-clamp-2">
-                                          {session.description}
-                                        </p>
-                                      )}
                                     </div>
                                   </div>
                                 ) : (
