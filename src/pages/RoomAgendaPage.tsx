@@ -1,10 +1,210 @@
-import React, { useMemo } from 'react';
-import { Calendar, Clock, MapPin, Users, ArrowLeft } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
 
+interface SessionModalProps {
+  session: any;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const SessionModal: React.FC<SessionModalProps> = ({ session, isOpen, onClose }) => {
+  if (!isOpen || !session) return null;
+
+  // Helper function to parse comma-separated values or arrays
+  const parseCommaSeparated = (value: string | string[] | null | undefined): string[] => {
+    if (!value) return [];
+    
+    if (Array.isArray(value)) {
+      return value.map(item => String(item).trim()).filter(Boolean);
+    }
+    
+    if (typeof value === 'string') {
+      return value.split(',').map(item => item.trim()).filter(Boolean);
+    }
+    
+    return [];
+  };
+
+  // Helper function to parse goals into individual items
+  const parseGoals = (goals: string | null | undefined): string[] => {
+    if (!goals) return [];
+    
+    const goalsString = typeof goals === 'string' ? goals : String(goals);
+    return goalsString.split(/[,\n]/).map(g => g.trim()).filter(Boolean);
+  };
+
+  // Helper function to get organizers data
+  const getOrganizersData = (item: any): string | null => {
+    if (item['co-organizer']) {
+      if (Array.isArray(item['co-organizer'])) {
+        return item['co-organizer'].join(', ');
+      } else if (typeof item['co-organizer'] === 'object') {
+        const values = Object.values(item['co-organizer']).filter(Boolean);
+        return values.length > 0 ? values.join(', ') : null;
+      } else if (typeof item['co-organizer'] === 'string') {
+        return item['co-organizer'];
+      }
+    }
+    
+    if (item.organizers && typeof item.organizers === 'string') {
+      return item.organizers;
+    }
+    
+    return null;
+  };
+
+  const organizersData = getOrganizersData(session);
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="fixed inset-0 transition-opacity" onClick={onClose}>
+          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <div 
+          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
+          onClick={e => e.stopPropagation()}
+        >
+          <div className="absolute top-0 right-0 pt-4 pr-4">
+            <button
+              type="button"
+              className="text-gray-400 hover:text-gray-500 focus:outline-none"
+              onClick={onClose}
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
+          <div className="bg-white px-6 pt-6 pb-4">
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Clock className="h-5 w-5 text-primary-500" />
+                <span className="text-sm font-medium text-primary-600">{session.time}</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">{session.title}</h3>
+              
+              {session.room && (
+                <div className="flex items-center gap-2 mb-4">
+                  <MapPin className="h-4 w-4 text-gray-500" />
+                  <span className="text-sm text-gray-600">{session.room}</span>
+                </div>
+              )}
+            </div>
+
+            {session.description && (
+              <div className="mb-6">
+                <p className="text-gray-700 whitespace-pre-line">{session.description}</p>
+              </div>
+            )}
+
+            {/* Format */}
+            {session.format && (
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-800 rounded-full">
+                  {String(session.format)}
+                </span>
+              </div>
+            )}
+
+            {/* Metadata */}
+            <div className="space-y-4">
+              {/* Goals */}
+              {session.goals && parseGoals(session.goals).length > 0 && (
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Goals</h4>
+                  <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
+                    {parseGoals(session.goals).map((goal, idx) => (
+                      <li key={idx}>{goal}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Focus Areas */}
+              {session.focus && parseCommaSeparated(session.focus).length > 0 && (
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Focus Areas</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {parseCommaSeparated(session.focus).map((focus, idx) => (
+                      <span key={idx} className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                        {focus}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Use Cases */}
+              {session['use-cases'] && parseCommaSeparated(session['use-cases']).length > 0 && (
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Use Cases</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {parseCommaSeparated(session['use-cases']).map((useCase, idx) => (
+                      <span key={idx} className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
+                        {useCase}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Co-organizers */}
+              {organizersData && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Building2 className="h-4 w-4 text-gray-500" />
+                    <h4 className="text-sm font-medium text-gray-700">Co-organizers</h4>
+                  </div>
+                  <p className="text-sm text-gray-600">{organizersData}</p>
+                </div>
+              )}
+
+              {/* Speakers */}
+              {session.speakers && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="h-4 w-4 text-gray-500" />
+                    <h4 className="text-sm font-medium text-gray-700">Speakers</h4>
+                  </div>
+                  <p className="text-sm text-gray-600">{session.speakers}</p>
+                </div>
+              )}
+
+              {/* Target Audience */}
+              {session.target_audience && (
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="h-4 w-4 text-gray-500" />
+                    <h4 className="text-sm font-medium text-gray-700">Target Audience</h4>
+                  </div>
+                  <p className="text-sm text-gray-600">{session.target_audience}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-gray-50 px-6 py-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:text-sm"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const RoomAgendaPage: React.FC = () => {
   const { data: agendaItems, isLoading, error } = useAgenda();
+  const [selectedSession, setSelectedSession] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Helper function to clean room names
   const cleanRoomName = (roomName: string): string => {
@@ -62,25 +262,14 @@ const RoomAgendaPage: React.FC = () => {
     return `${displayHour}:${minutes} ${period}`;
   };
 
-  // Helper function to get session duration class for visual indication
-  const getSessionClass = (item: any) => {
-    if (!item) return '';
-    
-    // You could add logic here to determine session length and apply different styles
-    const baseClass = 'p-3 rounded-lg border-l-4 hover:shadow-md transition-shadow cursor-pointer';
-    
-    // Color coding by format or category - safely convert format to string
-    const formatString = String(item.format || '').toLowerCase();
-    
-    if (formatString.includes('keynote')) {
-      return `${baseClass} bg-purple-50 border-purple-400 hover:bg-purple-100`;
-    } else if (formatString.includes('workshop')) {
-      return `${baseClass} bg-blue-50 border-blue-400 hover:bg-blue-100`;
-    } else if (formatString.includes('panel')) {
-      return `${baseClass} bg-green-50 border-green-400 hover:bg-green-100`;
-    } else {
-      return `${baseClass} bg-gray-50 border-gray-400 hover:bg-gray-100`;
-    }
+  const handleSessionClick = (session: any) => {
+    setSelectedSession(session);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedSession(null);
+    setIsModalOpen(false);
   };
 
   if (isLoading) {
@@ -156,19 +345,6 @@ const RoomAgendaPage: React.FC = () => {
 
       <section className="py-16">
         <div className="container">
-          {/* Info Banner */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <div className="flex items-center gap-3">
-              <Calendar className="h-6 w-6 text-blue-500" />
-              <div>
-                <h2 className="text-lg font-semibold text-blue-900">Day 2 Room Schedule</h2>
-                <p className="text-blue-800">
-                  This view shows all Day 2 sessions organized by room. Click on any session for more details.
-                </p>
-              </div>
-            </div>
-          </div>
-
           {rooms.length === 0 ? (
             <div className="bg-gray-50 rounded-lg p-8 text-center">
               <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -217,13 +393,16 @@ const RoomAgendaPage: React.FC = () => {
                               className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top"
                             >
                               {session ? (
-                                <div className={getSessionClass(session)}>
+                                <div 
+                                  className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300"
+                                  onClick={() => handleSessionClick(session)}
+                                >
                                   <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
                                     {session.title}
                                   </h4>
                                   {session.format && (
                                     <div className="flex items-center gap-2 mb-2">
-                                      <span className="inline-block px-2 py-1 text-xs font-medium bg-white rounded border">
+                                      <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded border">
                                         {String(session.format)}
                                       </span>
                                     </div>
@@ -256,31 +435,6 @@ const RoomAgendaPage: React.FC = () => {
             </div>
           )}
 
-          {/* Legend */}
-          {rooms.length > 0 && (
-            <div className="mt-8 bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Session Types</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-purple-50 border-l-4 border-purple-400 rounded"></div>
-                  <span className="text-sm text-gray-700">Keynote</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-blue-50 border-l-4 border-blue-400 rounded"></div>
-                  <span className="text-sm text-gray-700">Workshop</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-green-50 border-l-4 border-green-400 rounded"></div>
-                  <span className="text-sm text-gray-700">Panel</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gray-50 border-l-4 border-gray-400 rounded"></div>
-                  <span className="text-sm text-gray-700">Other</span>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Back to Full Agenda */}
           <div className="mt-8 text-center">
             <Link 
@@ -293,6 +447,13 @@ const RoomAgendaPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Session Details Modal */}
+      <SessionModal
+        session={selectedSession}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
