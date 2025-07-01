@@ -4,7 +4,7 @@ import { useHashScroll } from './hooks/useHashScroll';
 import Header from './components/Header';
 import Home from './pages/Home';
 import AgendaPage from './pages/AgendaPage';
-import RoomAgendaPage from './pages/RoomAgendaPage';
+import SessionsOverviewPage from './pages/SessionsOverviewPage';
 import SpeakersPage from './pages/SpeakersPage';
 import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
@@ -44,10 +44,10 @@ const AppContent = () => {
             onIdeaClick={() => setIsAgendaIdeaModalOpen(true)}
           />
         } />
-        <Route path="/agenda" element={
-          <AgendaPage onIdeaClick={() => setIsAgendaIdeaModalOpen(true)} />
+        <Route path="/agenda" element={<AgendaPage />} />
+        <Route path="/sessions-overview" element={
+          <SessionsOverviewPage onIdeaClick={() => setIsAgendaIdeaModalOpen(true)} />
         } />
-        <Route path="/agenda-by-room" element={<RoomAgendaPage />} />
         <Route path="/speakers" element={<SpeakersPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
