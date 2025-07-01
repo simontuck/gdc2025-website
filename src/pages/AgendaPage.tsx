@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ArrowLeft, X, Building2, Printer } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, X, Building2, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
 
@@ -469,15 +469,6 @@ const AgendaPage: React.FC = () => {
     <div className="pt-20 print:pt-0">
       <section className="bg-primary-700 text-white py-16 print:bg-white print:text-black print:py-2">
         <div className="container">
-          <div className="flex items-center gap-4 mb-6 print:hidden">
-            <Link 
-              to="/sessions-overview" 
-              className="inline-flex items-center text-white/80 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Sessions Overview
-            </Link>
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-lg print:mb-1 print:text-black print:font-bold">
             Conference Agenda
           </h1>
@@ -489,9 +480,9 @@ const AgendaPage: React.FC = () => {
 
       <section className="py-16 print:py-2">
         <div className="container">
-          {/* Print Button and Room Filters - Hidden in print */}
+          {/* Print Button and Conference Sessions Overview Button - Hidden in print */}
           <div className="print:hidden">
-            <div className="mb-6 flex items-center justify-between">
+            <div className="mb-6 flex items-center gap-4">
               <button
                 onClick={handlePrint}
                 className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
@@ -499,6 +490,14 @@ const AgendaPage: React.FC = () => {
                 <Printer className="h-4 w-4 mr-2" />
                 Print Schedule
               </button>
+
+              <Link
+                to="/sessions-overview"
+                className="inline-flex items-center px-4 py-2 bg-primary-600 text-white border border-primary-600 rounded-md text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+              >
+                <Calendar className="h-4 w-4 mr-2" />
+                Conference Sessions Overview
+              </Link>
             </div>
 
             {/* Room Filter Pills */}
@@ -664,17 +663,6 @@ const AgendaPage: React.FC = () => {
               </div>
             </div>
           )}
-
-          {/* Back to Sessions Overview - Hidden in print */}
-          <div className="mt-8 text-center print:hidden">
-            <Link 
-              to="/sessions-overview" 
-              className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              View All Conference Sessions
-            </Link>
-          </div>
         </div>
       </section>
 

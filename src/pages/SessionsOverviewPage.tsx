@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation, Printer, Table } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation, Printer, Table, ArrowLeft } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
 import AgendaFilters from '../components/AgendaFilters';
 
@@ -236,6 +236,15 @@ const SessionsOverviewPage: React.FC<SessionsOverviewPageProps> = ({ onIdeaClick
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16 print:bg-white print:text-black print:py-8">
         <div className="container">
+          <div className="flex items-center gap-4 mb-6 print:hidden">
+            <Link 
+              to="/agenda" 
+              className="inline-flex items-center text-white/80 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Agenda
+            </Link>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-3xl print:mb-4">Conference Sessions Overview</h1>
           <p className="text-xl text-white/90 max-w-3xl print:text-gray-700 print:text-lg">
             Detailed overview of all conference sessions across both days. All sessions are conducted in English, with no simultaneous translation provided.
@@ -272,14 +281,6 @@ const SessionsOverviewPage: React.FC<SessionsOverviewPageProps> = ({ onIdeaClick
             >
               <Printer className="h-4 w-4 mr-2" />
               Print Sessions
-            </button>
-
-            <button
-              onClick={() => navigate('/agenda')}
-              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white border border-primary-600 rounded-md text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-            >
-              <Table className="h-4 w-4 mr-2" />
-              Day 2 Sessions Timetable
             </button>
           </div>
 
