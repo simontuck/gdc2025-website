@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation, Printer, Table, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, ArrowRight, Users, Building2, X, MapPin, Target, Layers, Globe, Briefcase, BarChart3, UserCheck, Goal, Presentation, Printer, ArrowLeft } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
-import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
 import AgendaFilters from '../components/AgendaFilters';
 
@@ -12,7 +12,6 @@ interface SessionsOverviewPageProps {
 const SessionsOverviewPage: React.FC<SessionsOverviewPageProps> = ({ onIdeaClick }) => {
   const { data: agendaItems, isLoading, error } = useAgenda();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   
   const [selectedDay, setSelectedDay] = useState<string>(searchParams.get('day') || '2025-07-01');
   
@@ -254,7 +253,7 @@ const SessionsOverviewPage: React.FC<SessionsOverviewPageProps> = ({ onIdeaClick
 
       <section className="py-16 print:py-8">
         <div className="container">
-          {/* Day Filter, Print Button, and Day 2 Timetable Button */}
+          {/* Day Filter and Print Button */}
           <div className="mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:gap-6 print:hidden">
             <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
               {days.map((day) => (
