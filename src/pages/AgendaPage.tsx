@@ -952,7 +952,7 @@ const AgendaPage: React.FC = () => {
                                         className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300 print-session-content"
                                         onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
                                       >
-                                        {/* Title - smaller font size and truncated in print view */}
+                                        {/* Title only - format label removed */}
                                         <div className="text-sm font-semibold text-gray-900 mb-2 line-clamp-3 print:text-xs print:font-medium print:text-black print:mb-0 print:leading-tight">
                                           <span className="hidden print:inline print-title-truncated">
                                             {truncateTitle(session.title, 40)}
@@ -961,15 +961,6 @@ const AgendaPage: React.FC = () => {
                                             {session.title}
                                           </span>
                                         </div>
-                                        
-                                        {/* Format badge - hidden in print for space */}
-                                        {session.format && (
-                                          <div className="print:hidden">
-                                            <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded">
-                                              {String(session.format)}
-                                            </span>
-                                          </div>
-                                        )}
                                       </div>
                                     ) : (
                                       <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-4 print:text-2xs">
