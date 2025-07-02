@@ -36,14 +36,12 @@ const Footer: React.FC = () => {
               <li><Link to="/agenda" className="text-gray-300 hover:text-white transition-colors">Conference Agenda</Link></li>
               <li><Link to="/speakers" className="text-gray-300 hover:text-white transition-colors">Speakers</Link></li>
               <li>
-                <a 
-                  href="/barcode" 
+                <Link 
+                  to="/visual-generator" 
                   className="text-gray-300 hover:text-white transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   Attending Visual
-                </a>
+                </Link>
               </li>
               <li><Link to="/#code-of-conduct" className="text-gray-300 hover:text-white transition-colors">Code of Conduct</Link></li>
               <li><Link to="/#venue" className="text-gray-300 hover:text-white transition-colors">Venue</Link></li>
