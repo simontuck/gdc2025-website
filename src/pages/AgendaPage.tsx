@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Calendar, Clock, MapPin, Users, X, Building2, Printer, MessageSquare, ArrowRight, Target, Layers, Globe, Briefcase, BarChart3, Goal, Presentation } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, X, Building2, Printer, MessageSquare, ArrowRight, Target, Layers, Globe, Briefcase, BarChart3, Goal, Presentation, Grid3X3, List } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAgenda } from '../hooks/useAgenda';
 import { useAgendaFilters, ActiveFilters } from '../hooks/useAgendaFilters';
@@ -211,6 +211,7 @@ const AgendaPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   
   const [selectedDay, setSelectedDay] = useState<string>(searchParams.get('day') || '2025-07-01');
+  const [day2ViewMode, setDay2ViewMode] = useState<'timetable' | 'list'>('timetable');
   
   // Initialize active filters with arrays
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
@@ -702,6 +703,34 @@ const AgendaPage: React.FC = () => {
                 </button>
               ))}
             </div>
+
+            {/* View Toggle for Day 2 */}
+            {selectedDay === '2025-07-02' && (
+              <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+                <button
+                  onClick={() => setDay2ViewMode('timetable')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center gap-2 ${
+                    day2ViewMode === 'timetable'
+                      ? 'bg-primary-500 text-white'
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  <Grid3X3 className="h-4 w-4" />
+                  Timetable View
+                </button>
+                <button
+                  onClick={() => setDay2ViewMode('list')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center gap-2 ${
+                    day2ViewMode === 'list'
+                      ? 'bg-primary-500 text-white'
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  <List className="h-4 w-4" />
+                  List View
+                </button>
+              </div>
+            )}
             
             <button
               onClick={handlePrint}
@@ -822,161 +851,269 @@ const AgendaPage: React.FC = () => {
             </>
           )}
 
-          {/* Day 2: Timetable View */}
+          {/* Day 2: Timetable or List View */}
           {selectedDay === '2025-07-02' && (
             <>
-              {/* Room Filter Pills - Hidden in print */}
-              {allAvailableRooms.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8 print:hidden">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5 text-primary-500" />
-                      <h3 className="text-lg font-semibold text-gray-900">Filter by Room</h3>
+              {/* Timetable View */}
+              {day2ViewMode === 'timetable' && (
+                <>
+                  {/* Room Filter Pills - Hidden in print */}
+                  {allAvailableRooms.length > 0 && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8 print:hidden">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-5 w-5 text-primary-500" />
+                          <h3 className="text-lg font-semibold text-gray-900">Filter by Room</h3>
+                        </div>
+                        {selectedRooms.length > 0 && (
+                          <button
+                            onClick={clearRoomFilters}
+                            className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                          >
+                            <X className="h-4 w-4 mr-1" />
+                            Clear Rooms
+                          </button>
+                        )}
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-2">
+                        {allAvailableRooms.map((room) => {
+                          const isSelected = selectedRooms.includes(room);
+                          return (
+                            <button
+                              key={room}
+                              onClick={() => handleRoomToggle(room)}
+                              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                                isSelected
+                                  ? 'bg-primary-500 text-white shadow-md hover:bg-primary-600'
+                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+                              }`}
+                            >
+                              {room}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      
+                      {selectedRooms.length > 0 && (
+                        <div className="mt-3 text-sm text-gray-600">
+                          Showing {selectedRooms.length} of {allAvailableRooms.length} rooms
+                        </div>
+                      )}
                     </div>
-                    {selectedRooms.length > 0 && (
-                      <button
-                        onClick={clearRoomFilters}
-                        className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-                      >
-                        <X className="h-4 w-4 mr-1" />
-                        Clear Rooms
-                      </button>
-                    )}
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {allAvailableRooms.map((room) => {
-                      const isSelected = selectedRooms.includes(room);
-                      return (
+                  )}
+
+                  {/* Results Summary - Hidden in print */}
+                  {dayFilteredItems && (
+                    <div className="mb-6 flex items-center justify-between print:hidden">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <span className="text-sm">
+                            Showing {rooms.length} room{rooms.length !== 1 ? 's' : ''} with {dayFilteredItems.filter(item => item.room && (selectedRooms.length === 0 || selectedRooms.includes(cleanRoomName(item.room)))).length} session{dayFilteredItems.filter(item => item.room && (selectedRooms.length === 0 || selectedRooms.includes(cleanRoomName(item.room)))).length !== 1 ? 's' : ''}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {rooms.length === 0 ? (
+                    <div className="bg-gray-50 rounded-lg p-8 text-center print:hidden">
+                      <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        {allAvailableRooms.length === 0 ? 'No Room Assignments Yet' : 'No Sessions Match Filters'}
+                      </h3>
+                      <p className="text-gray-600">
+                        {allAvailableRooms.length === 0 
+                          ? 'Room assignments for Day 2 sessions are still being finalized. Check back later for updates.'
+                          : 'No sessions match your current room selection. Try selecting different rooms or clearing the filter to see more results.'
+                        }
+                      </p>
+                      {allAvailableRooms.length > 0 && selectedRooms.length > 0 && (
                         <button
-                          key={room}
-                          onClick={() => handleRoomToggle(room)}
-                          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                            isSelected
-                              ? 'bg-primary-500 text-white shadow-md hover:bg-primary-600'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
-                          }`}
+                          onClick={clearRoomFilters}
+                          className="mt-4 btn btn-secondary"
                         >
-                          {room}
+                          Clear Room Filter
                         </button>
-                      );
-                    })}
-                  </div>
-                  
-                  {selectedRooms.length > 0 && (
-                    <div className="mt-3 text-sm text-gray-600">
-                      Showing {selectedRooms.length} of {allAvailableRooms.length} rooms
+                      )}
                     </div>
-                  )}
-                </div>
-              )}
-
-              {/* Results Summary - Hidden in print */}
-              {dayFilteredItems && (
-                <div className="mb-6 flex items-center justify-between print:hidden">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <span className="text-sm">
-                        Showing {rooms.length} room{rooms.length !== 1 ? 's' : ''} with {dayFilteredItems.filter(item => item.room && (selectedRooms.length === 0 || selectedRooms.includes(cleanRoomName(item.room)))).length} session{dayFilteredItems.filter(item => item.room && (selectedRooms.length === 0 || selectedRooms.includes(cleanRoomName(item.room)))).length !== 1 ? 's' : ''}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {rooms.length === 0 ? (
-                <div className="bg-gray-50 rounded-lg p-8 text-center print:hidden">
-                  <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    {allAvailableRooms.length === 0 ? 'No Room Assignments Yet' : 'No Sessions Match Filters'}
-                  </h3>
-                  <p className="text-gray-600">
-                    {allAvailableRooms.length === 0 
-                      ? 'Room assignments for Day 2 sessions are still being finalized. Check back later for updates.'
-                      : 'No sessions match your current room selection. Try selecting different rooms or clearing the filter to see more results.'
-                    }
-                  </p>
-                  {allAvailableRooms.length > 0 && selectedRooms.length > 0 && (
-                    <button
-                      onClick={clearRoomFilters}
-                      className="mt-4 btn btn-secondary"
-                    >
-                      Clear Room Filter
-                    </button>
-                  )}
-                </div>
-              ) : (
-                <div className="print-table-wrapper">
-                  <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none print-table-container">
-                    {/* FLIPPED TABLE: Time slots as columns, rooms as rows */}
-                    <div className="overflow-x-auto relative">
-                      <table className="w-full print:text-2xs">
-                        <thead className="bg-gray-50 print:bg-gray-100 sticky top-0 z-10">
-                          <tr>
-                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[150px] print:px-1 print:py-1 print:text-2xs print:min-w-[80px] print:font-bold print:text-black sticky left-0 bg-gray-50 print:bg-gray-100 z-20">
-                              <div className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4 print:h-3 print:w-3" />
-                                <span className="print:text-2xs">Room</span>
-                              </div>
-                            </th>
-                            {timeSlots.map((timeSlot) => (
-                              <th 
-                                key={timeSlot} 
-                                className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[200px] print:px-1 print:py-1 print:text-2xs print:font-bold print:text-black print:min-w-[120px]"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Clock className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
-                                  <span className="print:text-2xs">{formatTimeRange(timeSlot)}</span>
-                                </div>
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200">
-                          {rooms.map((room) => (
-                            <tr key={room} className="hover:bg-gray-50 print:hover:bg-white">
-                              <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black sticky left-0 z-10">
-                                <div className="print:text-2xs">
-                                  {room}
-                                </div>
-                              </td>
-                              {timeSlots.map((timeSlot) => {
-                                const session = roomSchedule[room]?.[timeSlot];
-                                return (
-                                  <td 
-                                    key={`${room}-${timeSlot}`} 
-                                    className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top print:px-1 print:py-1"
+                  ) : (
+                    <div className="print-table-wrapper">
+                      <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none print-table-container">
+                        {/* FLIPPED TABLE: Time slots as columns, rooms as rows */}
+                        <div className="overflow-x-auto relative">
+                          <table className="w-full print:text-2xs">
+                            <thead className="bg-gray-50 print:bg-gray-100 sticky top-0 z-10">
+                              <tr>
+                                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 min-w-[150px] print:px-1 print:py-1 print:text-2xs print:min-w-[80px] print:font-bold print:text-black sticky left-0 bg-gray-50 print:bg-gray-100 z-20">
+                                  <div className="flex items-center gap-2">
+                                    <MapPin className="h-4 w-4 print:h-3 print:w-3" />
+                                    <span className="print:text-2xs">Room</span>
+                                  </div>
+                                </th>
+                                {timeSlots.map((timeSlot) => (
+                                  <th 
+                                    key={timeSlot} 
+                                    className="px-4 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200 last:border-r-0 min-w-[200px] print:px-1 print:py-1 print:text-2xs print:font-bold print:text-black print:min-w-[120px]"
                                   >
-                                    {session ? (
-                                      <div 
-                                        className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300 print-session-content"
-                                        onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
-                                      >
-                                        {/* Title only - format label removed */}
-                                        <div className="text-sm font-semibold text-gray-900 mb-2 line-clamp-3 print:text-xs print:font-medium print:text-black print:mb-0 print:leading-tight">
-                                          <span className="hidden print:inline print-title-truncated">
-                                            {truncateTitle(session.title, 40)}
-                                          </span>
-                                          <span className="print:hidden">
-                                            {session.title}
-                                          </span>
-                                        </div>
-                                      </div>
-                                    ) : (
-                                      <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-4 print:text-2xs">
-                                        —
-                                      </div>
-                                    )}
+                                    <div className="flex items-center gap-2">
+                                      <Clock className="h-4 w-4 text-primary-500 print:h-3 print:w-3" />
+                                      <span className="print:text-2xs">{formatTimeRange(timeSlot)}</span>
+                                    </div>
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200">
+                              {rooms.map((room) => (
+                                <tr key={room} className="hover:bg-gray-50 print:hover:bg-white">
+                                  <td className="px-6 py-4 text-sm font-medium text-gray-900 border-r border-gray-200 bg-gray-50 align-top print:px-1 print:py-1 print:text-2xs print:bg-gray-50 print:font-bold print:text-black sticky left-0 z-10">
+                                    <div className="print:text-2xs">
+                                      {room}
+                                    </div>
                                   </td>
-                                );
-                              })}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                                  {timeSlots.map((timeSlot) => {
+                                    const session = roomSchedule[room]?.[timeSlot];
+                                    return (
+                                      <td 
+                                        key={`${room}-${timeSlot}`} 
+                                        className="px-4 py-4 border-r border-gray-200 last:border-r-0 align-top print:px-1 print:py-1"
+                                      >
+                                        {session ? (
+                                          <div 
+                                            className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow cursor-pointer hover:border-primary-300 print:p-1 print:border-gray-300 print:rounded-none print:cursor-default print:hover:shadow-none print:hover:border-gray-300 print-session-content"
+                                            onClick={() => !window.matchMedia('print').matches && handleSessionClick(session)}
+                                          >
+                                            {/* Title only - format label removed */}
+                                            <div className="text-sm font-semibold text-gray-900 mb-2 line-clamp-3 print:text-xs print:font-medium print:text-black print:mb-0 print:leading-tight">
+                                              <span className="hidden print:inline print-title-truncated">
+                                                {truncateTitle(session.title, 40)}
+                                              </span>
+                                              <span className="print:hidden">
+                                                {session.title}
+                                              </span>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          <div className="h-16 flex items-center justify-center text-gray-400 text-sm print:h-4 print:text-2xs">
+                                            —
+                                          </div>
+                                        )}
+                                      </td>
+                                    );
+                                  })}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
+                  )}
+                </>
+              )}
+
+              {/* List View for Day 2 */}
+              {day2ViewMode === 'list' && (
+                <>
+                  {/* Advanced Filters - Hidden in print */}
+                  <div className="print:hidden">
+                    <AgendaFilters
+                      filterOptions={filterOptions}
+                      activeFilters={activeFilters}
+                      onFilterChange={handleFilterChange}
+                      onClearFilters={handleClearFilters}
+                    />
                   </div>
-                </div>
+
+                  {filteredAgendaItems.length === 0 ? (
+                    <div className="bg-gray-50 rounded-lg p-8 text-center print:hidden">
+                      <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">No Sessions Found</h3>
+                      <p className="text-gray-600">
+                        {Object.values(activeFilters).some(v => v.length > 0)
+                          ? 'No sessions match the selected filters. Try adjusting your filter criteria.'
+                          : 'There are no sessions scheduled for this day yet. Check back later for updates.'}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none">
+                      {filteredAgendaItems.map((item, index) => {
+                        const organizersData = getOrganizersData(item);
+                        
+                        return (
+                          <div key={index} className="border-b border-gray-200 last:border-0 print:break-inside-avoid print:mb-6">
+                            <div className="p-6 hover:bg-gray-50 print:hover:bg-white print:p-4">
+                              <div className="flex items-start">
+                                <div className="flex-shrink-0 mt-1">
+                                  <Clock className="h-5 w-5 text-primary-400" />
+                                </div>
+                                <div className="ml-4 flex-grow">
+                                  <p className="text-sm font-medium text-primary-600 print:text-gray-700">
+                                    {item.time}
+                                  </p>
+                                  <h3 className="text-xl font-semibold text-gray-900 mt-1 print:text-lg">
+                                    {item.title}
+                                  </h3>
+                                  
+                                  {/* Room information */}
+                                  {item.room && (
+                                    <div className="flex items-center mt-2 text-gray-600">
+                                      <MapPin className="h-4 w-4 mr-1" />
+                                      <span className="text-sm">{item.room}</span>
+                                    </div>
+                                  )}
+                                  
+                                  {item.description && (
+                                    <div className="mt-4">
+                                      <p className="text-gray-600 whitespace-pre-line print:text-sm">{item.description}</p>
+                                    </div>
+                                  )}
+
+                                  {/* Compact metadata table with clickable badges */}
+                                  {renderMetadataTable(item)}
+
+                                  {/* Co-organizers */}
+                                  {organizersData && (
+                                    <div className="mt-4">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Building2 className="h-4 w-4 text-gray-500" />
+                                        <h4 className="text-sm font-medium text-gray-700">Co-organizers</h4>
+                                      </div>
+                                      <p className="text-sm text-gray-600">{organizersData}</p>
+                                    </div>
+                                  )}
+
+                                  {/* Speakers */}
+                                  {item.speakers && (
+                                    <div className="mt-4">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Users className="h-4 w-4 text-gray-500" />
+                                        <h4 className="text-sm font-medium text-gray-700">Speakers</h4>
+                                      </div>
+                                      <p className="text-sm text-gray-600">{item.speakers}</p>
+                                    </div>
+                                  )}
+
+                                  {/* Target Audience */}
+                                  {item.target_audience && (
+                                    <div className="mt-4">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Users className="h-4 w-4 text-gray-500" />
+                                        <h4 className="text-sm font-medium text-gray-700">Target Audience</h4>
+                                      </div>
+                                      <p className="text-sm text-gray-600">{item.target_audience}</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}
