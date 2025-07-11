@@ -5,67 +5,67 @@ import { Camera, Presentation, FileText, Calendar, Play, Shirt, BookOpen } from 
 const ResourcesGrid: React.FC = () => {
   const resources = [
     {
-      icon: <Camera className="h-8 w-8 text-blue-600" />,
+      icon: <Camera className="h-8 w-8 text-gray-500" />,
       title: "Conference Photos",
       description: "Relive the moments from GDC25. Browse through our gallery of keynotes, networking sessions, and memorable interactions.",
       buttonText: "View Photo Gallery",
-      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      buttonColor: "btn btn-primary",
       href: "https://share.dma.swiss/s/XCx7CadWobSs9WR?dir=undefined&openfile=29024709",
       external: true
     },
     {
-      icon: <Presentation className="h-8 w-8 text-blue-600" />,
+      icon: <Presentation className="h-8 w-8 text-gray-500" />,
       title: "Day 1 Presentations",
       description: "Access all slides and presentations from the first day's keynotes and sessions on digital identity systems and use cases.",
       buttonText: "Download Slides",
-      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      buttonColor: "btn btn-primary",
       href: "/session-slides",
       external: false
     },
     {
-      icon: <FileText className="h-8 w-8 text-blue-600" />,
+      icon: <FileText className="h-8 w-8 text-gray-500" />,
       title: "Beat Jans Keynote Speech",
       description: "Read the full text of the opening keynote address by Swiss Federal Councillor Beat Jans on digital collaboration and Switzerland's digital future.",
       buttonText: "Read Full Speech",
-      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      buttonColor: "btn btn-primary",
       href: "https://www.eid.admin.ch/de/global-digital-collaboration-conference",
       external: true
     },
     {
-      icon: <BookOpen className="h-8 w-8 text-blue-600" />,
+      icon: <BookOpen className="h-8 w-8 text-gray-500" />,
       title: "Book of Proceedings",
       description: "The complete conference proceedings including all presentations, papers, and workshop outcomes will be released in September 2025.",
       buttonText: null,
-      buttonColor: "",
+      buttonColor: "btn btn-primary",
       href: "",
       external: false,
       badge: "(September 2025)",
       note: "Subscribe below to get notified when available"
     },
     {
-      icon: <Calendar className="h-8 w-8 text-blue-600" />,
+      icon: <Calendar className="h-8 w-8 text-gray-500" />,
       title: "Program & Speakers",
       description: "Review the complete 2-day program featuring keynotes on digital identity systems, workshops, and presentations from global leaders.",
       buttonText: "View Full Program",
-      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      buttonColor: "btn btn-primary",
       href: "/agenda",
       external: false
     },
     {
-      icon: <Play className="h-8 w-8 text-red-600" />,
+      icon: <Play className="h-8 w-8 text-gray-500" />,
       title: "GDC YouTube Channel",
       description: "Watch recorded sessions, keynote speeches, and highlights from the conference on our official YouTube channel.",
       buttonText: "Watch Videos",
-      buttonColor: "bg-red-600 hover:bg-red-700",
+      buttonColor: "btn btn-primary",
       href: "https://www.youtube.com/playlist?list=PL_X6UOh6MHSdluNDc9xcU86wBhsN4aIjz",
       external: true
     },
     {
-      icon: <Shirt className="h-8 w-8 text-red-600" />,
+      icon: <Shirt className="h-8 w-8 text-gray-500" />,
       title: "Conference T-Shirts",
       description: "Take home a piece of GDC25! Get your official conference t-shirt as a memento of this landmark event.",
       buttonText: "Order Your T-Shirt",
-      buttonColor: "bg-red-600 hover:bg-red-700",
+      buttonColor: "btn btn-primary",
       href: "https://globaldigitalcollaboration.org/t-shirt",
       external: true
     }
@@ -111,14 +111,14 @@ const ResourcesGrid: React.FC = () => {
                       href={resource.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-block w-full text-center px-4 py-2 text-white rounded-md transition-colors text-sm font-medium ${resource.buttonColor}`}
+                      className={`inline-block w-full text-center ${resource.buttonColor}`}
                     >
                       {resource.buttonText}
                     </a>
                   ) : (
                     <Link
                       to={resource.href}
-                      className={`inline-block w-full text-center px-4 py-2 text-white rounded-md transition-colors text-sm font-medium ${resource.buttonColor}`}
+                      className={`inline-block w-full text-center ${resource.buttonColor}`}
                     >
                       {resource.buttonText}
                     </Link>
