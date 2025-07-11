@@ -13,15 +13,11 @@ const BookOfProceedings: React.FC = () => {
                 <div>
                   <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Book of Proceedings</h2>
                   <div className="flex items-center justify-center mt-2">
-                    <Calendar className="h-5 w-5 text-red-600 mr-2" />
-                    <span className="text-lg font-semibold text-red-600">September 2025</span>
-                  </div>
-                </div>
               </div>
               
               <p className="text-lg text-gray-700 max-w-2xl mx-auto">
                 The complete conference proceedings including all presentations, papers, and workshop outcomes from the Global Digital Collaboration Conference 2025 will be released in September 2025.
-              </p>
+              The complete conference proceedings including all presentations, papers, and workshop outcomes from the Global Digital Collaboration Conference 2025 will be released soon.
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
