@@ -137,6 +137,15 @@ const SpeakersPage: React.FC = () => {
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16">
         <div className="container">
+          <div className="flex items-center gap-4 mb-6">
+            <Link 
+              to="/agenda" 
+              className="inline-flex items-center text-white/80 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Agenda 2025
+            </Link>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Speakers 2025</h1>
           <p className="text-lg text-white/80 mb-2">
             July 1-2, 2025 • Geneva, Switzerland
