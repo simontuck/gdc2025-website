@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ExternalLink, ArrowRight, Linkedin, Table } from 'lucide-react';
+import { ExternalLink, ArrowRight, Linkedin, Youtube } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const location = useLocation();
@@ -126,6 +126,15 @@ const Footer: React.FC = () => {
                   aria-label="Follow us on LinkedIn"
                 >
                   <Linkedin className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://www.youtube.com/@GlobalDigitalCollaboration" 
+                  className="text-gray-300 hover:text-white transition-colors ml-3" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Subscribe to our YouTube channel"
+                >
+                  <Youtube className="h-5 w-5" />
                 </a>
               </li>
             </ul>
