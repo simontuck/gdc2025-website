@@ -41,6 +41,24 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
     }
   };
 
+  const handleSubscribeClick = () => {
+    setIsMenuOpen(false);
+    
+    if (location.pathname === '/') {
+      const element = document.getElementById('newsletter');
+      if (element) {
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      navigate('/#newsletter');
+    }
+  };
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Decorative background */}
@@ -63,21 +81,15 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
+            <button
+              onClick={() => handleHashClick('book-of-proceedings')}
+              className="text-gray-700 hover:text-primary-500 transition-colors"
+            >
+              Book of Proceedings
+            </button>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <button
-              onClick={() => {
-                setIsMenuOpen(false);
-                const element = document.getElementById('newsletter');
-                if (element) {
-                  const headerOffset = 100;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
+              onClick={handleSubscribeClick}
               className="btn btn-primary"
             >
               Subscribe for Updates
@@ -104,21 +116,15 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               >
                 Slides & Videos
               </Link>
+              <button
+                onClick={() => handleHashClick('book-of-proceedings')}
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100 text-left"
+              >
+                Book of Proceedings
+              </button>
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
               <button
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  const element = document.getElementById('newsletter');
-                  if (element) {
-                    const headerOffset = 100;
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
+                onClick={handleSubscribeClick}
                 className="btn btn-primary w-full"
               >
                 Subscribe for Updates

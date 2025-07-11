@@ -3,7 +3,7 @@ import { BookOpen, Calendar, Download, Bell } from 'lucide-react';
 
 const BookOfProceedings: React.FC = () => {
   return (
-    <section className="section bg-white">
+    <section id="book-of-proceedings" className="section bg-white">
       <div className="container">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-primary-50 to-blue-50 rounded-xl p-8 md:p-12">

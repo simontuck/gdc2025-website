@@ -1,8 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ExternalLink, ArrowRight, Linkedin, Table } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSubscribeClick = () => {
+    if (location.pathname === '/') {
+      const element = document.getElementById('newsletter');
+      if (element) {
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      navigate('/#newsletter');
+    }
+  };
+
   return (
     <footer className="bg-primary-500 text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
@@ -117,18 +137,7 @@ const Footer: React.FC = () => {
               Stay updated on the next Global Digital Collaboration Conference and related developments in wallets, credentials and trusted infrastructure.
             </p>
             <button
-              onClick={() => {
-                const element = document.getElementById('newsletter');
-                if (element) {
-                  const headerOffset = 100;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
+              onClick={handleSubscribeClick}
               className="inline-flex items-center text-white bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-md transition-colors"
             >
               Subscribe for Updates
