@@ -81,6 +81,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
+            <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers 2025</Link>
             <button
               onClick={() => handleHashClick('book-of-proceedings')}
               className="text-gray-700 hover:text-primary-500 transition-colors"
@@ -115,6 +116,13 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Slides & Videos
+              </Link>
+              <Link 
+                to="/speakers" 
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Speakers 2025
               </Link>
               <button
                 onClick={() => handleHashClick('book-of-proceedings')}
