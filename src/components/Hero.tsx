@@ -25,26 +25,27 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <a
-              href="https://lu.ma/gc25?utm_source=gdc-website"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                // TODO: Implement newsletter subscription
+                alert('Newsletter subscription coming soon!');
+              }}
               className="btn bg-white text-primary-600 hover:bg-gray-100"
             >
-              Register
-            </a>
+              Subscribe for Updates
+            </button>
             <Link 
-              to="/agenda" 
+              to="/resources" 
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
             >
-              View Agenda
+              View Resources
             </Link>
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
             <div className="flex items-center">
               <Building2 className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Organized by 40 Intergovernmental, Standard Development, and Open Source Organizations</span>
+              <span>Organized by 46 Intergovernmental, Standard Development, and Open Source Organizations</span>
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />

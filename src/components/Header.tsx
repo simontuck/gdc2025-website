@@ -76,18 +76,6 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
             {location.pathname === '/' ? (
               <button
-                onClick={() => handleHashClick('code-of-conduct')}
-                className="text-gray-700 hover:text-primary-500 transition-colors"
-              >
-                Code of conduct
-              </button>
-            ) : (
-              <Link to="/#code-of-conduct" className="text-gray-700 hover:text-primary-500 transition-colors">
-                Code of conduct
-              </Link>
-            )}
-            {location.pathname === '/' ? (
-              <button
                 onClick={() => handleHashClick('venue')}
                 className="text-gray-700 hover:text-primary-500 transition-colors"
               >Venue</button>
@@ -96,14 +84,15 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             )}
             <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
-            <a
-              href="https://lu.ma/gc25?utm_source=gdc-website"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                // TODO: Implement newsletter subscription
+                alert('Newsletter subscription coming soon!');
+              }}
               className="btn btn-primary"
             >
-              Register Now
-            </a>
+              Subscribe for Updates
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -145,22 +134,6 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               </Link>
               {location.pathname === '/' ? (
                 <button
-                  onClick={() => handleHashClick('code-of-conduct')}
-                  className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                >
-                  Code of conduct
-                </button>
-              ) : (
-                <Link 
-                  to="/#code-of-conduct" 
-                  className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Code of conduct
-                </Link>
-              )}
-              {location.pathname === '/' ? (
-                <button
                   onClick={() => handleHashClick('venue')}
                   className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
                 >
@@ -177,14 +150,16 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 Hotels
               </Link>
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
-              <a
-                href="https://lu.ma/gc25?utm_source=gdc-website"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  // TODO: Implement newsletter subscription
+                  alert('Newsletter subscription coming soon!');
+                  setIsMenuOpen(false);
+                }}
                 className="btn btn-primary w-full"
               >
-                Register Now
-              </a>
+                Subscribe for Updates
+              </button>
             </div>
           </div>
         )}
