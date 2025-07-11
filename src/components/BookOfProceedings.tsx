@@ -71,3 +71,5 @@ const BookOfProceedings: React.FC = () => {
 };
 
 export default BookOfProceedings;
+  )
+}
