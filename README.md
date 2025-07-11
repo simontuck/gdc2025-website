@@ -65,6 +65,7 @@ Trust Square Ecosystem AG on behalf of the Swiss Confederation
    VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
    STRIPE_SECRET_KEY=sk_test_...
    STRIPE_WEBHOOK_SECRET=whsec_...
+   RESEND_API_KEY=re_...
    ```
 
 5. Start the development server
@@ -84,6 +85,9 @@ Environment variables required for the project:
 - `VITE_STRIPE_PUBLISHABLE_KEY`: Stripe publishable key (starts with pk_test_ for test mode)
 - `STRIPE_SECRET_KEY`: Stripe secret key (starts with sk_test_ for test mode) - Used in Supabase Edge Functions
 - `STRIPE_WEBHOOK_SECRET`: Stripe webhook secret for verifying webhook signatures
+
+**Resend Configuration:**
+- `RESEND_API_KEY`: Resend API key for sending emails (starts with re_) - Used in Supabase Edge Functions
 
 ### Stripe Setup
 
