@@ -16,7 +16,7 @@ const BookOfProceedings: React.FC = () => {
               </div>
               
               <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-                The complete conference proceedings including all presentations, papers, and workshop outcomes from the Global Digital Collaboration Conference 2025 will be released soon.
+                The complete conference proceedings including presentations, papers, and workshop outcomes from the Global Digital Collaboration Conference 2025 will be released soon.
               </p>
             </div>
 
