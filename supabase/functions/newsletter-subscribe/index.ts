@@ -151,17 +151,17 @@ function generateConfirmationEmailHTML(email: string, confirmationToken: string)
 }
 
 async function sendEmailWithSupabase(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
-  console.log(`Attempting to send email to: ${to}`);
-  console.log(\`Subject: ${subject}`);
+  console.log('Attempting to send email to: ' + to);
+  console.log('Subject: ' + subject);
 
   try {
     // Use Supabase's auth email system which integrates with Resend via SMTP
     console.log('Sending email via Supabase auth email system...');
     
-    const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/users`, {
+    const response = await fetch(Deno.env.get('SUPABASE_URL') + '/auth/v1/admin/users', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        'Authorization': 'Bearer ' + Deno.env.get('SUPABASE_SERVICE_ROLE_KEY'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -175,8 +175,8 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
     });
 
     const responseText = await response.text();
-    console.log(`Supabase Auth Response Status: ${response.status}`);
-    console.log(`Supabase Auth Response: ${responseText}`);
+    console.log('Supabase Auth Response Status: ' + response.status);
+    console.log('Supabase Auth Response: ' + responseText);
 
     if (!response.ok) {
       let errorData;
@@ -188,7 +188,7 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
       console.error('Supabase auth email error:', errorData);
       return { 
         success: false, 
-        error: `Supabase auth email error: ${errorData.message || 'Unknown error'}`,
+        error: 'Supabase auth email error: ' + (errorData.message || 'Unknown error'),
         method: 'supabase_auth'
       };
     }
@@ -201,7 +201,7 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
     console.error('Error sending email via Supabase auth:', error);
     return { 
       success: false, 
-      error: `Network error: ${error.message}`,
+      error: 'Network error: ' + error.message,
       method: 'supabase_auth'
     };
   }
@@ -315,11 +315,6 @@ Deno.serve(async (req) => {
           console.error('Error auto-confirming reactivated subscription:', confirmError);
         }
 
-        // TODO: Re-enable email sending once domain is validated
-        // const emailSubject = 'Confirm Your Newsletter Subscription - GDC';
-        // const emailHTML = generateConfirmationEmailHTML(normalizedEmail, reactivatedSubscription.confirmation_token);
-        // const emailResult = await sendEmailWithSupabase(normalizedEmail, emailSubject, emailHTML);
-
         return new Response(
           JSON.stringify({ 
             success: true,
@@ -354,11 +349,10 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Send confirmation email
-    // For now, skip email sending until domain is validated
-    console.log(`Skipping email send for ${normalizedEmail} - domain validation pending`);
+    // Skip email sending - implementing without double opt-in for now
+    console.log('Skipping email send for ' + normalizedEmail + ' - implementing without double opt-in');
     
-    // Update subscription to confirmed for testing
+    // Auto-confirm subscription without email verification
     const { error: confirmError } = await supabase
       .from('newsletter_subscriptions')
       .update({
@@ -371,11 +365,6 @@ Deno.serve(async (req) => {
       console.error('Error auto-confirming subscription:', confirmError);
     }
     
-    // TODO: Re-enable email sending once domain is validated
-    // const emailSubject = 'Confirm Your Newsletter Subscription - GDC';
-    // const emailHTML = generateConfirmationEmailHTML(normalizedEmail, newSubscription.confirmation_token);
-    // const emailResult = await sendEmailWithSupabase(normalizedEmail, emailSubject, emailHTML);
-
     return new Response(
       JSON.stringify({ 
         success: true,
