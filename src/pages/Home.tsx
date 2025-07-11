@@ -16,10 +16,10 @@ const Home: React.FC<HomeProps> = ({ onRegisterClick, onCoOrganizerClick, onIdea
   return (
     <>
       <Hero onRegisterClick={onRegisterClick} />
+      <ResourcesGrid />
       <NewsletterSubscription />
       <CoOrganizers onCoOrganizerClick={onCoOrganizerClick} />
       <Sponsors />
-      <ResourcesGrid />
       <Agenda onIdeaClick={onIdeaClick} />
     </>
   );
