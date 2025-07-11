@@ -43,7 +43,6 @@ const Footer: React.FC = () => {
                   Attending Visual
                 </Link>
               </li>
-              <li><Link to="/#venue" className="text-gray-300 hover:text-white transition-colors">Venue</Link></li>
               <li><Link to="/hotels" className="text-gray-300 hover:text-white transition-colors">Hotels</Link></li>
               <li><Link to="/meeting-rooms" className="text-gray-300 hover:text-white transition-colors">Meeting Rooms</Link></li>
               <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">FAQ</Link></li>
