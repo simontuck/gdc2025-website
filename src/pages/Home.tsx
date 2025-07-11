@@ -3,16 +3,14 @@ import Hero from '../components/Hero';
 import NewsletterSubscription from '../components/NewsletterSubscription';
 import CoOrganizers from '../components/Partners';
 import Sponsors from '../components/Sponsors';
-import Agenda from '../components/Agenda';
 import ResourcesGrid from '../components/ResourcesGrid';
 
 interface HomeProps {
   onRegisterClick: () => void;
   onCoOrganizerClick: () => void;
-  onIdeaClick: () => void;
 }
 
-const Home: React.FC<HomeProps> = ({ onRegisterClick, onCoOrganizerClick, onIdeaClick }) => {
+const Home: React.FC<HomeProps> = ({ onRegisterClick, onCoOrganizerClick }) => {
   return (
     <>
       <Hero onRegisterClick={onRegisterClick} />
@@ -20,7 +18,6 @@ const Home: React.FC<HomeProps> = ({ onRegisterClick, onCoOrganizerClick, onIdea
       <NewsletterSubscription />
       <CoOrganizers onCoOrganizerClick={onCoOrganizerClick} />
       <Sponsors />
-      <Agenda onIdeaClick={onIdeaClick} />
     </>
   );
 };

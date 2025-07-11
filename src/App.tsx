@@ -42,7 +42,6 @@ const AppContent = () => {
           <Home 
             onRegisterClick={() => setIsRegistrationModalOpen(true)}
             onCoOrganizerClick={() => setIsRegistrationModalOpen(true)}
-            onIdeaClick={() => setIsAgendaIdeaModalOpen(true)}
           />
         } />
         <Route path="/agenda" element={<AgendaPage />} />
