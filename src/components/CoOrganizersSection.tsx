@@ -18,7 +18,7 @@ const CoOrganizersSection: React.FC = () => {
             to="/co-organizers-2025"
             className="inline-flex items-center px-8 py-4 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-medium text-lg"
           >
-            View All Co-organizers
+            View All Co-Organizers
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </div>
