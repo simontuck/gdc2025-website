@@ -32,20 +32,48 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/co-organizers-2025" className="text-gray-300 hover:text-white transition-colors">Co-organizers</Link></li>
-              <li><Link to="/agenda" className="text-gray-300 hover:text-white transition-colors">Conference Agenda</Link></li>
               <li><Link to="/session-slides" className="text-gray-300 hover:text-white transition-colors">Slides & Videos</Link></li>
-              <li><Link to="/speakers" className="text-gray-300 hover:text-white transition-colors">Speakers</Link></li>
               <li>
-                <Link 
-                  to="/visual-generator" 
+                <a 
+                  href="https://share.dma.swiss/s/XCx7CadWobSs9WR" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Attending Visual
-                </Link>
+                  Conference Photos
+                </a>
               </li>
-              <li><Link to="/hotels" className="text-gray-300 hover:text-white transition-colors">Hotels</Link></li>
-              <li><Link to="/meeting-rooms" className="text-gray-300 hover:text-white transition-colors">Meeting Rooms</Link></li>
+              <li><Link to="/session-slides" className="text-gray-300 hover:text-white transition-colors">Day 1 Presentations</Link></li>
+              <li>
+                <a 
+                  href="https://www.eid.admin.ch/de/global-digital-collaboration-conference" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Beat Jans Keynote Speech
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://www.youtube.com/playlist?list=PL_X6UOh6MHSdluNDc9xcU86wBhsN4aIjz" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  GDC YouTube Channel
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://globaldigitalcollaboration.org/t-shirt" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Conference T-Shirts
+                </a>
+              </li>
               <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>

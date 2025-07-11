@@ -62,11 +62,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/co-organizers-2025" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
-            <Link to="/agenda" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
             <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
-            <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
-            <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <button
               onClick={() => {
@@ -93,39 +89,11 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
           <div className="md:hidden bg-white shadow-lg">
             <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
               <Link 
-                to="/co-organizers-2025" 
-                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Co-Organizers
-              </Link>
-              <Link 
-                to="/agenda" 
-                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Agenda
-              </Link>
-              <Link 
                 to="/session-slides" 
                 className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Slides & Videos
-              </Link>
-              <Link 
-                to="/speakers" 
-                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Speakers
-              </Link>
-              <Link 
-                to="/hotels"
-                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Hotels
               </Link>
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
               <button
