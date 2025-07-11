@@ -21,7 +21,7 @@ const FAQPage: React.FC = () => {
     },
     {
       question: "Who are the speakers?",
-      answer: "Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, OECD, World Bank Group, European Commission, and many other prominent organizations. Check our Speakers 2025 page for detailed speaker profiles and our Agenda page for the latest speaker lineup."
+      answer: "Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, OECD, World Bank Group, European Commission, and many other prominent organizations. Check our Speakers 2025 page for detailed speaker profiles and our Agenda page for the last speaker lineup."
     },
     {
       question: "What does the barcode image in the hero section represent?",
@@ -58,7 +58,18 @@ const FAQPage: React.FC = () => {
                 </summary>
                 <div className="px-6 pb-6 text-gray-600">
                   <p className="whitespace-pre-line">
-                    {faq.question === "How can I register for the conference?" ? (
+                    {faq.question === "Who are the speakers?" ? (
+                      <>
+                        Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, OECD, World Bank Group, European Commission, and many other prominent organizations. Check our{' '}
+                        <a 
+                          href="/speakers" 
+                          className="text-primary-600 hover:text-primary-700"
+                        >
+                          Speakers 2025 page
+                        </a>
+                        {' '}for detailed speaker profiles and our Agenda page for the last speaker lineup.
+                      </>
+                    ) : faq.question === "How can I register for the conference?" ? (
                       <>
                         {faq.answer}
                         <a 
