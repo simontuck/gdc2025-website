@@ -138,12 +138,12 @@ function generateConfirmationEmailHTML(email: string, confirmationToken: string)
           
           <p>Best regards,<br>
 async function sendEmailWithSupabase(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
-  console.log(`📧 Attempting to send email to: ${to}`);
-  console.log(\`📧 Subject: ${subject}`);
+  console.log(`Attempting to send email to: ${to}`);
+  console.log(`Subject: ${subject}`);
 
   try {
     // Use Supabase's auth email system which integrates with Resend via SMTP
-    console.log('📤 Sending email via Supabase auth email system...');
+    console.log('Sending email via Supabase auth email system...');
     
     const response = await fetch(\`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/users`, {
       method: 'POST',
@@ -162,8 +162,8 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
     });
 
     const responseText = await response.text();
-    console.log(\`📧 Supabase Auth Response Status: ${response.status}`);
-    console.log(\`📧 Supabase Auth Response: ${responseText}`);
+    console.log(`Supabase Auth Response Status: ${response.status}`);
+    console.log(`Supabase Auth Response: ${responseText}`);
 
     if (!response.ok) {
       let errorData;
@@ -172,23 +172,23 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
       } catch {
         errorData = { message: responseText };
       }
-      console.error('❌ Supabase auth email error:', errorData);
+      console.error('Supabase auth email error:', errorData);
       return { 
         success: false, 
-        error: \`Supabase auth email error: ${errorData.message || 'Unknown error'}`,
+        error: `Supabase auth email error: ${errorData.message || 'Unknown error'}`,
         method: 'supabase_auth'
       };
     }
 
     const result = JSON.parse(responseText);
-    console.log('✅ Email sent successfully via Supabase auth:', result);
+    console.log('Email sent successfully via Supabase auth:', result);
     return { success: true, method: 'supabase_auth' };
 
   } catch (error) {
-    console.error('❌ Error sending email via Supabase auth:', error);
+    console.error('Error sending email via Supabase auth:', error);
     return { 
       success: false, 
-      error: \`Network error: ${error.message}`,
+      error: `Network error: ${error.message}`,
       method: 'supabase_auth'
     };
   }
@@ -343,7 +343,7 @@ Deno.serve(async (req) => {
 
     // Send confirmation email
     // For now, skip email sending until domain is validated
-    console.log(\`📧 Skipping email send for ${normalizedEmail} - domain validation pending`);
+    console.log(`Skipping email send for ${normalizedEmail} - domain validation pending`);
     
     // Update subscription to confirmed for testing
     const { error: confirmError } = await supabase

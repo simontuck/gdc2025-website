@@ -285,12 +285,12 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
 }
 
 async function sendEmailWithSupabase(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
-  console.log(`📧 Attempting to send email to: ${to}`);
-  console.log(`📧 Subject: ${subject}`);
+  console.log(`Attempting to send email to: ${to}`);
+  console.log(`Subject: ${subject}`);
 
   try {
     // Use Supabase's built-in email functionality with Resend SMTP integration
-    console.log('📤 Sending email via Supabase email service...');
+    console.log('Sending email via Supabase email service...');
     
     const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/generate_link`, {
       method: 'POST',
@@ -312,8 +312,8 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
     });
 
     const responseText = await response.text();
-    console.log(`📧 Supabase Email Response Status: ${response.status}`);
-    console.log(`📧 Supabase Email Response: ${responseText}`);
+    console.log(`Supabase Email Response Status: ${response.status}`);
+    console.log(`Supabase Email Response: ${responseText}`);
 
     if (!response.ok) {
       let errorData;
@@ -322,7 +322,7 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
       } catch {
         errorData = { message: responseText };
       }
-      console.error('❌ Supabase email error:', errorData);
+      console.error('Supabase email error:', errorData);
       return { 
         success: false, 
         error: `Supabase email error: ${errorData.message || 'Unknown error'}`,
@@ -331,11 +331,11 @@ async function sendEmailWithSupabase(to: string, subject: string, htmlContent: s
     }
 
     const result = JSON.parse(responseText);
-    console.log('✅ Email sent successfully via Supabase:', result);
+    console.log('Email sent successfully via Supabase:', result);
     return { success: true, method: 'supabase_email' };
 
   } catch (error) {
-    console.error('❌ Error sending email via Supabase:', error);
+    console.error('Error sending email via Supabase:', error);
     return { 
       success: false, 
       error: `Network error: ${error.message}`,
@@ -376,7 +376,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`📧 Processing confirmation email for booking ${bookingId} to ${customerEmail}`);
+    console.log(`Processing confirmation email for booking ${bookingId} to ${customerEmail}`);
 
     // Get booking details with room information
     const { data: booking, error: bookingError } = await supabase
@@ -389,7 +389,7 @@ Deno.serve(async (req) => {
       .single();
 
     if (bookingError || !booking) {
-      console.error('❌ Booking not found:', bookingError);
+      console.error('Booking not found:', bookingError);
       return new Response(
         JSON.stringify({ error: 'Booking not found', details: bookingError }),
         { 
@@ -399,7 +399,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`📋 Booking found: ${booking.id}, Status: ${booking.status}, Room: ${booking.room?.name}`);
+    console.log(`Booking found: ${booking.id}, Status: ${booking.status}, Room: ${booking.room?.name}`);
 
     // Send emails for confirmed bookings (free bookings are immediately confirmed)
     if (booking.status !== 'confirmed') {
@@ -425,7 +425,7 @@ Deno.serve(async (req) => {
     const emailResult = await sendEmailWithSupabase(customerEmail, emailSubject, emailHTML);
 
     if (!emailResult.success) {
-      console.error(`❌ Failed to send confirmation email for booking ${bookingId}: ${emailResult.error}`);
+      console.error(`Failed to send confirmation email for booking ${bookingId}: ${emailResult.error}`);
       return new Response(
         JSON.stringify({ 
           error: 'Failed to send confirmation email',
@@ -444,7 +444,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`✅ Confirmation email sent successfully for booking ${bookingId} to ${customerEmail}`);
+    console.log(`Confirmation email sent successfully for booking ${bookingId} to ${customerEmail}`);
 
     return new Response(
       JSON.stringify({ 
@@ -464,7 +464,7 @@ Deno.serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('❌ Error in send-booking-confirmation function:', error);
+    console.error('Error in send-booking-confirmation function:', error);
     return new Response(
       JSON.stringify({ 
         error: 'Internal server error while sending confirmation email',
