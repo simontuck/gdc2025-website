@@ -9,6 +9,7 @@ import SpeakersPage from './pages/SpeakersPage';
 import SessionSlidesPage from './pages/SessionSlidesPage';
 import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
+import CoOrganizersPage from './pages/CoOrganizersPage';
 import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -41,7 +42,6 @@ const AppContent = () => {
         <Route path="/" element={
           <Home 
             onRegisterClick={() => setIsRegistrationModalOpen(true)}
-            onCoOrganizerClick={() => setIsRegistrationModalOpen(true)}
           />
         } />
         <Route path="/agenda" element={<AgendaPage />} />
@@ -51,6 +51,7 @@ const AppContent = () => {
         <Route path="/session-slides" element={<SessionSlidesPage />} />
         <Route path="/speakers" element={<SpeakersPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/co-organizers" element={<CoOrganizersPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
