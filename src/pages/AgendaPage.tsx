@@ -709,7 +709,6 @@ const AgendaPage: React.FC = () => {
               View 2025 Speakers
             </Link>
           </div>
-          </p>
         </div>
       </section>
 
