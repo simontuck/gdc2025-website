@@ -62,16 +62,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {location.pathname === '/' ? (
-              <button
-                onClick={() => handleHashClick('co-organizers')}
-                className="text-gray-700 hover:text-primary-500 transition-colors"
-              >
-                Co-Organizers
-              </button>
-            ) : (
-              <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
-            )}
+            <Link to="/co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
             <Link to="/agenda" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
             <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
             <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
@@ -101,16 +92,13 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
         {isMenuOpen && (
           <div className="md:hidden bg-white shadow-lg">
             <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-              {location.pathname === '/' ? (
-                <button
-                  onClick={() => handleHashClick('co-organizers')}
-                  className="text-left text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
-                >
-                  Co-Organizers
-                </button>
-              ) : (
-                <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">Co-Organizers</Link>
-              )}
+              <Link 
+                to="/co-organizers" 
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Co-Organizers
+              </Link>
               <Link 
                 to="/agenda" 
                 className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
