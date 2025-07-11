@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/co-organizers" className="text-gray-300 hover:text-white transition-colors">Co-organizers</Link></li>
+              <li><Link to="/co-organizers-2025" className="text-gray-300 hover:text-white transition-colors">Co-organizers</Link></li>
               <li><Link to="/agenda" className="text-gray-300 hover:text-white transition-colors">Conference Agenda</Link></li>
               <li><Link to="/session-slides" className="text-gray-300 hover:text-white transition-colors">Slides & Videos</Link></li>
               <li><Link to="/speakers" className="text-gray-300 hover:text-white transition-colors">Speakers</Link></li>

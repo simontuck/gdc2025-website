@@ -32,7 +32,7 @@ const NotFound: React.FC = () => {
             </Link>
 
             <Link 
-              to="/#co-organizers" 
+              to="/co-organizers-2025" 
               className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all hover:bg-primary-50 group"
             >
               <Users className="h-5 w-5 text-primary-500 mr-3 group-hover:scale-110 transition-transform" />

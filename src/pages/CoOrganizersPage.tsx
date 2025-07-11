@@ -142,6 +142,47 @@ const CoOrganizersPage: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {/* Sponsors Section */}
+          <div className="mt-16 bg-white rounded-lg shadow-lg p-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Sponsors</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Leading organizations supporting the advancement of wallets, credentials and trusted infrastructure in a manner of global collaboration.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center items-center gap-12 max-w-5xl mx-auto">
+              <div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
+                <img
+                  src="/Sponsors/google_logo.png"
+                  alt="Google"
+                  className="h-12 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                />
+              </div>
+              <div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
+                <img
+                  src="/Sponsors/huawei_logo.png"
+                  alt="Huawei"
+                  className="h-12 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                />
+              </div>
+              <div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
+                <img
+                  src="/Sponsors/ma_symbol_opt_73_3x.png"
+                  alt="Mastercard"
+                  className="h-12 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                />
+              </div>
+              <div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
+                <img
+                  src="/Sponsors/visa_logo.png"
+                  alt="Visa"
+                  className="h-12 w-auto object-contain filter grayscale hover:grayscale-0 transition-all"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
