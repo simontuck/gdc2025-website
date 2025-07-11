@@ -32,17 +32,6 @@ const ResourcesGrid: React.FC = () => {
       external: true
     },
     {
-      icon: <BookOpen className="h-8 w-8 text-gray-500" />,
-      title: "Book of Proceedings",
-      description: "The complete conference proceedings including all presentations, papers, and workshop outcomes will be released in September 2025.",
-      buttonText: null,
-      buttonColor: "btn btn-primary",
-      href: "",
-      external: false,
-      badge: "(September 2025)",
-      note: "Subscribe below to get notified when available"
-    },
-    {
       icon: <Calendar className="h-8 w-8 text-gray-500" />,
       title: "Program & Speakers",
       description: "Review the complete 2-day program featuring keynotes on digital identity systems, workshops, and presentations from global leaders.",

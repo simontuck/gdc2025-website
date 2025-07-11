@@ -4,6 +4,7 @@ import NewsletterSubscription from '../components/NewsletterSubscription';
 import CoOrganizers from '../components/Partners';
 import Sponsors from '../components/Sponsors';
 import ResourcesGrid from '../components/ResourcesGrid';
+import BookOfProceedings from '../components/BookOfProceedings';
 
 interface HomeProps {
   onRegisterClick: () => void;
@@ -15,6 +16,7 @@ const Home: React.FC<HomeProps> = ({ onRegisterClick, onCoOrganizerClick }) => {
     <>
       <Hero onRegisterClick={onRegisterClick} />
       <ResourcesGrid />
+      <BookOfProceedings />
       <NewsletterSubscription />
       <CoOrganizers onCoOrganizerClick={onCoOrganizerClick} />
       <Sponsors />
