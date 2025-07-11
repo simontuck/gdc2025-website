@@ -42,12 +42,23 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               Subscribe for Updates
             </button>
-            <Link 
-              to="/resources" 
+            <button
+              onClick={() => {
+                const element = document.querySelector('.section'); // This will target the first section which is ResourcesGrid
+                if (element) {
+                  const headerOffset = 100;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
             >
               View Resources
-            </Link>
+            </button>
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
