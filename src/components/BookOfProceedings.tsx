@@ -53,12 +53,12 @@ const BookOfProceedings: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 inline-block">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6 inline-block">
                 <div className="flex items-center justify-center mb-2">
-                  <Bell className="h-5 w-5 text-blue-500 mr-2" />
-                  <span className="text-sm font-medium text-blue-900">Get Notified</span>
+                  <Bell className="h-5 w-5 text-gray-500 mr-2" />
+                  <span className="text-sm font-medium text-gray-900">Get Notified</span>
                 </div>
-                <p className="text-sm text-blue-800">
+                <p className="text-sm text-gray-700">
                   Subscribe to our newsletter below to receive notification when the Book of Proceedings is available for download.
                 </p>
               </div>
