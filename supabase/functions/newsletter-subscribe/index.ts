@@ -137,18 +137,31 @@ function generateConfirmationEmailHTML(email: string, confirmationToken: string)
           <p>If you didn't request this subscription, you can safely ignore this email.</p>
           
           <p>Best regards,<br>
+          The GDC Team</p>
+        </div>
+
+        <div class="footer">
+          <p>Global Digital Collaboration Conference 2026</p>
+          <p><a href="https://gdc.network">gdc.network</a></p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
 async function sendEmailWithSupabase(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
   console.log(`Attempting to send email to: ${to}`);
-  console.log(`Subject: ${subject}`);
+  console.log(\`Subject: ${subject}`);
 
   try {
     // Use Supabase's auth email system which integrates with Resend via SMTP
     console.log('Sending email via Supabase auth email system...');
     
-    const response = await fetch(\`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/users`, {
+    const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/users`, {
       method: 'POST',
       headers: {
-        'Authorization': \`Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -270,7 +283,7 @@ Deno.serve(async (req) => {
           .from('newsletter_subscriptions')
           .update({ 
             status: 'pending',
-            confirmation_token: \`${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            confirmation_token: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             confirmed_at: null
           })
           .eq('email', normalizedEmail)
@@ -388,4 +401,3 @@ Deno.serve(async (req) => {
     );
   }
 });
-}
