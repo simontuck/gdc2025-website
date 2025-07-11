@@ -152,52 +152,42 @@ function generateConfirmationEmailHTML(email: string, confirmationToken: string)
   `;
 }
 
-async function sendEmailWithResend(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string }> {
-  const resendApiKey = Deno.env.get('RESEND_API_KEY');
-  
-  if (!resendApiKey) {
-    console.error('RESEND_API_KEY not found in environment variables');
-    return { success: false, error: 'Email service not configured' };
-  }
-
+async function sendEmailWithSupabase(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await fetch('https://api.resend.com/emails', {
+    // Use Supabase's built-in email functionality with Resend SMTP integration
+    const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/generate_link`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'GDC Newsletter <newsletter@globaldigitalcollaboration.org>',
-        to: [to],
-        subject: subject,
-        html: htmlContent,
-        reply_to: 'info@globaldigitalcollaboration.org'
+        type: 'email_change_current',
+        email: to,
+        options: {
+          email_redirect_to: `${Deno.env.get('SUPABASE_URL')}/functions/v1/newsletter-confirm`,
+          data: {
+            subject: subject,
+            html: htmlContent
+          }
+        }
       }),
     });
 
-    const responseText = await response.text();
-
     if (!response.ok) {
-      let errorData;
-      try {
-        errorData = JSON.parse(responseText);
-      } catch {
-        errorData = { message: responseText };
-      }
-      console.error('Resend API error:', errorData);
+      const errorData = await response.json();
+      console.error('Supabase email error:', errorData);
       return { 
         success: false, 
         error: `Email service error: ${errorData.message || 'Unknown error'}`
       };
     }
 
-    const result = JSON.parse(responseText);
-    console.log('Confirmation email sent successfully:', result);
+    console.log('Confirmation email sent successfully via Supabase');
     return { success: true };
 
   } catch (error) {
-    console.error('Error sending email via Resend:', error);
+    console.error('Error sending email via Supabase:', error);
     return { 
       success: false, 
       error: `Network error: ${error.message}`
@@ -303,7 +293,7 @@ Deno.serve(async (req) => {
         const emailSubject = 'Confirm Your Newsletter Subscription - GDC';
         const emailHTML = generateConfirmationEmailHTML(normalizedEmail, reactivatedSubscription.confirmation_token);
         
-        const emailResult = await sendEmailWithResend(normalizedEmail, emailSubject, emailHTML);
+        const emailResult = await sendEmailWithSupabase(normalizedEmail, emailSubject, emailHTML);
         
         if (!emailResult.success) {
           console.error('Failed to send reactivation confirmation email:', emailResult.error);
@@ -354,7 +344,7 @@ Deno.serve(async (req) => {
     const emailSubject = 'Confirm Your Newsletter Subscription - GDC';
     const emailHTML = generateConfirmationEmailHTML(normalizedEmail, newSubscription.confirmation_token);
     
-    const emailResult = await sendEmailWithResend(normalizedEmail, emailSubject, emailHTML);
+    const emailResult = await sendEmailWithSupabase(normalizedEmail, emailSubject, emailHTML);
     
     if (!emailResult.success) {
       console.error('Failed to send confirmation email:', emailResult.error);

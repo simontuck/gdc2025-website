@@ -87,7 +87,6 @@ Environment variables required for the project:
 - `STRIPE_WEBHOOK_SECRET`: Stripe webhook secret for verifying webhook signatures
 
 **Resend Configuration:**
-- `RESEND_API_KEY`: Resend API key for sending emails (starts with re_) - Used in Supabase Edge Functions
 
 ### Stripe Setup
 

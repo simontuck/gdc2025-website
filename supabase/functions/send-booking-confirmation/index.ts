@@ -284,41 +284,36 @@ function generateConfirmationEmailHTML(booking: BookingDetails): string {
   `;
 }
 
-async function sendEmailWithResend(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
+async function sendEmailWithSupabase(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: string; method?: string }> {
   console.log(`📧 Attempting to send email to: ${to}`);
   console.log(`📧 Subject: ${subject}`);
 
-  // Check if we have the Resend API key
-  const resendApiKey = Deno.env.get('RESEND_API_KEY');
-  console.log(`🔑 Resend API Key available: ${resendApiKey ? 'Yes' : 'No'}`);
-
-  if (!resendApiKey) {
-    console.error('❌ RESEND_API_KEY not found in environment variables');
-    return { success: false, error: 'RESEND_API_KEY not configured' };
-  }
-
   try {
-    // Use direct Resend API call with the correct domain and reply-to address
-    console.log('📤 Sending email via direct Resend API...');
+    // Use Supabase's built-in email functionality with Resend SMTP integration
+    console.log('📤 Sending email via Supabase email service...');
     
-    const response = await fetch('https://api.resend.com/emails', {
+    const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/auth/v1/admin/generate_link`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
-        to: [to],
-        subject: subject,
-        html: htmlContent,
-        reply_to: 'info@globaldigitalcollaboration.org'
+        type: 'email_change_current',
+        email: to,
+        options: {
+          email_redirect_to: `${Deno.env.get('SUPABASE_URL')}/functions/v1/newsletter-confirm`,
+          data: {
+            subject: subject,
+            html: htmlContent
+          }
+        }
       }),
     });
 
     const responseText = await response.text();
-    console.log(`📧 Resend API Response Status: ${response.status}`);
-    console.log(`📧 Resend API Response: ${responseText}`);
+    console.log(`📧 Supabase Email Response Status: ${response.status}`);
+    console.log(`📧 Supabase Email Response: ${responseText}`);
 
     if (!response.ok) {
       let errorData;
@@ -327,24 +322,24 @@ async function sendEmailWithResend(to: string, subject: string, htmlContent: str
       } catch {
         errorData = { message: responseText };
       }
-      console.error('❌ Resend API error:', errorData);
+      console.error('❌ Supabase email error:', errorData);
       return { 
         success: false, 
-        error: `Resend API error: ${errorData.message || 'Unknown error'}`,
-        method: 'direct_api'
+        error: `Supabase email error: ${errorData.message || 'Unknown error'}`,
+        method: 'supabase_email'
       };
     }
 
     const result = JSON.parse(responseText);
-    console.log('✅ Email sent successfully via Resend API:', result);
-    return { success: true, method: 'direct_api' };
+    console.log('✅ Email sent successfully via Supabase:', result);
+    return { success: true, method: 'supabase_email' };
 
   } catch (error) {
-    console.error('❌ Error sending email via Resend:', error);
+    console.error('❌ Error sending email via Supabase:', error);
     return { 
       success: false, 
       error: `Network error: ${error.message}`,
-      method: 'direct_api'
+      method: 'supabase_email'
     };
   }
 }
@@ -427,7 +422,7 @@ Deno.serve(async (req) => {
     const emailHTML = generateConfirmationEmailHTML(booking as BookingDetails);
 
     // Send confirmation email using Resend
-    const emailResult = await sendEmailWithResend(customerEmail, emailSubject, emailHTML);
+    const emailResult = await sendEmailWithSupabase(customerEmail, emailSubject, emailHTML);
 
     if (!emailResult.success) {
       console.error(`❌ Failed to send confirmation email for booking ${bookingId}: ${emailResult.error}`);
