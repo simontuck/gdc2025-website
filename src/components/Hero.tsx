@@ -17,11 +17,11 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
-            Global Digital Collaboration Conference
+            Thank You for Making GDC25 a Success!
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 text-white/90 drop-shadow">
-            To foster wallets, credentials and trusted infrastructure for the benefit of all humans
+            Together, we shaped the future of digital trust infrastructure
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -57,7 +57,11 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Up to 2,000 representatives from the public and private sector</span>
+              <span>1,000 In-person participants from the public and private sector</span>
+            </div>
+            <div className="flex items-center">
+              <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
+              <span>2 Days of innovation</span>
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
