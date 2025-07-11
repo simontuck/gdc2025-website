@@ -186,7 +186,7 @@ const SessionSlidesPage: React.FC = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Session Slides & Videos</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            Access presentation slides and video recordings from conference sessions. Download slides for offline viewing or watch session recordings on YouTube.
+            Access presentation slides and video recordings from the Global Digital Collaboration Conference 2025. Download slides for offline viewing or watch session recordings on YouTube.
           </p>
         </div>
       </section>
@@ -276,30 +276,9 @@ const SessionSlidesPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {filteredSessions.map((session, index) => {
                 const organizersData = getOrganizersData(session);
-                const youtubeVideoId = session.youtube ? getYouTubeVideoId(session.youtube) : null;
                 
                 return (
                   <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                    {/* YouTube Thumbnail */}
-                    {youtubeVideoId && (
-                      <div className="relative aspect-video bg-gray-100">
-                        <img
-                          src={`https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`}
-                          alt={`${session.title} video thumbnail`}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            // Fallback to default thumbnail if maxres doesn't exist
-                            e.currentTarget.src = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                          <div className="bg-red-600 rounded-full p-3 hover:bg-red-700 transition-colors">
-                            <Play className="h-8 w-8 text-white fill-white" />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
                     <div className="p-6">
                       {/* Session Info */}
                       <div className="flex items-center gap-4 mb-3 text-sm text-gray-500">
@@ -355,7 +334,7 @@ const SessionSlidesPage: React.FC = () => {
                             className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors text-sm font-medium"
                           >
                             <Download className="h-4 w-4 mr-2" />
-                            Download Slides
+                            View Slides
                           </a>
                         )}
 
