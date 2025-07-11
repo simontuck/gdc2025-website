@@ -308,7 +308,7 @@ async function sendEmailWithResend(to: string, subject: string, htmlContent: str
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'GDC25 Conference <noreply@gc25.trustsquare.com>',
+        from: 'GDC25 Conference <noreply@globaldigitalcollaboration.org>',
         to: [to],
         subject: subject,
         html: htmlContent,
