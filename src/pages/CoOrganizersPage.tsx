@@ -107,7 +107,7 @@ const CoOrganizersPage: React.FC = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Co-Organizers 2025</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            Leading organizations from across the globe that came together to shape the future of digital identity, in particular in the realm of secure, interoperable wallets, credentials and trusted infrastructure.
+            46 Leading organizations from across the globe that came together to shape the future of digital identity, in particular in the realm of secure, interoperable wallets, credentials and trusted infrastructure.
           </p>
         </div>
       </section>
