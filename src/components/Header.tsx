@@ -73,6 +73,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               <Link to="/#co-organizers" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
             )}
             <Link to="/agenda" className="text-gray-700 hover:text-primary-500 transition-colors">Agenda</Link>
+            <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
             <Link to="/speakers" className="text-gray-700 hover:text-primary-500 transition-colors">Speakers</Link>
             <Link to="/hotels" className="text-gray-700 hover:text-primary-500 transition-colors">Hotels</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
@@ -116,6 +117,13 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Agenda
+              </Link>
+              <Link 
+                to="/session-slides" 
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Slides & Videos
               </Link>
               <Link 
                 to="/speakers" 

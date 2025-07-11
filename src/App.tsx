@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import AgendaPage from './pages/AgendaPage';
 import SessionsOverviewPage from './pages/SessionsOverviewPage';
 import SpeakersPage from './pages/SpeakersPage';
+import SessionSlidesPage from './pages/SessionSlidesPage';
 import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
 import HotelsPage from './pages/HotelsPage';
@@ -48,6 +49,7 @@ const AppContent = () => {
         <Route path="/sessions-overview" element={
           <SessionsOverviewPage onIdeaClick={() => setIsAgendaIdeaModalOpen(true)} />
         } />
+        <Route path="/session-slides" element={<SessionSlidesPage />} />
         <Route path="/speakers" element={<SpeakersPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
