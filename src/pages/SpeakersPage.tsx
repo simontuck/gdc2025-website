@@ -137,9 +137,12 @@ const SpeakersPage: React.FC = () => {
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16">
         <div className="container">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Conference Speakers</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Speakers 2025</h1>
+          <p className="text-lg text-white/80 mb-2">
+            July 1-2, 2025 • Geneva, Switzerland
+          </p>
           <p className="text-xl text-white/90 max-w-3xl">
-            Meet the industry leaders and experts shaping the future of digital collaboration
+            Meet the industry leaders and experts who shaped the future of digital collaboration at GDC25
           </p>
         </div>
       </section>

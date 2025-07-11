@@ -691,11 +691,24 @@ const AgendaPage: React.FC = () => {
     <div className="pt-20 print:pt-0">
       <section className="bg-primary-700 text-white py-16 print:bg-white print:text-black print:py-2">
         <div className="container">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 print:text-lg print:mb-1 print:text-black print:font-bold">
-            Conference Agenda
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 print:text-lg print:mb-1 print:text-black print:font-bold">
+            Conference Agenda 2025
           </h1>
-          <p className="text-xl text-white/90 max-w-3xl print:text-gray-700 print:text-2xs print:mb-2">
+          <p className="text-lg text-white/80 mb-2 print:text-gray-600 print:text-2xs">
+            July 1-2, 2025 • Geneva, Switzerland
+          </p>
+          <p className="text-xl text-white/90 max-w-3xl mb-6 print:text-gray-700 print:text-2xs print:mb-2">
             Two days of intensive collaboration, knowledge sharing, and strategic planning for the future of digital public infrastructure. All sessions are conducted in English, with no simultaneous translation provided.
+          </p>
+          <div className="print:hidden">
+            <Link 
+              to="/speakers" 
+              className="inline-flex items-center px-6 py-3 bg-white text-primary-700 rounded-md hover:bg-gray-100 transition-colors font-medium"
+            >
+              <Users className="h-5 w-5 mr-2" />
+              View 2025 Speakers
+            </Link>
+          </div>
           </p>
         </div>
       </section>
