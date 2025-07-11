@@ -4,24 +4,8 @@ import { ChevronDown } from 'lucide-react';
 const FAQPage: React.FC = () => {
   const faqs = [
     {
-      question: "When and where is the conference?",
-      answer: "The Global Digital Collaboration Conference (GDC25) takes place on July 1-2, 2025, in Geneva, Switzerland. The venue is the Centre International de Conférences Genève (CICG)."
-    },
-    {
       question: "What is the goal of the conference?",
       answer: "The goal of the conference is to initiate collaboration on specific topics that require the involvement of more than one actor or organistion to be succesful. Sessions may inspire continued collaboration beyond the conference."
-    },
-    {
-      question: "How can I register for the conference?",
-      answer: "You can register for the conference through our official registration platform at "
-    },
-    {
-      question: "Why is it necessary to register through co-organizers?",
-      answer: "There are two reasons. Firstly, we wanted co-organizers to be the door for people to attend; the conference is free but you should be part of a community. And the second reason is privacy. We don't want every organizer to be forced to share their data with all the other co-organizers."
-    },
-    {
-      question: "What hotels are recommended for conference attendees?",
-      answer: "We've partnered with several hotels in Geneva, including the Hotel Intercontinental Geneva (closest to venue), Hotel President Wilson, and others. Special conference rates are available when mentioning 'GDC25' during booking. Visit our Hotels page for the complete list and booking information."
     },
     {
       question: "How can I become a co-organizer?",
@@ -96,7 +80,7 @@ const FAQPage: React.FC = () => {
                         >
                           info@globaldigitalcollaboration.org
                         </a>
-                        {' '}with the subject 'GDC25 Co-organizer Application'. We welcome organizations from intergovernmental, standards development, open source, and other relevant sectors who want to engage in collaboration with other co-organizers.
+                        {' '}with the subject 'GDC26 Co-organizer Application'. We welcome organizations from intergovernmental, standards development, open source, and other relevant sectors who want to engage in collaboration with other co-organizers.
                       </>
                     ) : faq.question === "What does the barcode image in the hero section represent?" ? (
                       <>
