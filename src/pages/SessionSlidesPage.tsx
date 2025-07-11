@@ -29,11 +29,6 @@ const SessionSlidesPage: React.FC = () => {
   const filteredSessions = useMemo(() => {
     let filtered = sessionsWithContent;
 
-    // Filter by day
-    if (selectedDay) {
-      filtered = filtered.filter(item => item.day === selectedDay);
-    }
-
     // Filter by search term
     if (searchTerm.trim()) {
       const search = searchTerm.toLowerCase();
@@ -51,7 +46,7 @@ const SessionSlidesPage: React.FC = () => {
       }
       return a.time.localeCompare(b.time);
     });
-  }, [sessionsWithContent, selectedDay, searchTerm]);
+  }, [sessionsWithContent, searchTerm]);
 
   // Helper function to get organizers data
   const getOrganizersData = (item: any): string | null => {
@@ -115,7 +110,6 @@ const SessionSlidesPage: React.FC = () => {
   };
 
   const handleClearFilters = () => {
-    setSelectedDay('');
     setSearchTerm('');
     setSearchParams({});
   };
@@ -175,15 +169,6 @@ const SessionSlidesPage: React.FC = () => {
     <div className="pt-20">
       <section className="bg-primary-700 text-white py-16">
         <div className="container">
-          <div className="flex items-center gap-4 mb-6">
-            <Link 
-              to="/agenda" 
-              className="inline-flex items-center text-white/80 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Agenda
-            </Link>
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Session Slides & Videos</h1>
           <p className="text-xl text-white/90 max-w-3xl">
             Access presentation slides and video recordings from the Global Digital Collaboration Conference 2025. Download slides for offline viewing or watch session recordings on YouTube.
@@ -196,19 +181,19 @@ const SessionSlidesPage: React.FC = () => {
           {/* Filters */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Filter Sessions</h3>
-              {(selectedDay || searchTerm) && (
+              <h3 className="text-lg font-semibold text-gray-900">Search Sessions</h3>
+              {searchTerm && (
                 <button
                   onClick={handleClearFilters}
                   className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
                 >
                   <X className="h-4 w-4 mr-1" />
-                  Clear Filters
+                  Clear Search
                 </button>
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
               {/* Search */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -222,28 +207,13 @@ const SessionSlidesPage: React.FC = () => {
                   className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 />
               </div>
-
-              {/* Day Filter */}
-              <div>
-                <select
-                  value={selectedDay}
-                  onChange={(e) => setSelectedDay(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                >
-                  {days.map(day => (
-                    <option key={day.id} value={day.id}>
-                      {day.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
           </div>
 
           {/* Results Summary */}
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-2 text-gray-600">
-              <Filter className="h-4 w-4" />
+              <Search className="h-4 w-4" />
               <span className="text-sm">
                 {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''} with slides or videos
               </span>
@@ -260,15 +230,15 @@ const SessionSlidesPage: React.FC = () => {
               <p className="text-gray-600">
                 {sessionsWithContent.length === 0 
                   ? 'No sessions with slides or videos are available yet. Check back later for updates.'
-                  : 'No sessions match your current filters. Try adjusting your search criteria.'
+                  : 'No sessions match your search. Try adjusting your search criteria.'
                 }
               </p>
-              {(selectedDay || searchTerm) && (
+              {searchTerm && (
                 <button
                   onClick={handleClearFilters}
                   className="mt-4 btn btn-secondary"
                 >
-                  Clear Filters
+                  Clear Search
                 </button>
               )}
             </div>
@@ -356,31 +326,6 @@ const SessionSlidesPage: React.FC = () => {
               })}
             </div>
           )}
-
-          {/* Additional Information */}
-          <div className="mt-12 bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">About Session Content</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div>
-                <h4 className="font-medium text-blue-900 mb-2">Presentation Slides</h4>
-                <ul className="space-y-1 text-blue-800">
-                  <li>• Download slides in PDF format</li>
-                  <li>• Available for offline viewing</li>
-                  <li>• Includes speaker notes where available</li>
-                  <li>• Copyright belongs to respective speakers</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium text-blue-900 mb-2">Video Recordings</h4>
-                <ul className="space-y-1 text-blue-800">
-                  <li>• Full session recordings on YouTube</li>
-                  <li>• Includes Q&A sessions where recorded</li>
-                  <li>• Available with closed captions</li>
-                  <li>• Can be shared and embedded</li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </div>
