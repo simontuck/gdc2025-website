@@ -1,6 +1,5 @@
 import React from 'react';
 import Hero from '../components/Hero';
-import FAQ from '../components/FAQ';
 import NewsletterSubscription from '../components/NewsletterSubscription';
 import Sponsors from '../components/Sponsors';
 import ResourcesGrid from '../components/ResourcesGrid';
@@ -15,7 +14,6 @@ const Home: React.FC<HomeProps> = ({ onRegisterClick }) => {
   return (
     <>
       <Hero onRegisterClick={onRegisterClick} />
-      <FAQ />
       <ResourcesGrid />
       <BookOfProceedings />
       <NewsletterSubscription />
