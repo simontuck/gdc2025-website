@@ -72,7 +72,7 @@ const ResourcesGrid: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map((resource, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex flex-col h-full">
               <div className="flex items-center mb-4">
                 {resource.icon}
                 <div className="ml-3">
@@ -83,7 +83,7 @@ const ResourcesGrid: React.FC = () => {
                 </div>
               </div>
               
-              <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+              <p className="text-gray-600 mb-6 text-sm leading-relaxed flex-grow">
                 {resource.description}
               </p>
 
@@ -94,7 +94,7 @@ const ResourcesGrid: React.FC = () => {
               )}
 
               {resource.buttonText && (
-                <div className="mt-auto">
+                <div className="mt-auto pt-4">
                   {resource.external ? (
                     <a
                       href={resource.href}
