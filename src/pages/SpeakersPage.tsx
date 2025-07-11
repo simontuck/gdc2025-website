@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Linkedin, Building2 } from 'lucide-react';
 import { useSpeakers } from '../hooks/useSpeakers';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 interface Speaker {
   id: string;
