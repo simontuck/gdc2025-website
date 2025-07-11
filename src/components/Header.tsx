@@ -65,7 +65,19 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <button
-              onClick={() => handleHashClick('newsletter')}
+              onClick={() => {
+                setIsMenuOpen(false);
+                const element = document.getElementById('newsletter');
+                if (element) {
+                  const headerOffset = 100;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
               className="btn btn-primary"
             >
               Subscribe for Updates
@@ -94,7 +106,19 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               </Link>
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
               <button
-                onClick={() => handleHashClick('newsletter')}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  const element = document.getElementById('newsletter');
+                  if (element) {
+                    const headerOffset = 100;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
                 className="btn btn-primary w-full"
               >
                 Subscribe for Updates

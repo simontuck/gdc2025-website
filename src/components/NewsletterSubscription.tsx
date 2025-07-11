@@ -44,7 +44,7 @@ const NewsletterSubscription: React.FC = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-primary-50 to-blue-50 py-16">
+    <section id="newsletter" className="bg-gradient-to-br from-primary-50 to-blue-50 py-16">
       <div className="container">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center mb-6">
