@@ -35,7 +35,7 @@ const NewsletterSubscription: React.FC = () => {
       }
 
       setStatus('success');
-      setMessage('Please check your email to confirm your subscription!');
+      setMessage('Subscription confirmed! You will receive updates about the conference.');
       setEmail('');
     } catch (error: any) {
       setStatus('error');
