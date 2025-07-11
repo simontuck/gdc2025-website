@@ -118,8 +118,16 @@ const Footer: React.FC = () => {
             </p>
             <button
               onClick={() => {
-                // TODO: Implement newsletter subscription
-                alert('Newsletter subscription coming soon!');
+                const element = document.getElementById('newsletter');
+                if (element) {
+                  const headerOffset = 100;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
               }}
               className="inline-flex items-center text-white bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-md transition-colors"
             >

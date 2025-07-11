@@ -65,10 +65,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
             <Link to="/session-slides" className="text-gray-700 hover:text-primary-500 transition-colors">Slides & Videos</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <button
-              onClick={() => {
-                // TODO: Implement newsletter subscription
-                alert('Newsletter subscription coming soon!');
-              }}
+              onClick={() => handleHashClick('newsletter')}
               className="btn btn-primary"
             >
               Subscribe for Updates
@@ -97,11 +94,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               </Link>
               <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100">FAQ</Link>
               <button
-                onClick={() => {
-                  // TODO: Implement newsletter subscription
-                  alert('Newsletter subscription coming soon!');
-                  setIsMenuOpen(false);
-                }}
+                onClick={() => handleHashClick('newsletter')}
                 className="btn btn-primary w-full"
               >
                 Subscribe for Updates

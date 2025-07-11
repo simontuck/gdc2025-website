@@ -27,8 +27,16 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <button
               onClick={() => {
-                // TODO: Implement newsletter subscription
-                alert('Newsletter subscription coming soon!');
+                const element = document.getElementById('newsletter');
+                if (element) {
+                  const headerOffset = 100;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
               }}
               className="btn bg-white text-primary-600 hover:bg-gray-100"
             >
