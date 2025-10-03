@@ -40,7 +40,7 @@ const GDC26Announcement: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://www.linkedin.com/posts/global-digital-collaboration-event_save-the-date-for-the-second-edition-of-the-activity-7351273343783698432-sHQf?utm_source=share&utm_medium=member_desktop&rcm=ACoAAABK7-MBVTSv3amtqMYggyWZ7qIAygJkU3I"
+              href="https://www.linkedin.com/posts/global-digital-collaboration-event_save-the-date-for-the-second-edition-of-the-activity-7379850441100255232-JnqA?utm_source=share&utm_medium=member_ios&rcm=ACoAAAABNi4BGMrmDae_JWkitr-dyqBUVqxa6lY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-white text-primary-600 rounded-md hover:bg-gray-100 transition-colors font-medium"

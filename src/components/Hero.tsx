@@ -42,23 +42,14 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               Get Notified
             </button>
-            <button
-              onClick={() => {
-                const element = document.getElementById('venue');
-                if (element) {
-                  const headerOffset = 100;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
+            <a
+              href="https://www.palexpo.ch/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
             >
               View Venue
-            </button>
+            </a>
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
@@ -68,7 +59,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>1,000 In-person participants from the public and private sector</span>
+              <span>2,000 In-person participants from the public and private sector</span>
             </div>
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
