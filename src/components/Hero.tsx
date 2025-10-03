@@ -13,15 +13,15 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
         <div className="max-w-3xl">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm mb-6">
             <Calendar className="h-4 w-4 mr-2" />
-            <span className="text-sm font-medium">1–2 July 2025 | Geneva, Switzerland</span>
+            <span className="text-sm font-medium">1–3 September 2026 | Geneva, Switzerland</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
-            Thank You for Making GDC25 a Success!
+            Global Digital Collaboration Conference 2026
           </h1>
-          
+
           <p className="text-xl md:text-2xl mb-8 text-white/90 drop-shadow">
-            Together, we shaped the future of digital trust infrastructure
+            Join us for the next edition as we continue advancing digital trust infrastructure worldwide
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -40,11 +40,11 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               }}
               className="btn bg-white text-primary-600 hover:bg-gray-100"
             >
-              Subscribe for Updates
+              Get Notified
             </button>
             <button
               onClick={() => {
-                const element = document.querySelector('.section'); // This will target the first section which is ResourcesGrid
+                const element = document.getElementById('venue');
                 if (element) {
                   const headerOffset = 100;
                   const elementPosition = element.getBoundingClientRect().top;
@@ -57,7 +57,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               }}
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
             >
-              View Resources
+              View Venue
             </button>
           </div>
           
@@ -72,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>2 Days of innovation</span>
+              <span>3 Days of innovation</span>
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />

@@ -3,8 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { MapPin, Navigation, ExternalLink } from 'lucide-react';
 
 const Venue: React.FC = () => {
-  // CICG Geneva coordinates
-  const position: [number, number] = [46.219756, 6.137516];
+  // Palexpo Geneva coordinates
+  const position: [number, number] = [46.232876, 6.108194];
 
   return (
     <section id="venue" className="section bg-gray-50">
@@ -12,7 +12,7 @@ const Venue: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Conference Venue</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            The Global Digital Collaboration Conference will be held at the Centre International de Conférences Genève (CICG) in the heart of international Geneva.
+            The Global Digital Collaboration Conference will be held at Palexpo Geneva, Switzerland's largest exhibition and congress center.
           </p>
         </div>
 
@@ -21,17 +21,17 @@ const Venue: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
               <div className="flex items-center mb-4">
                 <MapPin className="h-6 w-6 text-primary-500 mr-3" />
-                <h3 className="text-xl font-semibold text-gray-900">CICG Geneva</h3>
+                <h3 className="text-xl font-semibold text-gray-900">Palexpo Geneva</h3>
               </div>
               <p className="text-gray-700 mb-4">
-                Centre International de Conférences Genève<br />
-                17 Rue de Varembé<br />
-                1211 Genève, Switzerland
+                Palexpo SA<br />
+                Route François-Peyrot 30<br />
+                1218 Grand-Saconnex, Switzerland
               </p>
               <div className="flex flex-wrap gap-3">
-                <a 
-                  href="https://www.cicg.ch/en" 
-                  target="_blank" 
+                <a
+                  href="https://www.palexpo.ch/en/"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-primary-600 hover:text-primary-700"
                 >
@@ -57,13 +57,13 @@ const Venue: React.FC = () => {
                   <div className="flex-shrink-0 h-5 w-5 rounded-full bg-primary-100 flex items-center justify-center mt-1">
                     <span className="text-primary-600 text-xs">✓</span>
                   </div>
-                  <p className="ml-3 text-gray-700">Central location in the heart of International Geneva</p>
+                  <p className="ml-3 text-gray-700">Located next to Geneva International Airport</p>
                 </li>
                 <li className="flex items-start">
                   <div className="flex-shrink-0 h-5 w-5 rounded-full bg-primary-100 flex items-center justify-center mt-1">
                     <span className="text-primary-600 text-xs">✓</span>
                   </div>
-                  <p className="ml-3 text-gray-700">State-of-the-art conference facilities</p>
+                  <p className="ml-3 text-gray-700">Switzerland's largest exhibition and congress center</p>
                 </li>
                 <li className="flex items-start">
                   <div className="flex-shrink-0 h-5 w-5 rounded-full bg-primary-100 flex items-center justify-center mt-1">
@@ -100,9 +100,9 @@ const Venue: React.FC = () => {
               />
               <Marker position={position}>
                 <Popup>
-                  <b>CICG Geneva</b><br />
-                  Centre International de Conférences Genève<br />
-                  17 Rue de Varembé, 1211 Genève
+                  <b>Palexpo Geneva</b><br />
+                  Palexpo SA<br />
+                  Route François-Peyrot 30, 1218 Grand-Saconnex
                 </Popup>
               </Marker>
             </MapContainer>

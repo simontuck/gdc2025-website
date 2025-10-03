@@ -24,7 +24,7 @@ const GDC26Announcement: React.FC = () => {
                 <Calendar className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-2">When</h3>
-              <p className="text-lg">June 24-26, 2026</p>
+              <p className="text-lg">September 1-3, 2026</p>
               <p className="text-sm text-white/80 mt-1">Three days of collaboration</p>
             </div>
             
@@ -33,8 +33,8 @@ const GDC26Announcement: React.FC = () => {
                 <MapPin className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Where</h3>
-              <p className="text-lg">SwissTech Convention Center</p>
-              <p className="text-sm text-white/80 mt-1">Lausanne, Switzerland</p>
+              <p className="text-lg">Palexpo Geneva</p>
+              <p className="text-sm text-white/80 mt-1">Geneva, Switzerland</p>
             </div>
           </div>
           
