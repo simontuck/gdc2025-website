@@ -1,0 +1,110 @@
+plugins = []
+headers = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "/tmp/cc-agent/49186031/project/dist"
+publishOrigin = "ui"
+commandOrigin = "ui"
+command = "npm run build"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[redirects]]
+from = "/t-shirt"
+to = "https://tshirt.ag/collections/gdc-t-shirt"
+status = 302.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/briefings"
+to = "https://docs.google.com/document/d/1MPWTxSYL4SRN_LHL0j8_hTaJdmVgfZ0hWz0RsTjr350/edit?usp=sharing"
+status = 302.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/briefing"
+to = "https://docs.google.com/document/d/1MPWTxSYL4SRN_LHL0j8_hTaJdmVgfZ0hWz0RsTjr350/edit?usp=sharing"
+status = 302.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/photos"
+to = "https://share.dma.swiss/s/XCx7CadWobSs9WR"
+status = 302.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/photo"
+to = "https://share.dma.swiss/s/XCx7CadWobSs9WR"
+status = 302.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/barcode"
+to = "https://shaheeilyas.com/ow-barcode/"
+status = 302.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
