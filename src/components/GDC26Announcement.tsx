@@ -3,7 +3,7 @@ import { Calendar, MapPin, ExternalLink, ArrowRight } from 'lucide-react';
 
 const GDC26Announcement: React.FC = () => {
   return (
-    <section className="section bg-gradient-to-br from-primary-600 to-primary-800 text-white">
+    <section id="gdc26" className="section bg-gradient-to-br from-primary-600 to-primary-800 text-white">
       <div className="container">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-6">

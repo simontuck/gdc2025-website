@@ -44,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </button>
             <button
               onClick={() => {
-                const element = document.getElementById('venue');
+                const element = document.getElementById('gdc26');
                 if (element) {
                   const headerOffset = 100;
                   const elementPosition = element.getBoundingClientRect().top;
