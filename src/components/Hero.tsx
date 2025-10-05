@@ -42,14 +42,23 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               Get Notified
             </button>
-            <a
-              href="https://www.palexpo.ch/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                const element = document.getElementById('venue');
+                if (element) {
+                  const headerOffset = 100;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
             >
               View Venue
-            </a>
+            </button>
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
