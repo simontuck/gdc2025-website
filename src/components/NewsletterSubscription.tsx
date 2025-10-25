@@ -1,47 +1,47 @@
-import React, { useState } from 'react';
-import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Mail } from 'lucide-react';
 
 const NewsletterSubscription: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
+  const initialized = useRef(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !email.includes('@')) {
-      setStatus('error');
-      setMessage('Please enter a valid email address');
-      return;
-    }
+  useEffect(() => {
+    // Prevent double initialization in React StrictMode
+    if (initialized.current) return;
+    initialized.current = true;
 
-    setStatus('loading');
-    setMessage('');
+    // Check if script already exists
+    const existingScript = document.querySelector('script[src="https://api.mailxpert.ch/forms.js"]');
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-subscribe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to subscribe');
+    if (existingScript) {
+      // Script already loaded, just initialize the form
+      if ((window as any).mailxpert) {
+        const formElement = document.getElementById('formContentId');
+        if (formElement) {
+          (window as any).mailxpert.forms.include({
+            src: 'https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d.html?render=container',
+            element: formElement,
+          });
+        }
       }
+    } else {
+      // Load the Mailxpert forms script
+      const script = document.createElement('script');
+      script.src = 'https://api.mailxpert.ch/forms.js';
+      script.async = true;
+      document.body.appendChild(script);
 
-      setStatus('success');
-      setMessage('Subscription confirmed! You will receive updates about the conference.');
-      setEmail('');
-    } catch (error: any) {
-      setStatus('error');
-      setMessage(error.message || 'Something went wrong. Please try again.');
+      // Initialize the form after script loads
+      script.onload = () => {
+        const formElement = document.getElementById('formContentId');
+        if (formElement && (window as any).mailxpert) {
+          (window as any).mailxpert.forms.include({
+            src: 'https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d.html?render=container',
+            element: formElement,
+          });
+        }
+      };
     }
-  };
+  }, []);
 
   return (
     <section id="newsletter" className="bg-gradient-to-br from-primary-50 to-blue-50 py-16">
@@ -89,53 +89,7 @@ const NewsletterSubscription: React.FC = () => {
           </div>
 
           <div className="max-w-md mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  disabled={status === 'loading'}
-                  required
-                />
-                <button
-                  type="submit"
-                  disabled={status === 'loading' || !email}
-                  className="btn btn-primary whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {status === 'loading' ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Subscribing...
-                    </>
-                  ) : (
-                    'Subscribe for Updates'
-                  )}
-                </button>
-              </div>
-              
-              {message && (
-                <div className={`flex items-center justify-center p-3 rounded-lg ${
-                  status === 'success' 
-                    ? 'bg-green-50 text-green-800 border border-green-200' 
-                    : 'bg-red-50 text-red-800 border border-red-200'
-                }`}>
-                  {status === 'success' ? (
-                    <CheckCircle className="h-5 w-5 mr-2" />
-                  ) : (
-                    <AlertCircle className="h-5 w-5 mr-2" />
-                  )}
-                  <span className="text-sm">{message}</span>
-                </div>
-              )}
-            </form>
-            
-            <p className="text-xs text-gray-500 mt-4">
-              By subscribing, you agree to receive updates about the Global Digital Collaboration Conference. 
-              You can unsubscribe at any time.
-            </p>
+            <div id="formContentId"></div>
           </div>
         </div>
       </div>
