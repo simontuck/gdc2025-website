@@ -64,7 +64,7 @@ const NewsletterSubscription: React.FC = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Book of Proceedings</h3>
-              <p className="text-sm text-gray-600">Release in September 2025</p>
+              <p className="text-sm text-gray-600">Release in November 2025</p>
             </div>
             
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">

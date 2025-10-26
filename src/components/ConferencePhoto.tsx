@@ -18,7 +18,7 @@ const ConferencePhoto: React.FC = () => {
                   A Historic Gathering in Geneva
                 </h2>
                 <p className="text-lg text-white/90 max-w-3xl">
-                  Representatives from 46 leading organizations came together to advance digital trust infrastructure for the benefit of all humanity.
+                  On July 1 and 2, 2025, representatives from 46 leading organizations came together to advance digital trust infrastructure for the benefit of all humanity.
                 </p>
               </div>
             </div>
