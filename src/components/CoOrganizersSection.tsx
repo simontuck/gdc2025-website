@@ -8,7 +8,7 @@ const CoOrganizersSection: React.FC = () => {
       <div className="container">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Co-organized by 46 Leading Global Organizations
+            Co-organized by Leading Global Organizations
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto mb-8">
             Including WHO, World Bank, UNDP, W3C, ISO, Linux Foundation, OpenWallet Foundation, and many more

@@ -26,6 +26,20 @@ Copy `.env.example` to `.env` and configure:
 
 The application validates these environment variables on startup and will throw clear errors if they're missing or malformed.
 
+## Git Workflow
+
+This project uses a simple **dev/main** branching strategy with pull requests:
+
+- **dev** - Development branch where all changes are committed during active development
+- **main** - Production branch that deploys to Netlify
+
+### Workflow:
+1. Make changes and commit directly to the `dev` branch during development
+2. When ready for production, create a pull request from `dev` to `main`
+3. After PR approval and merge, changes automatically deploy to production via Netlify
+
+**Important**: Always work on the `dev` branch. Only merge to `main` via pull request when ready for production deployment.
+
 ## Architecture Overview
 
 ### Tech Stack
