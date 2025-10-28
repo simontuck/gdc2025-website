@@ -29,6 +29,14 @@ const AppContent = () => {
   useHashScroll();
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('mxsrc')) {
+      window.location.href = 'https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d/success.html';
+      return;
+    }
+  }, [location.search]);
+
+  useEffect(() => {
     if (!location.hash) {
       window.scrollTo(0, 0);
     }
