@@ -20,6 +20,7 @@ const NewsletterSubscription: React.FC = () => {
           (window as any).mailxpert.forms.include({
             src: 'https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d.html?render=container',
             element: formElement,
+            type: 'subscription_form',
           });
         }
       }
@@ -37,6 +38,7 @@ const NewsletterSubscription: React.FC = () => {
           (window as any).mailxpert.forms.include({
             src: 'https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d.html?render=container',
             element: formElement,
+            type: 'subscription_form',
           });
         }
       };
