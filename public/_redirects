@@ -1,6 +1,5 @@
 # Newsletter subscription success redirect
-/?mxsrc=* https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d/success.html 302
-
+/ mxsrc=:mxsrc https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d/success.html 302
 /t-shirt  https://tshirt.ag/collections/gdc-t-shirt  302
 /briefings https://docs.google.com/document/d/1MPWTxSYL4SRN_LHL0j8_hTaJdmVgfZ0hWz0RsTjr350/edit?usp=sharing 302
 /briefing https://docs.google.com/document/d/1MPWTxSYL4SRN_LHL0j8_hTaJdmVgfZ0hWz0RsTjr350/edit?usp=sharing 302

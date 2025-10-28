@@ -29,15 +29,9 @@ command = "npm run build"
 [[redirects]]
 from = "/"
 to = "https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d/success.html"
-status = 302.0
+status = 302
 force = false
-
-[redirects.query]
-mxsrc = ":mxsrc"
-
-[redirects.conditions]
-
-[redirects.headers]
+query = {mxsrc = ":mxsrc"}
 
 [[redirects]]
 from = "/t-shirt"
