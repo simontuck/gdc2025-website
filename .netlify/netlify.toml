@@ -25,6 +25,20 @@ command = "npm run build"
 
 [build.services]
 
+# Newsletter subscription success redirect
+[[redirects]]
+from = "/"
+to = "https://web.swissnewsletter.ch/e/86bdf89f9e770cbb/de/form/ae408211-d111-4c21-8554-89793b23257d/success.html"
+status = 302.0
+force = false
+
+[redirects.query]
+mxsrc = ":mxsrc"
+
+[redirects.conditions]
+
+[redirects.headers]
+
 [[redirects]]
 from = "/t-shirt"
 to = "https://tshirt.ag/collections/gdc-t-shirt"
