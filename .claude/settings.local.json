@@ -14,7 +14,11 @@
       "mcp__chrome-devtools__list_console_messages",
       "mcp__chrome-devtools__evaluate_script",
       "Bash(git checkout:*)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(cat:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []
