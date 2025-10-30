@@ -72,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>3 Days of collaboration, innovation and trust building</span>
+              <span>4 Days of collaboration, innovation and trust building</span>
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
