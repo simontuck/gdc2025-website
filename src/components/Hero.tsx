@@ -59,6 +59,12 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               View Venue
             </button>
+            <Link
+              to="/co-organizers"
+              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+            >
+              Call for Co-Organizers
+            </Link>
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
