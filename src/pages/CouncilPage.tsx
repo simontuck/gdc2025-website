@@ -7,61 +7,51 @@ const CouncilPage: React.FC = () => {
     {
       title: "Group of UN-Member States",
       members: [
-        { name: "1 (Chair)", placeholder: true },
-        { name: "2", placeholder: true },
-        { name: "3", placeholder: true },
-        { name: "4", placeholder: true },
-        { name: "5", placeholder: true },
-        { name: "6", placeholder: true },
-        { name: "7", placeholder: true },
-        { name: "8", placeholder: true },
-        { name: "9", placeholder: true },
-        { name: "10", placeholder: true }
+        { name: "Brazil", representation: "Ministry of Management and Innovation in Public Services", isChair: true },
+        { name: "Canada", representation: "Canadian Digital Service / Employment and Social Development Canada / Government of Canada" },
+        { name: "China", representation: "State Information Center" },
+        { name: "France", representation: "Agence Nationale des Titres Sécurisés, Ministry of the Interior" },
+        { name: "Germany", representation: "Federal Ministry of Digital and State Modernization" },
+        { name: "Singapore", representation: "Government Technology Agency" },
+        { name: "Switzerland", representation: "Federal Office of Justice" }
       ]
     },
     {
-      title: "Group of International Organizations",
+      title: "Group of Intergovernmental Organizations",
       members: [
-        { name: "1 (Chair)", placeholder: true },
-        { name: "2", placeholder: true },
-        { name: "3", placeholder: true },
-        { name: "4", placeholder: true },
-        { name: "5", placeholder: true },
-        { name: "6", placeholder: true },
-        { name: "7", placeholder: true },
-        { name: "8", placeholder: true },
-        { name: "9", placeholder: true },
-        { name: "10", placeholder: true }
+        { name: "European Union" },
+        { name: "United Nations High Commissioner for Refugees (UNHCR)" },
+        { name: "United Nations Educational, Scientific and Cultural Organization (UNESCO)" },
+        { name: "World Bank Group", isChair: true },
+        { name: "World Health Organization (WHO)" }
       ]
     },
     {
       title: "Group of Companies",
       members: [
-        { name: "1 (Chair)", placeholder: true },
-        { name: "2", placeholder: true },
-        { name: "3", placeholder: true },
-        { name: "4", placeholder: true },
-        { name: "5", placeholder: true },
-        { name: "6", placeholder: true },
-        { name: "7", placeholder: true },
-        { name: "8", placeholder: true },
-        { name: "9", placeholder: true },
-        { name: "10", placeholder: true }
+        { name: "Ant Group Co. Ltd." },
+        { name: "Apple Inc." },
+        { name: "Consensys Software Inc." },
+        { name: "Google LLC", isChair: true },
+        { name: "Huawei Corporation" },
+        { name: "Mastercard Inc." },
+        { name: "Microsoft Corporation" },
+        { name: "Samsung Electronics Co., Ltd." },
+        { name: "Visa Inc." },
+        { name: "Yubico Inc." }
       ]
     },
     {
       title: "Group of Nongovernmental Organizations",
       members: [
-        { name: "1 (Chair)", placeholder: true },
-        { name: "2", placeholder: true },
-        { name: "3", placeholder: true },
-        { name: "4", placeholder: true },
-        { name: "5", placeholder: true },
-        { name: "6", placeholder: true },
-        { name: "7", placeholder: true },
-        { name: "8", placeholder: true },
-        { name: "9", placeholder: true },
-        { name: "10", placeholder: true }
+        { name: "FIDO Alliance" },
+        { name: "Gates Foundation" },
+        { name: "Institute of International Finance" },
+        { name: "International Federation of Pharmaceutical Manufacturers and Associations" },
+        { name: "International Air Transport Association", isChair: true },
+        { name: "Linux Foundation/Open Wallet" },
+        { name: "Mozilla Foundation" },
+        { name: "World Wide Web Consortium" }
       ]
     }
   ];
@@ -103,33 +93,31 @@ const CouncilPage: React.FC = () => {
       </section>
 
       {/* Purpose Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16" style={{ backgroundColor: '#f4f8fc' }}>
         <div className="container max-w-4xl">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Council Purpose</h2>
-            <p className="text-gray-700 mb-6">
-              The GDC Council advances dialogue to support trusted and interoperable digital
-              infrastructure—including wallets, credentials, payment systems, and the use of cybersecurity
-              and AI in these contexts—by bringing together UN Member States, companies,
-              Intergovernmental Organizations (IGOs), and Non-Governmental Organizations (NGOs).
-            </p>
-            <p className="text-gray-700 mb-6">
-              Council members are expected to provide independent, non-binding advice to the GDC on
-              the following matters:
-            </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">Council Purpose</h2>
+          <p className="text-gray-700 mb-6">
+            The GDC Council advances dialogue to support trusted and interoperable digital
+            infrastructure—including wallets, credentials, payment systems, and the use of cybersecurity
+            and AI in these contexts—by bringing together UN Member States, companies,
+            Intergovernmental Organizations (IGOs), and Non-Governmental Organizations (NGOs).
+          </p>
+          <p className="text-gray-700 mb-6">
+            Council members are expected to provide independent, non-binding advice to the GDC on
+            the following matters:
+          </p>
 
-            <ul className="space-y-3 mb-6">
-              {responsibilities.map((responsibility, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-primary-500 mr-3">•</span>
-                  <span className="text-gray-700">{responsibility}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="space-y-3 mb-8">
+            {responsibilities.map((responsibility, index) => (
+              <li key={index} className="flex items-start">
+                <span className="text-primary-500 mr-3">•</span>
+                <span className="text-gray-700">{responsibility}</span>
+              </li>
+            ))}
+          </ul>
 
           {/* Chatham House Rule Note */}
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
+          <div className="bg-primary-50 border-l-4 border-primary-400 p-6 mb-8">
             <p className="text-gray-700">
               Meetings follow the{' '}
               <a
@@ -155,69 +143,73 @@ const CouncilPage: React.FC = () => {
           </div>
 
           {/* Link to Meeting Summaries */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <p className="text-gray-700 mb-4">
-              Summaries of the Council Meetings are published here:
-            </p>
-            <Link
-              to="/council/meetings"
-              className="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold"
-            >
-              <Users className="h-5 w-5 mr-2" />
-              View Council Meeting Summaries
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Link>
-          </div>
+          <p className="text-gray-700 mb-4">
+            Summaries of the Council Meetings are published here:
+          </p>
+          <Link
+            to="/council/meetings"
+            className="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold"
+          >
+            <Users className="h-5 w-5 mr-2" />
+            View Council Meeting Summaries
+            <ArrowRight className="h-5 w-5 ml-2" />
+          </Link>
         </div>
       </section>
 
       {/* Council Members Section */}
-      <section className="py-16">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Council Members</h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+      <section className="py-16 bg-white">
+        <div className="container max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">Council Members</h2>
+          <p className="text-gray-600 text-center mb-2">
             The Members of the Council are as follows:
+          </p>
+          <p className="text-gray-500 text-center text-sm italic mb-12">
+            The remaining seats are in the process of being finalized.
           </p>
 
           <div className="space-y-12">
             {memberGroups.map((group, groupIndex) => (
-              <div key={groupIndex} className="bg-white rounded-lg shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">{group.title}</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <div key={groupIndex}>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{group.title}</h3>
+                <ul className="space-y-2">
                   {group.members.map((member, memberIndex) => (
-                    <div
+                    <li
                       key={memberIndex}
-                      className={`p-4 rounded-lg border ${
-                        member.placeholder
-                          ? 'border-dashed border-gray-300 bg-gray-50'
-                          : 'border-gray-200 bg-white'
-                      }`}
+                      className="flex items-start"
                     >
-                      <p className={`text-center ${
-                        member.placeholder ? 'text-gray-400 italic' : 'text-gray-900 font-medium'
-                      }`}>
-                        {member.name}
-                      </p>
-                    </div>
+                      <span className="text-primary-500 mr-3">•</span>
+                      <span className="text-gray-700">
+                        <span className="font-medium">{member.name}</span>
+                        {member.isChair && (
+                          <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
+                            Chair
+                          </span>
+                        )}
+                        {member.representation && (
+                          <span className="text-gray-500">, represented by {member.representation}</span>
+                        )}
+                      </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
 
-            {/* Secretariat Section */}
-            <div className="bg-primary-50 rounded-lg shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Secretariat</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {/* Secretariat */}
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Secretariat</h3>
+              <ul className="space-y-2">
                 {secretariat.map((member, index) => (
-                  <div key={index} className="text-center p-4">
-                    <div className="w-20 h-20 bg-primary-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                      <Users className="h-8 w-8 text-primary-600" />
-                    </div>
-                    <p className="font-semibold text-gray-900">{member.name}</p>
-                    <p className="text-sm text-gray-600">{member.role}</p>
-                  </div>
+                  <li key={index} className="flex items-start">
+                    <span className="text-primary-500 mr-3">•</span>
+                    <span className="text-gray-700">
+                      <span className="font-medium">{member.name}</span>
+                      <span className="text-gray-500">, {member.role}</span>
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>

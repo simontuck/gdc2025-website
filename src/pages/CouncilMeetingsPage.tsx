@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const CouncilMeetingsPage: React.FC = () => {
   const meetings = [
     {
-      date: "December 2, 2025",
+      date: "December 2, 2025 (online virtual meeting)",
       title: "Inaugural Council Meeting",
       summary: "The inaugural Global Digital Collaboration Council meeting successfully established the Council, comprising four distinct groups: Member States, Intergovernmental Organizations, Non-Governmental Organizations, and Companies. The meeting addressed several strategic themes, laying the groundwork for future initiatives.",
       keyOutcomes: [
@@ -17,10 +17,10 @@ const CouncilMeetingsPage: React.FC = () => {
           title: "Recognition of Chairs",
           description: "The procedure for electing Group Chairs was outlined and endorsed. Voluntary expressions of interest for Group Chair positions were noted and accepted, with chairs confirmed by acclamation.",
           chairs: [
-            { group: "Member States", name: "[Chair TBD]" },
-            { group: "IGOs", name: "[Chair TBD]" },
-            { group: "Companies", name: "[Chair TBD]" },
-            { group: "NGOs", name: "[Chair TBD]" }
+            { group: "Member States", name: "Federative Republic of Brazil" },
+            { group: "IGOs", name: "World Bank Group" },
+            { group: "Companies", name: "Google LLC" },
+            { group: "NGOs", name: "International Air Transport Association" }
           ]
         },
         {
@@ -89,7 +89,7 @@ const CouncilMeetingsPage: React.FC = () => {
                               <li key={chairIndex} className="text-gray-600 flex items-center">
                                 <span className="text-primary-500 mr-2">•</span>
                                 <span className="font-medium">{chair.group}:</span>
-                                <span className="ml-2 italic text-gray-500">{chair.name}</span>
+                                <span className="ml-2">{chair.name}</span>
                               </li>
                             ))}
                           </ul>

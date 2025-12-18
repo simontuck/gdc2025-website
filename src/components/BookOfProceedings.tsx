@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Calendar, Download, Bell } from 'lucide-react';
+import { BookOpen, Download } from 'lucide-react';
 
 const BookOfProceedings: React.FC = () => {
   return (
@@ -16,21 +16,20 @@ const BookOfProceedings: React.FC = () => {
               </div>
               
               <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-                The complete conference proceedings including presentations, papers, and workshop outcomes from the Global Digital Collaboration Conference 2025 will be released soon.
+                The complete conference proceedings including presentations, papers, and workshop outcomes from the Global Digital Collaboration Conference 2025 is now available.
               </p>
             </div>
 
-
             <div className="text-center">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6 inline-block">
-                <div className="flex items-center justify-center mb-2">
-                  <Bell className="h-5 w-5 text-gray-500 mr-2" />
-                  <span className="text-sm font-medium text-gray-900">Get Notified</span>
-                </div>
-                <p className="text-sm text-gray-700">
-                  Subscribe to our newsletter below to receive notification when the Book of Proceedings is available for download.
-                </p>
-              </div>
+              <a
+                href="/documents/book-of-proceedings.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+              >
+                <Download className="h-5 w-5 mr-2" />
+                Download Book of Proceedings
+              </a>
             </div>
           </div>
         </div>
