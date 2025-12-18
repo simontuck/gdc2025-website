@@ -83,13 +83,6 @@ function LoginForm({ onLogin }: { onLogin: (email: string, password: string) => 
   );
 }
 
-const statusColors: Record<string, string> = {
-  pending: 'bg-yellow-100 text-yellow-800',
-  approved: 'bg-green-100 text-green-800',
-  rejected: 'bg-red-100 text-red-800',
-  waitlisted: 'bg-blue-100 text-blue-800',
-};
-
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-CH', {
     year: 'numeric',
@@ -151,11 +144,6 @@ function ApplicationRow({ app, isExpanded, onToggle }: {
         <td className="px-4 py-4">
           <span className="text-sm text-gray-900">{formatOrgType(app.organization_type)}</span>
         </td>
-        <td className="px-4 py-4">
-          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${statusColors[app.status] || 'bg-gray-100 text-gray-800'}`}>
-            {app.status}
-          </span>
-        </td>
         <td className="px-4 py-4 text-sm text-gray-500">
           <div className="flex items-center gap-1">
             <Calendar className="w-3 h-3" />
@@ -165,7 +153,7 @@ function ApplicationRow({ app, isExpanded, onToggle }: {
       </tr>
       {isExpanded && (
         <tr>
-          <td colSpan={5} className="px-4 py-4 bg-gray-50 border-t border-gray-100">
+          <td colSpan={4} className="px-4 py-4 bg-gray-50 border-t border-gray-100">
             <div className="grid md:grid-cols-2 gap-4 pl-6">
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
@@ -210,9 +198,6 @@ function ApplicationsTable({
             </th>
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Type
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Status
             </th>
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Submitted
