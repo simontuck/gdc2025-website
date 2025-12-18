@@ -21,6 +21,7 @@ import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelledPage from './pages/PaymentCancelledPage';
 import MeetingRoomsPage from './pages/MeetingRoomsPage';
 import NameTagGeneratorPage from './pages/NameTagGeneratorPage';
+import AdminPanelPage from './pages/AdminPanelPage';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import AgendaIdeaModal from './components/AgendaIdeaModal';
@@ -37,10 +38,15 @@ const AppContent = () => {
     }
   }, [location.pathname]);
 
+  // Admin panel has its own layout (no header/footer)
+  if (location.pathname === '/panel') {
+    return <AdminPanelPage />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header onRegisterClick={() => setIsRegistrationModalOpen(true)} />
-      
+
       <Routes>
         <Route path="/" element={
           <Home 
