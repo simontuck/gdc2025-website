@@ -117,30 +117,28 @@ const CouncilPage: React.FC = () => {
           </ul>
 
           {/* Chatham House Rule Note */}
-          <div className="bg-primary-50 border-l-4 border-primary-400 p-6 mb-8">
-            <p className="text-gray-700">
-              Meetings follow the{' '}
-              <a
-                href="https://www.chathamhouse.org/about-us/chatham-house-rule"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 hover:text-primary-700 font-medium"
-              >
-                Chatham House Rule
-              </a>
-              , unless the Council agrees otherwise in advance, in accordance with its{' '}
-              <a
-                href="/documents/terms-of-reference.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 hover:text-primary-700 inline-flex items-center font-medium"
-              >
-                Terms of Reference
-                <ExternalLink className="h-4 w-4 ml-1" />
-              </a>
-              .
-            </p>
-          </div>
+          <p className="text-gray-700 mb-8">
+            Meetings follow the{' '}
+            <a
+              href="https://www.chathamhouse.org/about-us/chatham-house-rule"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-600 hover:text-primary-700 font-medium"
+            >
+              Chatham House Rule
+            </a>
+            , unless the Council agrees otherwise in advance, in accordance with its{' '}
+            <a
+              href="/documents/terms-of-reference.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-600 hover:text-primary-700 inline-flex items-center font-medium"
+            >
+              Terms of Reference
+              <ExternalLink className="h-4 w-4 ml-1" />
+            </a>
+            .
+          </p>
 
           {/* Link to Meeting Summaries */}
           <p className="text-gray-700 mb-4">
@@ -161,11 +159,8 @@ const CouncilPage: React.FC = () => {
       <section className="py-16 bg-white">
         <div className="container max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">Council Members</h2>
-          <p className="text-gray-600 text-center mb-2">
+          <p className="text-gray-600 text-center mb-12">
             The Members of the Council are as follows:
-          </p>
-          <p className="text-gray-500 text-center text-sm italic mb-12">
-            The remaining seats are in the process of being finalized.
           </p>
 
           <div className="space-y-12">
@@ -181,13 +176,13 @@ const CouncilPage: React.FC = () => {
                       <span className="text-primary-500 mr-3">•</span>
                       <span className="text-gray-700">
                         <span className="font-medium">{member.name}</span>
+                        {member.representation && (
+                          <span className="text-gray-500">, represented by {member.representation}</span>
+                        )}
                         {member.isChair && (
                           <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
                             Chair
                           </span>
-                        )}
-                        {member.representation && (
-                          <span className="text-gray-500">, represented by {member.representation}</span>
                         )}
                       </span>
                     </li>
@@ -196,22 +191,28 @@ const CouncilPage: React.FC = () => {
               </div>
             ))}
 
-            {/* Secretariat */}
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Secretariat</h3>
-              <ul className="space-y-2">
-                {secretariat.map((member, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-primary-500 mr-3">•</span>
-                    <span className="text-gray-700">
-                      <span className="font-medium">{member.name}</span>
-                      <span className="text-gray-500">, {member.role}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="text-gray-500 text-sm italic">
+              The remaining seats are in the process of being finalized.
+            </p>
           </div>
+        </div>
+      </section>
+
+      {/* Secretariat Section */}
+      <section className="py-16" style={{ backgroundColor: '#f4f8fc' }}>
+        <div className="container max-w-4xl">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Secretariat</h3>
+          <ul className="space-y-2">
+            {secretariat.map((member, index) => (
+              <li key={index} className="flex items-start">
+                <span className="text-primary-500 mr-3">•</span>
+                <span className="text-gray-700">
+                  <span className="font-medium">{member.name}</span>
+                  <span className="text-gray-500">, {member.role}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </div>
