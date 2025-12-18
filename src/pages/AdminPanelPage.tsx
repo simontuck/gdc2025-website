@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { LogOut, Download, RefreshCw, Mail, Phone, Building2, Globe, FileText, Calendar, AlertCircle } from 'lucide-react';
+import { LogOut, Download, RefreshCw, Mail, Phone, Building2, Globe, FileText, Calendar, AlertCircle, ChevronDown, ChevronRight } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
 import type { CoorganizerApplication } from '../hooks/useCoorganizerApplication';
@@ -83,28 +83,120 @@ function LoginForm({ onLogin }: { onLogin: (email: string, password: string) => 
   );
 }
 
-function ApplicationsTable({ applications }: { applications: CoorganizerApplication[] }) {
-  const statusColors: Record<string, string> = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    approved: 'bg-green-100 text-green-800',
-    rejected: 'bg-red-100 text-red-800',
-    waitlisted: 'bg-blue-100 text-blue-800',
-  };
+const statusColors: Record<string, string> = {
+  pending: 'bg-yellow-100 text-yellow-800',
+  approved: 'bg-green-100 text-green-800',
+  rejected: 'bg-red-100 text-red-800',
+  waitlisted: 'bg-blue-100 text-blue-800',
+};
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-CH', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('en-CH', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
 
-  const formatOrgType = (types: string[]) => {
-    return types.map(t => t.toUpperCase()).join(', ');
-  };
+const formatOrgType = (types: string[]) => {
+  return types.map(t => t.toUpperCase()).join(', ');
+};
 
+function ApplicationRow({ app, isExpanded, onToggle }: {
+  app: CoorganizerApplication;
+  isExpanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <>
+      <tr className="hover:bg-gray-50">
+        <td className="px-4 py-4">
+          <button
+            onClick={onToggle}
+            className="flex items-start gap-2 text-left w-full group"
+          >
+            <span className="mt-1 text-gray-400 group-hover:text-secondary-600 transition-colors">
+              {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </span>
+            <div>
+              <div className="font-medium text-gray-900">{app.organization_name}</div>
+              {app.website && (
+                <span className="text-sm text-secondary-600 flex items-center gap-1">
+                  <Globe className="w-3 h-3" />
+                  {app.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                </span>
+              )}
+            </div>
+          </button>
+        </td>
+        <td className="px-4 py-4">
+          <div className="space-y-1">
+            <a
+              href={`mailto:${app.contact_email}`}
+              className="text-sm text-gray-900 hover:text-secondary-600 flex items-center gap-1"
+            >
+              <Mail className="w-3 h-3" />
+              {app.contact_email}
+            </a>
+            {app.contact_phone && (
+              <div className="text-sm text-gray-500 flex items-center gap-1">
+                <Phone className="w-3 h-3" />
+                {app.contact_phone}
+              </div>
+            )}
+          </div>
+        </td>
+        <td className="px-4 py-4">
+          <span className="text-sm text-gray-900">{formatOrgType(app.organization_type)}</span>
+        </td>
+        <td className="px-4 py-4">
+          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${statusColors[app.status] || 'bg-gray-100 text-gray-800'}`}>
+            {app.status}
+          </span>
+        </td>
+        <td className="px-4 py-4 text-sm text-gray-500">
+          <div className="flex items-center gap-1">
+            <Calendar className="w-3 h-3" />
+            {formatDate(app.created_at)}
+          </div>
+        </td>
+      </tr>
+      {isExpanded && (
+        <tr>
+          <td colSpan={5} className="px-4 py-4 bg-gray-50 border-t border-gray-100">
+            <div className="grid md:grid-cols-2 gap-4 pl-6">
+              <div>
+                <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <FileText className="w-4 h-4" />
+                  Strategic Contribution
+                </h4>
+                <p className="text-sm text-gray-600 whitespace-pre-wrap">{app.strategic_contribution}</p>
+              </div>
+              {app.additional_info && (
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Additional Information</h4>
+                  <p className="text-sm text-gray-600 whitespace-pre-wrap">{app.additional_info}</p>
+                </div>
+              )}
+            </div>
+          </td>
+        </tr>
+      )}
+    </>
+  );
+}
+
+function ApplicationsTable({
+  applications,
+  expandedId,
+  onToggleExpand
+}: {
+  applications: CoorganizerApplication[];
+  expandedId: string | null;
+  onToggleExpand: (id: string) => void;
+}) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -129,83 +221,15 @@ function ApplicationsTable({ applications }: { applications: CoorganizerApplicat
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {applications.map((app) => (
-            <tr key={app.id} className="hover:bg-gray-50">
-              <td className="px-4 py-4">
-                <div className="flex items-start gap-2">
-                  <Building2 className="w-4 h-4 text-gray-400 mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-medium text-gray-900">{app.organization_name}</div>
-                    {app.website && (
-                      <a
-                        href={app.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-secondary-600 hover:underline flex items-center gap-1"
-                      >
-                        <Globe className="w-3 h-3" />
-                        {app.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </td>
-              <td className="px-4 py-4">
-                <div className="space-y-1">
-                  <a
-                    href={`mailto:${app.contact_email}`}
-                    className="text-sm text-gray-900 hover:text-secondary-600 flex items-center gap-1"
-                  >
-                    <Mail className="w-3 h-3" />
-                    {app.contact_email}
-                  </a>
-                  {app.contact_phone && (
-                    <div className="text-sm text-gray-500 flex items-center gap-1">
-                      <Phone className="w-3 h-3" />
-                      {app.contact_phone}
-                    </div>
-                  )}
-                </div>
-              </td>
-              <td className="px-4 py-4">
-                <span className="text-sm text-gray-900">{formatOrgType(app.organization_type)}</span>
-              </td>
-              <td className="px-4 py-4">
-                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${statusColors[app.status] || 'bg-gray-100 text-gray-800'}`}>
-                  {app.status}
-                </span>
-              </td>
-              <td className="px-4 py-4 text-sm text-gray-500">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-3 h-3" />
-                  {formatDate(app.created_at)}
-                </div>
-              </td>
-            </tr>
+            <ApplicationRow
+              key={app.id}
+              app={app}
+              isExpanded={expandedId === app.id}
+              onToggle={() => onToggleExpand(app.id)}
+            />
           ))}
         </tbody>
       </table>
-    </div>
-  );
-}
-
-function ApplicationDetail({ application }: { application: CoorganizerApplication }) {
-  return (
-    <div className="bg-gray-50 px-4 py-4 border-t border-gray-200">
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
-            <FileText className="w-4 h-4" />
-            Strategic Contribution
-          </h4>
-          <p className="text-sm text-gray-600 whitespace-pre-wrap">{application.strategic_contribution}</p>
-        </div>
-        {application.additional_info && (
-          <div>
-            <h4 className="text-sm font-medium text-gray-700 mb-2">Additional Information</h4>
-            <p className="text-sm text-gray-600 whitespace-pre-wrap">{application.additional_info}</p>
-          </div>
-        )}
-      </div>
     </div>
   );
 }
@@ -339,20 +363,11 @@ function Dashboard({ onSignOut }: { onSignOut: () => Promise<void> }) {
               No applications yet
             </div>
           ) : applications ? (
-            <div>
-              <ApplicationsTable applications={applications} />
-              {applications.map(app => (
-                <div key={app.id}>
-                  <button
-                    onClick={() => setExpandedId(expandedId === app.id ? null : app.id)}
-                    className="w-full px-4 py-2 text-left text-sm text-secondary-600 hover:bg-gray-50 border-t border-gray-100"
-                  >
-                    {expandedId === app.id ? 'Hide details' : 'Show details'} for {app.organization_name}
-                  </button>
-                  {expandedId === app.id && <ApplicationDetail application={app} />}
-                </div>
-              ))}
-            </div>
+            <ApplicationsTable
+              applications={applications}
+              expandedId={expandedId}
+              onToggleExpand={(id) => setExpandedId(expandedId === id ? null : id)}
+            />
           ) : null}
         </div>
       </main>
