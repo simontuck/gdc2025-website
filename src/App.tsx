@@ -10,6 +10,9 @@ import SessionSlidesPage from './pages/SessionSlidesPage';
 import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
 import CoOrganizersPage from './pages/CoOrganizersPage';
+import CouncilPage from './pages/CouncilPage';
+import CouncilMeetingsPage from './pages/CouncilMeetingsPage';
+import CallForCoOrganizersPage from './pages/CallForCoOrganizersPage';
 import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -51,6 +54,9 @@ const AppContent = () => {
         <Route path="/session-slides" element={<SessionSlidesPage />} />
         <Route path="/speakers" element={<SpeakersPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/council" element={<CouncilPage />} />
+        <Route path="/council/meetings" element={<CouncilMeetingsPage />} />
+        <Route path="/co-organizers" element={<CallForCoOrganizersPage />} />
         <Route path="/co-organizers-2025" element={<CoOrganizersPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
