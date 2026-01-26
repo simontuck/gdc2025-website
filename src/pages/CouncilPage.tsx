@@ -46,9 +46,11 @@ const CouncilPage: React.FC = () => {
       members: [
         { name: "FIDO Alliance" },
         { name: "Gates Foundation" },
+        { name: "Global System for Mobile Communications Association (GSMA)" },
         { name: "Institute of International Finance" },
-        { name: "International Federation of Pharmaceutical Manufacturers and Associations" },
         { name: "International Air Transport Association", isChair: true },
+        { name: "International Federation of Pharmaceutical Manufacturers and Associations" },
+        { name: "Internet Society (ISOC)" },
         { name: "Linux Foundation/Open Wallet" },
         { name: "Mozilla Foundation" },
         { name: "World Wide Web Consortium" }
