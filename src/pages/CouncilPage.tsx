@@ -13,7 +13,8 @@ const CouncilPage: React.FC = () => {
         { name: "France", representation: "Agence Nationale des Titres Sécurisés, Ministry of the Interior" },
         { name: "Germany", representation: "Federal Ministry of Digital and State Modernization" },
         { name: "Singapore", representation: "Government Technology Agency" },
-        { name: "Switzerland", representation: "Federal Office of Justice" }
+        { name: "Switzerland", representation: "Federal Office of Justice" },
+        { name: "United Kingdom", representation: "the Department for Science, Innovation and Technology" }
       ]
     },
     {
