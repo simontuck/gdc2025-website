@@ -19,7 +19,9 @@
       "Bash(gh pr view:*)",
       "Bash(git fetch:*)",
       "Bash(git merge:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(pandoc:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []

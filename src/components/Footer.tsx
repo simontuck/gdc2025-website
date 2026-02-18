@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ExternalLink, ArrowRight, Linkedin, Youtube } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const location = useLocation();
@@ -30,9 +30,9 @@ const Footer: React.FC = () => {
           <div className="flex flex-col">
             <div className="mb-4">
               <Link to="/">
-                <img 
-                  src="/GC25_logo_white.svg" 
-                  alt="GDC25 Logo" 
+                <img
+                  src="/GC25_logo_white.svg"
+                  alt="GDC25 Logo"
                   className="h-12 w-auto mb-2"
                 />
               </Link>
@@ -41,43 +41,24 @@ const Footer: React.FC = () => {
               <p className="text-sm text-gray-300">
                 Hosted by the Swiss Confederation
               </p>
-              <img 
-                src="/logos/Logo_der_Schweizerischen_Eidgenossenschaft.png" 
-                alt="Swiss Confederation" 
+              <img
+                src="/logos/Logo_der_Schweizerischen_Eidgenossenschaft.png"
+                alt="Swiss Confederation"
                 className="h-25 mt-2 p-2 rounded"
               />
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/session-slides" className="text-gray-300 hover:text-white transition-colors">Slides & Videos</Link></li>
+              <li><Link to="/council" className="text-gray-300 hover:text-white transition-colors">Council</Link></li>
+              <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">GDC26</Link></li>
+              <li><Link to="/gdc25" className="text-gray-300 hover:text-white transition-colors">GDC25</Link></li>
               <li>
-                <a 
-                  href="https://share.dma.swiss/s/XCx7CadWobSs9WR" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Conference Photos
-                </a>
-              </li>
-              <li><Link to="/session-slides" className="text-gray-300 hover:text-white transition-colors">Day 1 Presentations</Link></li>
-              <li>
-                <a 
-                  href="https://www.eid.admin.ch/de/global-digital-collaboration-conference" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Beat Jans Keynote Speech
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://www.youtube.com/playlist?list=PL_X6UOh6MHSdluNDc9xcU86wBhsN4aIjz" 
-                  target="_blank" 
+                <a
+                  href="https://www.youtube.com/playlist?list=PL_X6UOh6MHSdluNDc9xcU86wBhsN4aIjz"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
@@ -85,9 +66,9 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://globaldigitalcollaboration.org/t-shirt" 
-                  target="_blank" 
+                <a
+                  href="https://globaldigitalcollaboration.org/t-shirt"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
@@ -97,7 +78,7 @@ const Footer: React.FC = () => {
               <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Contact</h3>
             <ul className="space-y-3">
@@ -109,37 +90,9 @@ const Footer: React.FC = () => {
                   </a>
                 </div>
               </li>
-              <li>
-                <div>
-                  <p className="text-sm text-gray-300">Agenda Submissions:</p>
-                  <a href="mailto:agenda@globaldigitalcollaboration.org" className="text-white hover:underline">
-                    agenda@globaldigitalcollaboration.org
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start">
-                <a 
-                  href="https://www.linkedin.com/company/global-digital-collaboration-event/" 
-                  className="text-gray-300 hover:text-white transition-colors" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="Follow us on LinkedIn"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://www.youtube.com/@GlobalDigitalCollaboration" 
-                  className="text-gray-300 hover:text-white transition-colors ml-3" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="Subscribe to our YouTube channel"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
-              </li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Register Now</h3>
             <p className="text-gray-300 mb-4">
@@ -154,10 +107,10 @@ const Footer: React.FC = () => {
             </button>
           </div>
         </div>
-        
+
         <div className="border-t border-primary-400 pt-8 mt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © Global Digital Collaboration Conference. All rights reserved. | 
+            © Global Digital Collaboration Conference. All rights reserved. |
             <Link to="/imprint" className="text-gray-400 hover:text-white ml-2 transition-colors">
               Imprint
             </Link> |
