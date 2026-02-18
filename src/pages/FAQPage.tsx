@@ -65,7 +65,7 @@ const FAQPage: React.FC = () => {
                       <>
                         Please apply via{' '}
                         <a
-                          href="#"
+                          href="/co-organizers"
                           className="text-primary-600 hover:text-primary-700"
                         >
                           this form
