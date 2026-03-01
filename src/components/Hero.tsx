@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
                   });
                 }
               }}
-              className="btn bg-white text-primary-600 hover:bg-gray-100"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
               Get Notified
             </button>
@@ -46,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               href="https://www.palexpo.ch/en/home/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
               View Venue
             </a>
@@ -54,14 +54,14 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               href="https://luma.com/gc26"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
               <Ticket className="h-4 w-4 mr-2 inline" />
               Tickets
             </a>
             <Link
               to="/co-organizers"
-              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
               Call for Co-Organizers
             </Link>

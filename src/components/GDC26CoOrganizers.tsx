@@ -17,7 +17,7 @@ const coOrganizers = [
   'mDL Group: AAMVA',
   'OpenID Foundation',
   'OpenWallet Foundation',
-  'UN Environment Programme',
+  'United Nations Environment Programme',
   'United Nations International Computing Centre',
   'W3C',
   'World Bank Group',
@@ -36,7 +36,7 @@ const GDC26CoOrganizers: React.FC = () => {
               </h2>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The following organizations have confirmed as co-organizers for GDC26. The list is being finalized and will be updated.
+              The following organizations are confirmed as co-organizers for GC26. Up to 50 co-organizers will be admitted. The list will be updated continuesly.
             </p>
           </div>
 
