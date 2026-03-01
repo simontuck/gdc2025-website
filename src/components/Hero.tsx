@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Users, Building2, Cross } from 'lucide-react';
+import { Calendar, Users, Building2, Cross, Ticket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface HeroProps {
@@ -42,23 +42,23 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               Get Notified
             </button>
-            <button
-              onClick={() => {
-                const element = document.getElementById('gdc26');
-                if (element) {
-                  const headerOffset = 100;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
+            <a
+              href="https://www.palexpo.ch/en/home/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
             >
               View Venue
-            </button>
+            </a>
+            <a
+              href="https://luma.com/gc26"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+            >
+              <Ticket className="h-4 w-4 mr-2 inline" />
+              Tickets
+            </a>
             <Link
               to="/co-organizers"
               className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
@@ -74,7 +74,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>2,000 In-person participants from the public and private sector, Participation is free and on approval by Co-Organizers only, application process to be opened in May 2026</span>
+              <span>2,000 In-person participants from the public and private sector, Participation is free and on approval by Co-Organizers only, application process open through approved Co-Organizers.</span>
             </div>
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />

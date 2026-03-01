@@ -6,13 +6,21 @@ const coOrganizers = [
   'Cloud Signature Consortium',
   'Decentralized Identity Foundation',
   'EMVCo',
+  'EUDIW Group: We Build, Aptitude',
+  'FIDO Alliance',
   'GLEIF',
   'GlobalPlatform',
-  'Group for EUDI-Wallets (Aptitude, We Build)',
-  'Group for mDL (AAMVA, Austroads)',
+  'IATA',
+  'IEC',
+  'ISO',
+  'ISOC',
+  'mDL Group: AAMVA',
   'OpenID Foundation',
+  'OpenWallet Foundation',
   'UN Environment Programme',
   'United Nations International Computing Centre',
+  'W3C',
+  'World Bank Group',
 ];
 
 const GDC26CoOrganizers: React.FC = () => {
@@ -24,7 +32,7 @@ const GDC26CoOrganizers: React.FC = () => {
             <div className="flex items-center justify-center mb-4">
               <Users className="h-8 w-8 text-primary-500 mr-3" />
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                Co-Organizers (to be further completed)
+                Co-Organizers
               </h2>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">

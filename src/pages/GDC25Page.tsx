@@ -1,43 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Calendar, Play, Users, FileText, Presentation } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import ConferencePhoto from '../components/ConferencePhoto';
 import ResourcesGrid from '../components/ResourcesGrid';
-import BookOfProceedings from '../components/BookOfProceedings';
 import Sponsors from '../components/Sponsors';
-
-const navCards = [
-  {
-    icon: <Presentation className="h-8 w-8 text-primary-500" />,
-    title: 'Slides & Videos',
-    description: 'Access all presentations and recorded sessions from GDC25.',
-    to: '/session-slides',
-  },
-  {
-    icon: <Users className="h-8 w-8 text-primary-500" />,
-    title: 'Speakers',
-    description: 'Browse profiles of all GDC25 speakers and panelists.',
-    to: '/speakers',
-  },
-  {
-    icon: <FileText className="h-8 w-8 text-primary-500" />,
-    title: 'Agenda',
-    description: 'View the full two-day conference program.',
-    to: '/agenda',
-  },
-  {
-    icon: <Play className="h-8 w-8 text-primary-500" />,
-    title: 'Sessions Overview',
-    description: 'Explore all conference sessions and their outcomes.',
-    to: '/sessions-overview',
-  },
-  {
-    icon: <Users className="h-8 w-8 text-primary-500" />,
-    title: 'Co-Organizers 2025',
-    description: 'Organizations that co-organized GDC25.',
-    to: '/co-organizers-2025',
-  },
-];
 
 const GDC25Page: React.FC = () => {
   return (
@@ -63,38 +28,8 @@ const GDC25Page: React.FC = () => {
       {/* Conference Photo */}
       <ConferencePhoto />
 
-      {/* Navigation Cards */}
-      <section className="section bg-gray-50">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">GDC25 Archive</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Access all materials from the Global Digital Collaboration Conference 2025.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {navCards.map((card) => (
-              <Link
-                key={card.to}
-                to={card.to}
-                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex flex-col"
-              >
-                <div className="flex items-center mb-4">
-                  {card.icon}
-                  <h3 className="ml-3 text-lg font-semibold text-gray-900">{card.title}</h3>
-                </div>
-                <p className="text-gray-600 text-sm leading-relaxed">{card.description}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Resources */}
+      {/* Conference Resources */}
       <ResourcesGrid />
-
-      {/* Book of Proceedings */}
-      <BookOfProceedings />
 
       {/* Sponsors */}
       <Sponsors />

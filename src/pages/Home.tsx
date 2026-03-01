@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import CouncilSummary from '../components/CouncilSummary';
 import GDC26CoOrganizers from '../components/GDC26CoOrganizers';
 import SponsorInquiry from '../components/SponsorInquiry';
 import NewsletterSubscription from '../components/NewsletterSubscription';
@@ -12,6 +13,7 @@ const Home: React.FC<HomeProps> = ({ onRegisterClick }) => {
   return (
     <>
       <Hero onRegisterClick={onRegisterClick} />
+      <CouncilSummary />
       <GDC26CoOrganizers />
       <SponsorInquiry />
       <NewsletterSubscription />
