@@ -51,7 +51,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               View Venue
             </a>
             <a
-              href="https://luma.com/gc26"
+              href="https://luma.com/gdccon"
               target="_blank"
               rel="noopener noreferrer"
               className="btn bg-primary-500 text-white hover:bg-primary-600"
