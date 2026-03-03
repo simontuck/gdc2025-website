@@ -94,15 +94,15 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Register Now</h3>
+            <h3 className="text-lg font-semibold mb-4 border-b border-primary-400 pb-2">Subscribe to newsletter</h3>
             <p className="text-gray-300 mb-4">
-              Stay updated on the next Global Digital Collaboration Conference and related developments in wallets, credentials and trusted infrastructure.
+              Stay updated on the next Global Digital Collaboration Conference.
             </p>
             <button
               onClick={handleSubscribeClick}
               className="inline-flex items-center text-white bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-md transition-colors"
             >
-              Subscribe for Updates
+              Subscribe to newsletter
               <ArrowRight className="ml-2 h-4 w-4" />
             </button>
           </div>

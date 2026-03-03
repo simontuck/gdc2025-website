@@ -51,11 +51,11 @@ const NewsletterSubscription: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center mb-6">
             <Mail className="h-8 w-8 text-primary-500 mr-3" />
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Stay Up to Date</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Subscribe to newsletter</h2>
           </div>
           
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Get notified about important updates.
+            The newsletter will be sent when relevant updates are available.
           </p>
 
           <div className="max-w-md mx-auto">

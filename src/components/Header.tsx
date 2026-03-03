@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
               onClick={handleSubscribeClick}
               className="btn btn-primary"
             >
-              Subscribe for Updates
+              Subscribe to newsletter
             </button>
           </nav>
 

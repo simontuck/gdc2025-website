@@ -36,7 +36,7 @@ const GDC26CoOrganizers: React.FC = () => {
               </h2>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The following organizations are confirmed as co-organizers for GC26. Up to 50 co-organizers will be admitted. The list will be updated continuesly.
+              The following organizations are confirmed as co-organizers for GDC CON in 2026. Up to 50 co-organizers will be admitted. The list will be updated continuously.
             </p>
           </div>
 

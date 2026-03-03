@@ -9,9 +9,9 @@ const SponsorInquiry: React.FC = () => {
             Become a Sponsor
           </h2>
           <p className="text-xl text-white/90">
-            Would you like to become a sponsor of GC26? You will find more information{' '}
+            Would you like to become a sponsor of the GDC CON in 2026? You will find more information{' '}
             <a
-              href="/documents/GC26_sponsors_v1.pdf"
+              href="/documents/GC26_sponsors_v2.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-white"

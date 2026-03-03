@@ -40,7 +40,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               }}
               className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
-              Get Notified
+              Subscribe to newsletter
             </button>
             <a
               href="https://www.palexpo.ch/en/home/"
@@ -74,11 +74,11 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>2,000 In-person participants from the public and private sector, Participation is free and on approval by Co-Organizers only, application process open through approved Co-Organizers.</span>
+              <span>Join 2,000 sector leaders by invitation only via Co-Organizers</span>
             </div>
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>3 Days of collaboration, innovation and trust building</span>
+              <span>The global pulse of cross-sector innovation: 3 days to bridge gaps and solve for interoperability</span>
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
