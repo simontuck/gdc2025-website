@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, MapPin, Users, Building2, Cross } from 'lucide-react';
+import { Calendar, Users, Building2, Cross, Ticket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface HeroProps {
@@ -38,30 +38,30 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
                   });
                 }
               }}
-              className="btn bg-white text-primary-600 hover:bg-gray-100"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
-              Get Notified
+              Subscribe to newsletter
             </button>
-            <button
-              onClick={() => {
-                const element = document.getElementById('gdc26');
-                if (element) {
-                  const headerOffset = 100;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+            <a
+              href="https://www.palexpo.ch/en/home/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
               View Venue
-            </button>
+            </a>
+            <a
+              href="https://luma.com/gdccon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
+            >
+              <Ticket className="h-4 w-4 mr-2 inline" />
+              Tickets
+            </a>
             <Link
               to="/co-organizers"
-              className="btn bg-transparent border-2 border-white text-white hover:bg-white/10"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
             >
               Call for Co-Organizers
             </Link>
@@ -70,15 +70,15 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
             <div className="flex items-center">
               <Building2 className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Organized by Intergovernmental, Standard Development, and Open Source Organizations</span>
+              <span>Organized by Intergovernmental and Non-governmental Organizations, in particular Standard Development, and Open Source Organizations</span>
             </div>
             <div className="flex items-center">
               <Users className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>2,000 In-person participants from the public and private sector</span>
+              <span>Join 2,000 sector leaders by invitation only via Co-Organizers</span>
             </div>
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>3 Days of collaboration, innovation and trust building</span>
+              <span>The global pulse of cross-sector innovation: 3 days to bridge gaps and solve for interoperability</span>
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />

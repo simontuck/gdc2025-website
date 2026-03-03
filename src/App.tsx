@@ -13,6 +13,7 @@ import CoOrganizersPage from './pages/CoOrganizersPage';
 import CouncilPage from './pages/CouncilPage';
 import CouncilMeetingsPage from './pages/CouncilMeetingsPage';
 import CallForCoOrganizersPage from './pages/CallForCoOrganizersPage';
+import GDC25Page from './pages/GDC25Page';
 import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -59,6 +60,7 @@ const AppContent = () => {
         } />
         <Route path="/session-slides" element={<SessionSlidesPage />} />
         <Route path="/speakers" element={<SpeakersPage />} />
+        <Route path="/gdc25" element={<GDC25Page />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/council" element={<CouncilPage />} />
         <Route path="/council/meetings" element={<CouncilMeetingsPage />} />

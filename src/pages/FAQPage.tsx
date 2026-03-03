@@ -5,15 +5,11 @@ const FAQPage: React.FC = () => {
   const faqs = [
     {
       question: "What is the goal of the conference?",
-      answer: "The goal of the conference is to initiate collaboration on specific topics that require the involvement of more than one actor or organistion to be succesful. Sessions may inspire continued collaboration beyond the conference."
+      answer: "The goal of the conference is to promote collaboration on specific topics that require the involvement of more than one actor or organistion to be succesful. Sessions may inspire continued collaboration beyond the conference."
     },
     {
       question: "How can I become a co-organizer?",
-      answer: "Organizations interested in becoming co-organizers can apply by sending an email to "
-    },
-    {
-      question: "Can I submit an idea for the agenda?",
-      answer: "Yes! We welcome ideas for collaborative sessions. You can submit your proposal through the 'Submit Your Idea' button on the Agenda page. Ideally, your proposal would involve other co-organizers, since the aim is to initiate concrete collaboration."
+      answer: "Please apply via this form."
     },
     {
       question: "What topics will be covered at the conference?",
@@ -26,10 +22,6 @@ const FAQPage: React.FC = () => {
     {
       question: "What does the barcode image in the hero section represent?",
       answer: "The distinctive barcode pattern visualizes the top 40 countries leading the global open source movement, arranged from west to east. Each bar represents a country's contribution to open source development, with its width corresponding to the relative impact. This unique visualization demonstrates how digital collaboration transcends geographical boundaries and highlights the truly global nature of open source innovation.\n\nIf you'd like to create your own barcode visualization, you can use this tool: "
-    },
-    {
-      question: "Will there be a second conference?",
-      answer: "Yes, the conference will be held annually. Conference co-organizers may change from year to year."
     }
   ];
 
@@ -61,44 +53,31 @@ const FAQPage: React.FC = () => {
                     {faq.question === "Who are the speakers?" ? (
                       <>
                         Speakers include leaders from major international organizations, government agencies, standards bodies, and open-source communities. The conference features representatives from WHO, ITU, OECD, World Bank Group, European Commission, and many other prominent organizations. Check our{' '}
-                        <a 
-                          href="/speakers" 
+                        <a
+                          href="/speakers"
                           className="text-primary-600 hover:text-primary-700"
                         >
                           Speakers 2025 page
                         </a>
                         {' '}for detailed speaker profiles and our Agenda page for the last speaker lineup.
                       </>
-                    ) : faq.question === "How can I register for the conference?" ? (
-                      <>
-                        {faq.answer}
-                        <a 
-                          href="https://lu.ma/gc25" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-primary-600 hover:text-primary-700"
-                        >
-                          lu.ma/gc25
-                        </a>
-                        . Register with the co-organizer of your choice which will approve your entry. Early registration is recommended as space is limited.
-                      </>
                     ) : faq.question === "How can I become a co-organizer?" ? (
                       <>
-                        Organizations interested in becoming co-organizers can apply by sending an email to{' '}
-                        <a 
-                          href="mailto:info@globaldigitalcollaboration.org"
+                        Please apply via{' '}
+                        <a
+                          href="/co-organizers"
                           className="text-primary-600 hover:text-primary-700"
                         >
-                          info@globaldigitalcollaboration.org
+                          this form
                         </a>
-                        {' '}with the subject 'GDC26 Co-organizer Application'. We welcome organizations from intergovernmental, standards development, open source, and other relevant sectors who want to engage in collaboration with other co-organizers.
+                        .
                       </>
                     ) : faq.question === "What does the barcode image in the hero section represent?" ? (
                       <>
                         {faq.answer}
-                        <a 
-                          href="https://shaheeilyas.com/ow-barcode/" 
-                          target="_blank" 
+                        <a
+                          href="https://shaheeilyas.com/ow-barcode/"
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary-600 hover:text-primary-700"
                         >
