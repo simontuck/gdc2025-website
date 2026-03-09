@@ -56,6 +56,15 @@ const CouncilPage: React.FC = () => {
         { name: "Mozilla Foundation" },
         { name: "World Wide Web Consortium" }
       ]
+    },
+    {
+      title: "mDL-Group",
+      members: [
+        { name: "AAMVA" },
+        { name: "Austroads" },
+        { name: "EReg" },
+        { name: "Secure Technology Alliance" }
+      ]
     }
   ];
 
