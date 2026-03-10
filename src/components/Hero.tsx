@@ -25,6 +25,29 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <Link
+              to="/co-organizers"
+              className="btn-outline bg-primary-500 text-white hover:bg-primary-600"
+            >
+              Call for Co-Organizers
+            </Link>
+            <a
+              href="https://luma.com/gdccon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline bg-primary-500 text-white hover:bg-primary-600"
+            >
+              <Ticket className="h-4 w-4 mr-2 inline" />
+              Tickets
+            </a>
+            <a
+              href="https://www.palexpo.ch/en/home/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-primary-500 text-white hover:bg-primary-600"
+            >
+              View Venue
+            </a>
             <button
               onClick={() => {
                 const element = document.getElementById('newsletter');
@@ -42,29 +65,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               Subscribe to newsletter
             </button>
-            <a
-              href="https://www.palexpo.ch/en/home/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
-            >
-              View Venue
-            </a>
-            <a
-              href="https://luma.com/gdccon"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
-            >
-              <Ticket className="h-4 w-4 mr-2 inline" />
-              Tickets
-            </a>
-            <Link
-              to="/co-organizers"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
-            >
-              Call for Co-Organizers
-            </Link>
+            
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
