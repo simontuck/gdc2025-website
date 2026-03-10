@@ -27,7 +27,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link
               to="/co-organizers"
-              className="btn btn-outline border-white text-white hover:text-zinc-70"
+              className="btn btn-outline border-white text-white hover:text-zinc-700"
             >
               Call for Co-Organizers
             </Link>
