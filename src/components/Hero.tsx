@@ -25,46 +25,30 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <button
-              onClick={() => {
-                const element = document.getElementById('newsletter');
-                if (element) {
-                  const headerOffset = 100;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
-            >
-              Subscribe to newsletter
-            </button>
-            <a
-              href="https://www.palexpo.ch/en/home/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
-            >
-              View Venue
-            </a>
-            <a
+             <a
               href="https://luma.com/gdccon"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
+              className="btn btn-outline border-white text-white hover:text-zinc-700"
             >
-              <Ticket className="h-4 w-4 mr-2 inline" />
-              Tickets
+              Attend
             </a>
             <Link
               to="/co-organizers"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
+              target="_blank"
+              className="btn btn-outline border-white text-white hover:text-zinc-700"
             >
-              Call for Co-Organizers
+              Co-organize
             </Link>
+           
+            <a
+              href="/documents/GC26_sponsors_v2.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline border-white text-white hover:text-zinc-700"
+            >
+              Sponsor
+            </a>           
           </div>
           
           <div className="flex flex-col gap-4 text-white/90 drop-shadow">
@@ -82,7 +66,12 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Hosted by the Swiss Confederation</span>
+              <span>
+                Hosted by the Swiss Confederation at{" "}
+                <a href="https://www.palexpo.ch/en/home/" target="_blank" rel="noopener noreferrer"  className="underline text-primary-50 hover:text-primary-50">
+                  Palexpo
+                </a>
+              </span>
             </div>
           </div>
         </div>

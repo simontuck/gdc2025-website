@@ -14,7 +14,7 @@ const coOrganizers = [
   'IEC',
   'ISO',
   'ISOC',
-  'mDL Group: AAMVA',
+  'mDL Group: AAMVA, Austroads, EReg, STA',
   'OpenID Foundation',
   'OpenWallet Foundation',
   'United Nations Environment Programme',
