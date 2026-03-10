@@ -27,7 +27,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link
               to="/co-organizers"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
+              className="btn btn-outline"
             >
               Call for Co-Organizers
             </Link>
@@ -35,7 +35,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               href="https://luma.com/gdccon"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn bg-primary-500 text-white hover:bg-primary-600"
+              className="btn btn-outline"
             >
               <Ticket className="h-4 w-4 mr-2 inline" />
               Tickets
