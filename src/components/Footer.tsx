@@ -65,6 +65,16 @@ const Footer: React.FC = () => {
                   GDC YouTube Channel
                 </a>
               </li>
+               <li>
+                <a
+                  href="https://www.linkedin.com/company/global-digital-collaboration-event/?viewAsMember=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  GDC LinkedIn
+                </a>
+              </li>
               <li>
                 <a
                   href="https://globaldigitalcollaboration.org/t-shirt"

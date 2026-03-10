@@ -83,7 +83,12 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </div>
             <div className="flex items-center">
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span>Hosted by the Swiss Confederation</span>
+              <span>
+                Hosted by the Swiss Confederation at{" "}
+                <a href="https://www.palexpo.ch/en/home/" target="_blank" rel="noopener noreferrer"  className="underline hover:text-primary-500">
+                  Palexpo
+                </a>
+              </span>
             </div>
           </div>
         </div>
