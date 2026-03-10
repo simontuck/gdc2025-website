@@ -35,6 +35,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             </a>
             <Link
               to="/co-organizers"
+              target="_blank"
               className="btn btn-outline border-white text-white hover:text-zinc-700"
             >
               Co-organize
@@ -67,7 +68,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
               <Cross className="h-5 w-5 mr-2 flex-shrink-0" />
               <span>
                 Hosted by the Swiss Confederation at{" "}
-                <a href="https://www.palexpo.ch/en/home/" target="_blank" rel="noopener noreferrer"  className="underline text-primary-500 hover:text-primary-500">
+                <a href="https://www.palexpo.ch/en/home/" target="_blank" rel="noopener noreferrer"  className="underline text-primary-50 hover:text-primary-50">
                   Palexpo
                 </a>
               </span>
