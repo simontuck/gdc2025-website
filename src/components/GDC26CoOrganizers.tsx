@@ -17,6 +17,7 @@ const coOrganizers = [
   'mDL Group: AAMVA, Austroads, EReg, STA',
   'OpenID Foundation',
   'OpenWallet Foundation',
+  'UNESCO',
   'United Nations Environment Programme',
   'United Nations International Computing Centre',
   'W3C',
