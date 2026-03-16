@@ -2,6 +2,7 @@ import React from 'react';
 import { Users } from 'lucide-react';
 
 const coOrganizers = [
+  'Advocacy Group',
   'Car Connectivity Consortium',
   'Cloud Signature Consortium',
   'Decentralized Identity Foundation',
@@ -11,12 +12,14 @@ const coOrganizers = [
   'GLEIF',
   'GlobalPlatform',
   'IATA',
+  'ID Associations Group',
   'IEC',
   'ISO',
   'ISOC',
   'mDL Group: AAMVA, Austroads, EReg, STA',
   'OpenID Foundation',
   'OpenWallet Foundation',
+  'Research Organizations Group',
   'UNESCO',
   'United Nations Environment Programme',
   'United Nations International Computing Centre',
