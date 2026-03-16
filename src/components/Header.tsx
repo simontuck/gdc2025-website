@@ -53,8 +53,8 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
           <Link to="/" className="block">
             <img
-              src="/GC25_logo.svg"
-              alt="GDC25 Logo"
+              src="/GDC_logo.svg"
+              alt="GDC Logo"
               className="h-12 w-auto"
             />
           </Link>
