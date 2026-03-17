@@ -122,7 +122,7 @@ const Footer: React.FC = () => {
           <p className="text-gray-400 text-sm">
             © Global Digital Collaboration Conference. All rights reserved. |
             <Link to="/imprint" className="text-gray-400 hover:text-white ml-2 transition-colors">
-              Imprinted
+              Imprint
             </Link> |
             <Link to="/privacy" className="text-gray-400 hover:text-white ml-2 transition-colors">
               Privacy
