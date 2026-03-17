@@ -8,7 +8,7 @@ const ImprintPage: React.FC = () => {
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Imprint</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            Legal information and technical details about the GDC25 website
+            Legal information and technical details about the GDC website
           </p>
         </div>
       </section>
