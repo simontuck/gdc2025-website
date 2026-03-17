@@ -31,8 +31,8 @@ const Footer: React.FC = () => {
             <div className="mb-4">
               <Link to="/">
                 <img
-                  src="/GC25_logo_white.svg"
-                  alt="GDC25 Logo"
+                  src="/GDC_logo-white.svg"
+                  alt="GDC Logo"
                   className="h-12 w-auto mb-2"
                 />
               </Link>
