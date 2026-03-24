@@ -25,7 +25,6 @@ const coOrganizers = [
   'United Nations International Computing Centre',
   'W3C',
   'World Bank Group',
-  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
 ];
 
 const GDC26CoOrganizers: React.FC = () => {
@@ -49,7 +48,7 @@ const GDC26CoOrganizers: React.FC = () => {
             {coOrganizers.map((name) => (
               <div
                 key={name}
-                className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center flex items-center justify-center min-h-[120px]"
+                className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center flex items-center justify-center min-h-[150px]"
               >
                 <span className="text-gray-800 font-medium">{name}</span>
               </div>
