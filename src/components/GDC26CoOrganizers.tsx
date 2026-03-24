@@ -49,7 +49,7 @@ const GDC26CoOrganizers: React.FC = () => {
             {coOrganizers.map((name) => (
               <div
                 key={name}
-                className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center flex items-center justify-center min-h-[80px]"
+                className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center flex items-center justify-center min-h-[120px]"
               >
                 <span className="text-gray-800 font-medium">{name}</span>
               </div>
