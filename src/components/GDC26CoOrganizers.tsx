@@ -12,7 +12,7 @@ const coOrganizers = [
   'GLEIF',
   'GlobalPlatform',
   'IATA',
-  'ID Associations Group: APDI, DIACC, DIDAS, FIDES, TeleTrusT, test',
+  'ID Associations Group: APDI, DIACC, DIDAS, FIDES, TeleTrusT',
   'IEC',
   'ISO',
   'ISOC',
