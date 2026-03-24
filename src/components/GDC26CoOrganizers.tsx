@@ -25,6 +25,7 @@ const coOrganizers = [
   'United Nations International Computing Centre',
   'W3C',
   'World Bank Group',
+  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
 ];
 
 const GDC26CoOrganizers: React.FC = () => {
