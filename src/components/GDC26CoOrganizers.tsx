@@ -2,7 +2,7 @@ import React from 'react';
 import { Users } from 'lucide-react';
 
 const coOrganizers = [
-  'Advocacy Group',
+  'Advocacy Group: BGIN, Blockchain Commons, CDPI, PolicyLab Africa, IFED',
   'Car Connectivity Consortium',
   'Cloud Signature Consortium',
   'Decentralized Identity Foundation',
@@ -12,14 +12,14 @@ const coOrganizers = [
   'GLEIF',
   'GlobalPlatform',
   'IATA',
-  'ID Associations Group',
+  'ID Associations Group: APDI, DIACC, DIDAS, FIDES, TeleTrusT, FIDES',
   'IEC',
   'ISO',
   'ISOC',
   'mDL Group: AAMVA, Austroads, EReg, STA',
   'OpenID Foundation',
   'OpenWallet Foundation',
-  'Research Organizations Group',
+  'Research Organizations Group: TNO',
   'UNESCO',
   'United Nations Environment Programme',
   'United Nations International Computing Centre',
@@ -48,7 +48,7 @@ const GDC26CoOrganizers: React.FC = () => {
             {coOrganizers.map((name) => (
               <div
                 key={name}
-                className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center flex items-center justify-center min-h-[80px]"
+                className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center flex items-center justify-center min-h-[120px]"
               >
                 <span className="text-gray-800 font-medium">{name}</span>
               </div>
