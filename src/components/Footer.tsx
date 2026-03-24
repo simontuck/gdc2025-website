@@ -75,16 +75,6 @@ const Footer: React.FC = () => {
                   GDC LinkedIn
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://globaldigitalcollaboration.org/t-shirt"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Conference T-Shirts
-                </a>
-              </li>
               <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
