@@ -14,6 +14,7 @@ const coOrganizers = [
   'FIRST',
   'GLEIF',
   'GlobalPlatform',
+  'GSMA',
   'IATA',
   'ID Associations Group: APDI, DIACC, DIDAS, FIDES, TeleTrusT',
   'IEC',
@@ -22,7 +23,7 @@ const coOrganizers = [
   'mDL Group: AAMVA, Austroads, EReg',
   'OpenID Foundation',
   'OpenWallet Foundation',
-  'Research Organizations Group: TNO',
+  'Research Organizations Group: TNO, GEANT',
   'UNESCO',
   'United Nations Environment Programme',
   'United Nations International Computing Centre',
@@ -43,7 +44,7 @@ const GDC26CoOrganizers: React.FC = () => {
               </h2>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The following organizations are confirmed as co-organizers for GDC CON in 2026. Up to 50 co-organizers will be admitted. The list will be updated continuously.
+              The following organizations are confirmed as co-organizers for GDC conference in 2026. Up to 50 co-organizers will be admitted. The list will be updated continuously.
             </p>
           </div>
 
