@@ -88,10 +88,12 @@ const Footer: React.FC = () => {
                   <a href="mailto:info@globaldigitalcollaboration.org" className="text-white hover:underline">
                     info@globaldigitalcollaboration.org
                   </a>
+                  </div>
+              </li>
+              <li>
                   <a href="mailto:sponsorship@globaldigitalcollaboration.org" className="text-white hover:underline">
                     sponsorship@globaldigitalcollaboration.org
                   </a>
-                </div>
               </li>
             </ul>
           </div>
