@@ -88,7 +88,15 @@ const Footer: React.FC = () => {
                   <a href="mailto:info@globaldigitalcollaboration.org" className="text-white hover:underline">
                     info@globaldigitalcollaboration.org
                   </a>
-                </div>
+                  </div>
+              </li>
+              <li>
+                <div>
+                  <p className="text-sm text-gray-300">Sponsors:</p>
+                  <a href="mailto:sponsorship@globaldigitalcollaboration.org" className="text-white hover:underline">
+                    sponsorship@globaldigitalcollaboration.org
+                  </a>
+                  </div>
               </li>
             </ul>
           </div>
