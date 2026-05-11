@@ -62,6 +62,7 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/council" className="text-gray-700 hover:text-primary-500 transition-colors">Council</Link>
+            <Link to="/co-organizers-26" className="text-gray-700 hover:text-primary-500 transition-colors">Co-Organizers</Link>
             <Link to="/gdc25" className="text-gray-700 hover:text-primary-500 transition-colors">GDC25</Link>
             <Link to="/faq" className="text-gray-700 hover:text-primary-500 transition-colors">FAQ</Link>
             <button
