@@ -33,13 +33,6 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             >
               Attend
             </a>
-            <Link
-              to="/co-organizers"
-              target="_blank"
-              className="btn btn-outline border-white text-white hover:text-zinc-700"
-            >
-              Co-organize
-            </Link>
            
             <a
               href="/documents/GC26_sponsors_v2.pdf"
