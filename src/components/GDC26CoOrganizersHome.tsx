@@ -22,5 +22,5 @@ const GDC26CoOrganizers: React.FC = () => {
   );
 };
 
-export default GDC26CoOrganizers;
+export default GDC26CoOrganizersHome;
 
