@@ -65,7 +65,7 @@ const AppContent = () => {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/council" element={<CouncilPage />} />
         <Route path="/council/meetings" element={<CouncilMeetingsPage />} />
-        <Route path="/co-organizers" element={<CallForCoOrganizersPage />} />
+        <Route path="/co-organizers-call" element={<CallForCoOrganizersPage />} />
         <Route path="/co-organizers" element={<CoOrganizersPage />} />
         <Route path="/co-organizers26" element={<CoOrganizers26Page />} />
         <Route path="/hotels" element={<HotelsPage />} />
