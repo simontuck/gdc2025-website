@@ -35,7 +35,7 @@ const coOrganizers = [
   'World Health Organization',
 ];
 
-const CoOrganizersPage: React.FC = () => {
+const CoOrganizers26Page: React.FC = () => {
   return (
     <div className="pt-20">
       
@@ -89,4 +89,4 @@ const CoOrganizersPage: React.FC = () => {
   );
 };
 
-export default CoOrganizersPage;
+export default CoOrganizers26Page;
