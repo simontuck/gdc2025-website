@@ -58,7 +58,9 @@ const CoOrganizersPage: React.FC = () => {
 
           <p className="text-xl text-white/90 max-w-3xl">
             Co-Organizers are the main drivers of the Global Digital Collaboration Conference.
-            They convene their communities and provide their expertise.
+            They convene their communities and provide their expertise. Intergovernmental Organizations and Non-Governmental
+            Organizations such as Standardization-, Open-Source- and Civil Society Organizations as well as Trade Associations are eligible.
+            Their applications have been approved by the Council. Applications for 2026 are closed.
           </p>
         </div>
       </section>
