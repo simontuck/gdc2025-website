@@ -10,6 +10,7 @@ import SessionSlidesPage from './pages/SessionSlidesPage';
 import FAQPage from './pages/FAQPage';
 import NotFound from './pages/NotFound';
 import CoOrganizersPage from './pages/CoOrganizersPage';
+import CoOrganizers26Page from './pages/CoOrganizers26Page';
 import CouncilPage from './pages/CouncilPage';
 import CouncilMeetingsPage from './pages/CouncilMeetingsPage';
 import CallForCoOrganizersPage from './pages/CallForCoOrganizersPage';
@@ -66,6 +67,7 @@ const AppContent = () => {
         <Route path="/council/meetings" element={<CouncilMeetingsPage />} />
         <Route path="/co-organizers" element={<CallForCoOrganizersPage />} />
         <Route path="/co-organizers" element={<CoOrganizersPage />} />
+        <Route path="/co-organizers26" element={<CoOrganizers26Page />} />
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
