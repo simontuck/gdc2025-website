@@ -1,37 +1,4 @@
 import React from 'react';
-import { Users } from 'lucide-react';
-
-const coOrganizers = [
-  'Advocacy Group: BGIN, Blockchain Commons, CDPI, PolicyLab Africa, IFED',
-  'Car Connectivity Consortium',
-  'Cloud Signature Consortium',
-  'DAMA',
-  'Decentralized Identity Foundation',
-  'EMVCo',
-  'ETSI',
-  'EUDIW Group: Aptitude, We Build',
-  'FIDO Alliance',
-  'FIRST',
-  'GLEIF',
-  'GlobalPlatform',
-  'GSMA',
-  'IATA',
-  'ID Associations Group: APDI, DIACC, DIDAS, FIDES, TeleTrusT',
-  'IEC',
-  'IEEE',
-  'ISO',
-  'ISOC',
-  'Linux Foundation: LFDT, OWF',
-  'mDL Group: AAMVA, Austroads, EReg',
-  'OpenID Foundation',
-  'Research Organizations Group: TNO, GEANT',
-  'UNECE',
-  'UNESCO',
-  'United Nations Environment Programme',
-  'United Nations International Computing Centre',
-  'W3C',
-  'World Bank Group',
-];
 
 const GDC26CoOrganizers: React.FC = () => {
   return (
@@ -56,3 +23,4 @@ const GDC26CoOrganizers: React.FC = () => {
 };
 
 export default GDC26CoOrganizers;
+
