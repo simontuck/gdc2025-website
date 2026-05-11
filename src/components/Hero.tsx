@@ -17,7 +17,7 @@ const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
-            Dlobal Digital Collaboration Conference 2026
+            Global Digital Collaboration Conference 2026
           </h1>
 
           <p className="text-xl md:text-2xl mb-8 text-white/90 drop-shadow">
