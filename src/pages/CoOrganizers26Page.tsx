@@ -105,10 +105,11 @@ const CoOrganizersPage: React.FC = () => {
               Back to Home
             </Link>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Co-Organizers 2025</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Co-Organizers</h1>
           <p className="text-xl text-white/90 max-w-3xl">
-            46 Leading organizations from across the globe that came together to shape the future of digital identity, in particular in the realm of secure, interoperable wallets, credentials and trusted infrastructure.
-          </p>
+            Co-Organizers are the main drivers of the Global Digital Collaboration Conference. They convene their communities and provide their expertise.
+            Intergovernmental Organizations and Non-Governmental Organizations such as Standardization-, Open-Source- and Civil Society
+            Organizations as well as Trade Associations are eligible. Their applications have been approved by the Council. Applications for 2026 are closed.</p>
         </div>
       </section>
 
