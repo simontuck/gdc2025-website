@@ -58,9 +58,7 @@ const CoOrganizersPage: React.FC = () => {
 
           <p className="text-xl text-white/90 max-w-3xl">
             Co-Organizers are the main drivers of the Global Digital Collaboration Conference.
-            They convene their communities and provide their expertise. Intergovernmental Organizations and Non-Governmental 
-            Organizations such as Standardization-, Open-Source- and Civil Society Organizations as well as Trade Associations are eligible.
-            Their applications have been approved by the Council. Applications for 2026 are closed.
+            They convene their communities and provide their expertise. 
           </p>
         </div>
       </section>
@@ -69,6 +67,15 @@ const CoOrganizersPage: React.FC = () => {
       <section className="py-16 bg-gray-50">
         <div className="container">
           <div className="max-w-5xl mx-auto">
+
+            <div className="text-center mb-12">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Intergovernmental Organizations and Non-Governmental Organizations such as Standardization-,
+                Open-Source- and Civil Society Organizations as well as Trade Associations are eligible.
+                Their applications have been approved by the Council. Applications for 2026 are closed.
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {coOrganizers.map((name) => (
                 <div
