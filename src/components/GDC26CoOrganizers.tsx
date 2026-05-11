@@ -47,8 +47,9 @@ const GDC26CoOrganizers: React.FC = () => {
               </h2>
             </div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The following organizations are confirmed as co-organizers for GDC conference in 2026. Up to 50 co-organizers will be admitted. The list will be updated continuously.
-            </p>
+             The GDC is co-organized by Intergovernmental Organizations and Non-Governmental Organizations such as Standardization-,
+             Open-Source- and Civil Society Organizations as well as Trade Associations.
+             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
