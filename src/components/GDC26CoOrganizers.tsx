@@ -31,6 +31,7 @@ const coOrganizers = [
   'United Nations International Computing Centre',
   'W3C',
   'World Bank Group',
+  'World Health Organization',
 ];
 
 const GDC26CoOrganizers: React.FC = () => {
