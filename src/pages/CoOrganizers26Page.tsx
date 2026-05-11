@@ -67,21 +67,6 @@ const CoOrganizersPage: React.FC = () => {
       <section className="py-16 bg-gray-50">
         <div className="container">
           <div className="max-w-5xl mx-auto">
-
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Users className="h-8 w-8 text-primary-500 mr-3" />
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                  Confirmed Co-Organizers 2026
-                </h2>
-              </div>
-
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                The following organizations are confirmed as co-organizers for GDC 2026.
-                The list will be updated continuously.
-              </p>
-            </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {coOrganizers.map((name) => (
                 <div
