@@ -94,6 +94,13 @@ const Header: React.FC<HeaderProps> = ({ onRegisterClick }) => {
                 Council
               </Link>
               <Link
+                to="/co-organizers-26"
+                className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Co-Organizers
+              </Link>
+              <Link
                 to="/gdc25"
                 className="text-gray-700 hover:text-primary-500 transition-colors py-2 border-b border-gray-100"
                 onClick={() => setIsMenuOpen(false)}

@@ -13,7 +13,6 @@ import CoOrganizersPage from './pages/CoOrganizersPage';
 import CoOrganizers26Page from './pages/CoOrganizers26Page';
 import CouncilPage from './pages/CouncilPage';
 import CouncilMeetingsPage from './pages/CouncilMeetingsPage';
-import CallForCoOrganizersPage from './pages/CallForCoOrganizersPage';
 import GDC25Page from './pages/GDC25Page';
 import HotelsPage from './pages/HotelsPage';
 import ImprintPage from './pages/ImprintPage';
@@ -65,7 +64,6 @@ const AppContent = () => {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/council" element={<CouncilPage />} />
         <Route path="/council/meetings" element={<CouncilMeetingsPage />} />
-        <Route path="/co-organizers-call" element={<CallForCoOrganizersPage />} />
         <Route path="/co-organizers" element={<CoOrganizersPage />} />
         <Route path="/co-organizers-26" element={<CoOrganizers26Page />} />
         <Route path="/hotels" element={<HotelsPage />} />
