@@ -21,6 +21,7 @@ const CouncilPage: React.FC = () => {
       title: "Group of Intergovernmental Organizations",
       members: [
         { name: "European Union" },
+        { name: "Smart Africa" },
         { name: "United Nations High Commissioner for Refugees (UNHCR)" },
         { name: "United Nations Educational, Scientific and Cultural Organization (UNESCO)" },
         { name: "World Bank Group", isChair: true },
